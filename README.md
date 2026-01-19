@@ -199,7 +199,7 @@ EXPO_PUBLIC_FIREBASE_APP_ID=your-app-id
 ### Execução
 
 ```bash
-npx expo start
+npm run start
 ```
 
 Abra no:

@@ -12,6 +12,8 @@
       "tsconfigPaths": true
     },
 
+    "scheme": "mindease",
+
     "plugins": [],
 
     "orientation": "portrait",

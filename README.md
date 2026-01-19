@@ -143,7 +143,7 @@ A lógica compartilhada foi extraída da versão web sempre que possível, evita
 * **Expo**
 * **TypeScript**
 * **NativeWind** (Tailwind no React Native)
-* **React Navigation**
+* **Expo Router**
 * **Firebase Authentication**
 * **Firestore**
 * **Zod**

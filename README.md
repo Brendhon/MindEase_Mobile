@@ -217,7 +217,8 @@ Abra no:
 * Acessibilidade foi reinterpretada para leitores de tela e gestos
 
 Projeto Web:
-🔗 [https://mind-ease-web.vercel.app](https://mind-ease-web.vercel.app)
+- Site: [https://mind-ease-web.vercel.app](https://mind-ease-web.vercel.app)
+- GitHub: [https://github.com/Brendhon/MindEase](https://github.com/Brendhon/MindEase)
 
 ---
 

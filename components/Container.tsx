@@ -1,16 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Container = ({ children }: { children: React.ReactNode }) => {
-  return <SafeAreaView className={styles.container}>
-    <View className={styles.content}>
-      {children}
-    </View>
-  </SafeAreaView>;
-};
+interface ContainerProps {
+  children: React.ReactNode;
+  /** Additional className for custom styling */
+  className?: string;
+}
 
-const styles = {
-  container: 'flex flex-1 m-6',
-  content: 'flex-1 bg-action-primary rounded-lg p-6',
+/**
+ * Container Component
+ *
+ * Provides safe area boundaries for the app content.
+ * Uses minimal styling to allow child components full control over their appearance.
+ */
+export const Container = ({ children, className = '' }: ContainerProps) => {
+  return (
+    <SafeAreaView className={`flex-1 bg-bg-secondary ${className}`}>
+      {children}
+    </SafeAreaView>
+  );
 };

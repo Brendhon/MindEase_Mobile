@@ -9,12 +9,14 @@
  * - Accessible design with proper labels
  * - Clear visual hierarchy
  * - Consistent with web version design
+ * - Uses cognitive accessibility hooks for dynamic text/styling
  */
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 
 /**
  * Login icon component for the button
@@ -28,9 +30,45 @@ function LoginIcon({ size, color }: { size?: number; color?: string }) {
  *
  * Displays the authentication interface with Google sign-in option.
  * Designed for cognitive accessibility with minimal visual clutter.
+ * Uses cognitive settings for dynamic text and styling.
  */
 export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
+
+  // Use cognitive settings hooks for accessibility
+  const { spacingClasses, fontSizeClasses } = useAccessibilityClasses();
+  const { getText } = useTextDetail();
+
+  // Generate dynamic classes based on user preferences
+  const cardClasses = useMemo(
+    () => {
+      console.log(spacingClasses.padding);
+      return `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`;
+    },
+    [spacingClasses.padding]
+  );
+
+  const titleClasses = useMemo(
+    () =>{ 
+      console.log(fontSizeClasses['3xl']);
+      return `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`},
+    [fontSizeClasses]
+  );
+
+  const descriptionClasses = useMemo(
+    () => `text-text-secondary text-center leading-relaxed mb-8 ${fontSizeClasses.base}`,
+    [fontSizeClasses]
+  );
+
+  const disclaimerClasses = useMemo(
+    () => `text-text-muted text-center mt-6 leading-relaxed ${fontSizeClasses.sm}`,
+    [fontSizeClasses]
+  );
+
+  const buttonTextClasses = useMemo(
+    () => fontSizeClasses.lg,
+    [fontSizeClasses]
+  );
 
   /**
    * Handles sign-in button press
@@ -50,22 +88,21 @@ export default function LoginScreen() {
   return (
     <View
       className={styles.container}
-      accessibilityLabel="Tela de login"
+      accessibilityLabel={getText('login_title')}
     >
-      <View className={styles.card}>
+      <View className={cardClasses}>
         {/* Title */}
         <Text
-          className={styles.title}
+          className={titleClasses}
           accessibilityRole="header"
-          accessibilityLabel="Bem-vindo ao MindEase"
+          accessibilityLabel={getText('login_title')}
         >
-          Bem-vindo ao MindEase
+          {getText('login_title')}
         </Text>
 
         {/* Description */}
-        <Text className={styles.description}>
-          Entre com sua conta Google para acessar seu espaço de bem-estar
-          mental.
+        <Text className={descriptionClasses}>
+          {getText('login_description')}
         </Text>
 
         {/* Sign-in Button */}
@@ -77,18 +114,19 @@ export default function LoginScreen() {
             disabled={isLoading}
             isLoading={isLoading}
             className={styles.button}
-            accessibilityLabel="Entrar com Google"
+            accessibilityLabel={getText('login_button_aria')}
             accessibilityHint="Pressione para fazer login com sua conta Google"
           >
             <Button.Icon icon={LoginIcon} position="left" size="lg" />
-            <Button.Text className="text-lg">Entrar com Google</Button.Text>
+            <Button.Text className={buttonTextClasses}>
+              {getText('login_button')}
+            </Button.Text>
           </Button>
         </View>
 
         {/* Disclaimer */}
-        <Text className={styles.disclaimer}>
-          Ao entrar, você concorda com nossos termos de uso e política de
-          privacidade.
+        <Text className={disclaimerClasses}>
+          {getText('login_disclaimer')}
         </Text>
       </View>
     </View>
@@ -97,14 +135,10 @@ export default function LoginScreen() {
 
 /**
  * Login Screen Styles
- * Centralized styles following MindEase design tokens
+ * Base styles - dynamic styling is applied via useAccessibilityClasses
  */
 const styles = {
-  container: 'flex-1 items-center justify-center bg-bg-secondary px-6',
-  card: 'w-full bg-surface-primary border border-border-subtle rounded-lg p-6 shadow-soft',
-  title: 'text-3xl font-semibold text-text-primary text-center mb-4',
-  description: 'text-md text-text-secondary text-center leading-relaxed mb-8',
+  container: 'flex-1 items-center justify-center bg-bg-secondary px-4',
   buttonContainer: 'w-full',
   button: 'w-full',
-  disclaimer: 'text-sm text-text-muted text-center mt-6 leading-relaxed',
 } as const;

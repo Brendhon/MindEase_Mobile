@@ -41,17 +41,12 @@ export default function LoginScreen() {
 
   // Generate dynamic classes based on user preferences
   const cardClasses = useMemo(
-    () => {
-      console.log(spacingClasses.padding);
-      return `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`;
-    },
+    () => `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`,
     [spacingClasses.padding]
   );
 
   const titleClasses = useMemo(
-    () =>{ 
-      console.log(fontSizeClasses['3xl']);
-      return `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`},
+    () => `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`,
     [fontSizeClasses]
   );
 

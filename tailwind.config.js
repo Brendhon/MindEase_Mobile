@@ -7,6 +7,47 @@ module.exports = {
   ],
 
   presets: [require('nativewind/preset')],
+
+  /**
+   * Safelist for dynamic accessibility classes
+   * These classes are generated at runtime via tailwind-classes.ts
+   * and need to be explicitly included in the build.
+   */
+  safelist: [
+    // Font size classes (all modes: small, normal, large)
+    'text-[10px]',
+    'text-xs',
+    'text-sm',
+    'text-md',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'text-4xl',
+    // Spacing classes (compact, normal, relaxed)
+    'p-2',
+    'p-4',
+    'p-6',
+    'gap-2',
+    'gap-4',
+    'gap-6',
+    'm-2',
+    'm-4',
+    'm-6',
+    // Focus mode classes
+    'border-2',
+    'border-action-primary',
+    'shadow-md',
+    // Text contrast classes
+    'text-text-primary',
+    'text-text-secondary',
+    'text-text-muted',
+    'opacity-75',
+    'opacity-60',
+    // Border contrast classes
+    'border-border-strong',
+    'border-border-subtle',
+  ],
   theme: {
     extend: {
       // ========================================

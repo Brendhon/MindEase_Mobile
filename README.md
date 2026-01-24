@@ -185,7 +185,13 @@ npm install
 
 ### Variáveis de Ambiente
 
-Crie um arquivo `.env` com:
+Copie o arquivo de exemplo e preencha com suas credenciais:
+
+```bash
+cp environment.example .env
+```
+
+O arquivo `.env` deve conter as seguintes variáveis:
 
 ```bash
 EXPO_PUBLIC_FIREBASE_API_KEY=your-api-key
@@ -195,6 +201,8 @@ EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your-bucket
 EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
 EXPO_PUBLIC_FIREBASE_APP_ID=your-app-id
 ```
+
+> 💡 Consulte o arquivo `environment.example` para instruções detalhadas de configuração.
 
 ### Execução
 

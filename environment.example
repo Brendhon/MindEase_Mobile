@@ -1,0 +1,51 @@
+# Firebase Configuration (Expo/React Native)
+# Get these values from your Firebase project settings
+# https://console.firebase.google.com/
+
+# IMPORTANT: In Expo, environment variables must be prefixed with EXPO_PUBLIC_
+# to be accessible in the client-side code.
+
+# Firebase API Key
+EXPO_PUBLIC_FIREBASE_API_KEY=your-api-key-here
+
+# Firebase Auth Domain
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+
+# Firebase Project ID
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+
+# Firebase Storage Bucket
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+
+# Firebase Messaging Sender ID
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+
+# Firebase App ID
+EXPO_PUBLIC_FIREBASE_APP_ID=your-app-id
+
+# ---------------------------------------------------------------------------
+# Setup Instructions:
+# ---------------------------------------------------------------------------
+#
+# 1. Copy this file to .env:
+#    cp environment.example .env
+#
+# 2. Replace all placeholder values with your actual Firebase credentials
+#
+# 3. To get your Firebase credentials:
+#    - Go to Firebase Console: https://console.firebase.google.com/
+#    - Select your project (or create a new one)
+#    - Go to Project Settings > General > Your apps
+#    - If you haven't added an app yet, click "Add app" and select Web
+#    - Copy the configuration values from the Firebase SDK snippet
+#
+# 4. For Google Sign-In on mobile:
+#    - Go to Google Cloud Console: https://console.cloud.google.com/
+#    - Enable Google Sign-In API
+#    - Configure OAuth consent screen
+#    - Create OAuth 2.0 credentials for Android and/or iOS
+#
+# 5. Run the app:
+#    npm run start
+#
+# ---------------------------------------------------------------------------

@@ -169,8 +169,7 @@ export default function AuthenticatedLayout() {
           drawerItemStyle: {
             borderRadius: borderRadius,
             marginHorizontal: spacingValue / 4,
-            paddingHorizontal: spacingValue / 4,
-            paddingVertical: spacingValue / 2,
+            padding: spacingValue / 4,
           },
         }}
       >

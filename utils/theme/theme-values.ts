@@ -32,12 +32,12 @@ export function getSpacingPixelValue(
 ): number {
   switch (spacing) {
     case 'compact':
-      return 2 * SPACING_UNIT; // 8px
+      return 1 * SPACING_UNIT; // 4px
     case 'relaxed':
-      return 6 * SPACING_UNIT; // 24px
+      return 4 * SPACING_UNIT; // 16px
     case 'normal':
     default:
-      return 4 * SPACING_UNIT; // 16px
+      return 3 * SPACING_UNIT; // 12px
   }
 }
 

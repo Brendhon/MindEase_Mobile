@@ -12,10 +12,16 @@ interface AuthProviderProps {
 
 /**
  * Convert Firebase User to AuthUser
+ * Uses Google ID as uid when available (from providerData)
  */
 function firebaseUserToAuthUser(user: User): AuthUser {
+  // Extract Google ID from providerData if available
+  const googleProvider = user.providerData.find(
+    (provider) => provider.providerId === 'google.com'
+  );
+
   return {
-    uid: user.uid,
+    uid: googleProvider?.uid || user.uid,
     email: user.email,
     name: user.displayName,
     image: user.photoURL,

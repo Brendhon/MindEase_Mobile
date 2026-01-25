@@ -14,16 +14,20 @@ import { AuthProvider } from '@/providers/auth';
  *
  * Note: The 'top' edge is excluded from safe area because nested navigators
  * (Drawer, Stack) handle the status bar area with their own headers.
+ *
+ * Provider order is important:
+ * 1. AuthProvider - provides user authentication state
+ * 2. CognitiveSettingsProvider - loads user preferences (requires auth context)
  */
 export default function RootLayout() {
   return (
-    <CognitiveSettingsProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <CognitiveSettingsProvider>
         <StatusBar style="dark" translucent backgroundColor="transparent" />
         <Container edges={['bottom', 'left', 'right']}>
           <Slot />
         </Container>
-      </AuthProvider>
-    </CognitiveSettingsProvider>
+      </CognitiveSettingsProvider>
+    </AuthProvider>
   );
 }

@@ -1,10 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { useCognitiveSettingsContext } from '@/contexts/cognitive-settings';
+import { useAuthContext } from '@/contexts/auth';
 import {
   UserPreferences,
   DEFAULT_ACCESSIBILITY_SETTINGS,
 } from '@/models/user-preferences';
+import { userPreferencesService } from '@/services/user-preferences';
 
 /**
  * useCognitiveSettings Hook - MindEase Mobile
@@ -13,14 +15,13 @@ import {
  *
  * This hook handles:
  * - CRUD operations for settings
- * - State management
+ * - State management with Firestore synchronization
  * - Loading and error handling
+ * - Automatic loading when user authenticates
  *
  * For Tailwind classes generation, use `useAccessibilityClasses` hook instead.
  * For text detail helpers, use `useTextDetail` hook instead.
  * This separation reduces unnecessary re-renders and improves performance.
- *
- * Note: Firebase/Firestore sync to be implemented when auth is ready.
  *
  * @example
  * ```tsx
@@ -52,68 +53,142 @@ import {
 export function useCognitiveSettings() {
   const { settings, isLoading, error, _setSettings, _setLoading, _setError } =
     useCognitiveSettingsContext();
+  const { user } = useAuthContext();
+
+  // Track if settings have been loaded for current user
+  const loadedForUserRef = useRef<string | null>(null);
 
   /**
-   * Load settings from storage
-   * TODO: Implement AsyncStorage/Firestore sync when auth is ready
+   * Load settings from Firestore
+   * Called automatically when user authenticates
    */
-  const loadSettings = useCallback(async () => {
-    _setLoading(true);
-    _setError(null);
+  const loadSettings = useCallback(
+    async (userId?: string) => {
+      const targetUserId = userId || user?.uid;
 
-    try {
-      // TODO: Load from AsyncStorage or Firestore when implemented
-      // For now, just use default settings
-      _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
-    } catch (err) {
-      console.error('Error loading user preferences:', err);
-      _setError(
-        err instanceof Error ? err : new Error('Failed to load preferences')
-      );
-    } finally {
-      _setLoading(false);
+      if (!targetUserId) {
+        // No user, use defaults
+        _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
+        return;
+      }
+
+      _setLoading(true);
+      _setError(null);
+
+      try {
+        const preferences =
+          await userPreferencesService.getUserPreferences(targetUserId);
+
+        _setSettings(preferences);
+        loadedForUserRef.current = targetUserId;
+      } catch (err) {
+        console.error('Error loading user preferences:', err);
+        _setError(
+          err instanceof Error ? err : new Error('Failed to load preferences')
+        );
+        // Fallback to defaults on error
+        _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
+      } finally {
+        _setLoading(false);
+      }
+    },
+    [user?.uid, _setSettings, _setLoading, _setError]
+  );
+
+  /**
+   * Auto-load settings when user changes
+   * This ensures the UI is updated with user preferences when they log in
+   */
+  useEffect(() => {
+    // Skip if already loaded for this user
+    if (user?.uid && loadedForUserRef.current === user.uid) {
+      return;
     }
-  }, [_setSettings, _setLoading, _setError]);
+
+    // Reset loaded ref when user changes
+    if (!user?.uid) {
+      loadedForUserRef.current = null;
+      _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
+      return;
+    }
+
+    // Load settings for new user
+    loadSettings(user.uid);
+  }, [user?.uid, loadSettings, _setSettings]);
 
   /**
    * Update a single setting
-   * Automatically syncs with local state (Firestore sync to be added)
+   * Automatically syncs with Firestore
    */
   const updateSetting = useCallback(
     async <K extends keyof UserPreferences>(
       key: K,
       value: UserPreferences[K]
     ) => {
-      // Optimistic update
+      // Optimistic update for immediate UI feedback
       _setSettings((prev) => ({ ...prev, [key]: value }));
 
-      // TODO: Sync with AsyncStorage/Firestore when auth is implemented
+      // Sync with Firestore if user is authenticated
+      if (user?.uid) {
+        try {
+          await userPreferencesService.updateUserPreferences(user.uid, {
+            [key]: value,
+          });
+        } catch (err) {
+          console.error('Error syncing setting to Firestore:', err);
+          // Revert on error by reloading from Firestore
+          await loadSettings(user.uid);
+        }
+      }
     },
-    [_setSettings]
+    [user?.uid, _setSettings, loadSettings]
   );
 
   /**
    * Update multiple settings at once
+   * Automatically syncs with Firestore
    */
   const updateSettings = useCallback(
     async (newSettings: Partial<UserPreferences>) => {
-      // Optimistic update
+      // Optimistic update for immediate UI feedback
       _setSettings((prev) => ({ ...prev, ...newSettings }));
 
-      // TODO: Sync with AsyncStorage/Firestore when auth is implemented
+      // Sync with Firestore if user is authenticated
+      if (user?.uid) {
+        try {
+          await userPreferencesService.updateUserPreferences(
+            user.uid,
+            newSettings
+          );
+        } catch (err) {
+          console.error('Error syncing settings to Firestore:', err);
+          // Revert on error by reloading from Firestore
+          await loadSettings(user.uid);
+        }
+      }
     },
-    [_setSettings]
+    [user?.uid, _setSettings, loadSettings]
   );
 
   /**
    * Reset settings to defaults
+   * Automatically syncs with Firestore
    */
   const resetSettings = useCallback(async () => {
-    // Optimistic update
+    // Optimistic update for immediate UI feedback
     _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
 
-    // TODO: Sync with AsyncStorage/Firestore when auth is implemented
-  }, [_setSettings]);
+    // Sync with Firestore if user is authenticated
+    if (user?.uid) {
+      try {
+        await userPreferencesService.resetUserPreferences(user.uid);
+      } catch (err) {
+        console.error('Error resetting settings in Firestore:', err);
+        // Revert on error by reloading from Firestore
+        await loadSettings(user.uid);
+      }
+    }
+  }, [user?.uid, _setSettings, loadSettings]);
 
   return {
     // State

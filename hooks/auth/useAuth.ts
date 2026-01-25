@@ -26,12 +26,11 @@
  * function AuthButtons() {
  *   const { signIn, signOut, isAuthenticated, isLoading } = useAuth();
  *
- *   // Note: signIn requires the Google auth response from useGoogleAuth hook
  *   return (
  *     <View>
  *       {!isAuthenticated ? (
- *         <Pressable onPress={() => signIn(response)} disabled={isLoading}>
- *           <Text>Sign In</Text>
+ *         <Pressable onPress={signIn} disabled={isLoading}>
+ *           <Text>Sign In with Google</Text>
  *         </Pressable>
  *       ) : (
  *         <Pressable onPress={signOut} disabled={isLoading}>
@@ -46,38 +45,51 @@
  * @throws Error if used outside AuthProvider
  */
 
-import { useCallback } from 'react';
-import * as Google from 'expo-auth-session/providers/google';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { useAuthContext } from '@/contexts/auth';
 import { authService } from '@/services/auth';
 
 export function useAuth() {
   const { user, isLoading, error, _setLoading, _setError } = useAuthContext();
+  const isConfigured = useRef(false);
+
+  /**
+   * Configure Google Sign-In on mount
+   * This should only run once when the hook is first used
+   */
+  useEffect(() => {
+    if (!isConfigured.current) {
+      authService.configure();
+      isConfigured.current = true;
+    }
+  }, []);
 
   /**
    * Sign in with Google
-   * Handles the Google authentication response and signs into Firebase
-   *
-   * @param response - The response from Google.useAuthRequest promptAsync
+   * Handles the Google authentication and signs into Firebase
    */
-  const signIn = useCallback(
-    async (response: Google.GoogleAuthSessionResult | null) => {
-      _setLoading(true);
-      _setError(null);
+  const signIn = useCallback(async () => {
+    _setLoading(true);
+    _setError(null);
 
-      try {
-        await authService.handleGoogleSignIn(response);
-        // User state will be updated automatically by AuthProvider's onAuthStateChanged
-      } catch (err) {
-        console.error('Error signing in:', err);
-        _setError(err instanceof Error ? err : new Error('Failed to sign in'));
-      } finally {
-        _setLoading(false);
+    try {
+      await authService.signIn();
+      // User state will be updated automatically by AuthProvider's onAuthStateChanged
+    } catch (err) {
+      console.error('Error signing in:', err);
+
+      // Don't set error for user cancellation
+      const authErr = err as { code?: string };
+      if (authErr?.code === 'SIGN_IN_CANCELLED') {
+        return;
       }
-    },
-    [_setLoading, _setError]
-  );
+
+      _setError(err instanceof Error ? err : new Error('Failed to sign in'));
+    } finally {
+      _setLoading(false);
+    }
+  }, [_setLoading, _setError]);
 
   /**
    * Sign out current user
@@ -98,30 +110,21 @@ export function useAuth() {
   }, [_setLoading, _setError]);
 
   /**
-   * Get Google auth request hook
-   * Must be destructured at component top level
-   *
-   * @example
-   * ```tsx
-   * function LoginScreen() {
-   *   const { useGoogleAuth, signIn } = useAuth();
-   *   const [request, response, promptAsync] = useGoogleAuth();
-   *
-   *   useEffect(() => {
-   *     if (response) {
-   *       signIn(response);
-   *     }
-   *   }, [response]);
-   *
-   *   return (
-   *     <Pressable onPress={() => promptAsync()} disabled={!request}>
-   *       <Text>Sign in with Google</Text>
-   *     </Pressable>
-   *   );
-   * }
-   * ```
+   * Attempt silent sign-in for returning users
+   * This provides a seamless experience for users who have previously signed in
    */
-  const useGoogleAuth = authService.useGoogleAuth;
+  const signInSilently = useCallback(async () => {
+    _setLoading(true);
+
+    try {
+      await authService.signInSilently();
+    } catch {
+      // Silent sign-in failure is not an error condition
+      // User simply needs to sign in manually
+    } finally {
+      _setLoading(false);
+    }
+  }, [_setLoading]);
 
   return {
     // State
@@ -133,8 +136,6 @@ export function useAuth() {
     // Operations
     signIn,
     signOut,
-
-    // Google Auth Hook
-    useGoogleAuth,
+    signInSilently,
   };
 }

@@ -14,7 +14,7 @@
 
     "scheme": "mindease",
 
-    "plugins": [],
+    "plugins": ["@react-native-google-signin/google-signin"],
 
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,13 +28,17 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.mindease.mobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.mindease.mobile"
     }
   }
 }

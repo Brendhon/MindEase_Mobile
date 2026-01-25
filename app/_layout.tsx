@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Container } from '@/components/Container';
 import { CognitiveSettingsProvider } from '@/contexts/cognitive-settings';
 import '../global.css';
+import { AuthProvider } from '@/providers/auth';
 
 /**
  * Root layout component for the Expo Router app
@@ -14,10 +15,12 @@ import '../global.css';
 export default function RootLayout() {
   return (
     <CognitiveSettingsProvider>
-      <StatusBar style="auto" />
-      <Container>
-        <Slot />
-      </Container>
+      <AuthProvider>
+        <StatusBar style="auto" />
+        <Container>
+          <Slot />
+        </Container>
+      </AuthProvider>
     </CognitiveSettingsProvider>
   );
 }

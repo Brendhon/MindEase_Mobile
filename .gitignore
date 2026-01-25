@@ -27,3 +27,7 @@ android
 
 # Environment variables
 .env
+
+# Firebase config files (contain API keys)
+google-services.json
+GoogleService-Info.plist

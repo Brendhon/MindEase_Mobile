@@ -2,7 +2,7 @@
  * Login Screen - MindEase Mobile
  *
  * Authentication screen with Google sign-in button.
- * Currently displays UI only - authentication logic to be implemented.
+ * Uses @react-native-google-signin/google-signin for native authentication.
  *
  * Features:
  * - Simple, low cognitive load interface
@@ -12,11 +12,13 @@
  * - Uses cognitive accessibility hooks for dynamic text/styling
  */
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useMemo, useState } from 'react';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useAuth } from '@/hooks/auth';
 
 /**
  * Login icon component for the button
@@ -33,30 +35,43 @@ function LoginIcon({ size, color }: { size?: number; color?: string }) {
  * Uses cognitive settings for dynamic text and styling.
  */
 export default function LoginScreen() {
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { signIn, isLoading, isAuthenticated, error } = useAuth();
 
   // Use cognitive settings hooks for accessibility
   const { spacingClasses, fontSizeClasses } = useAccessibilityClasses();
   const { getText } = useTextDetail();
 
+  // Redirect to home when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
   // Generate dynamic classes based on user preferences
   const cardClasses = useMemo(
-    () => `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`,
+    () =>
+      `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`,
     [spacingClasses.padding]
   );
 
   const titleClasses = useMemo(
-    () => `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`,
+    () =>
+      `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`,
     [fontSizeClasses]
   );
 
   const descriptionClasses = useMemo(
-    () => `text-text-secondary text-center leading-relaxed mb-8 ${fontSizeClasses.base}`,
+    () =>
+      `text-text-secondary text-center leading-relaxed mb-8 ${fontSizeClasses.base}`,
     [fontSizeClasses]
   );
 
   const disclaimerClasses = useMemo(
-    () => `text-text-muted text-center mt-6 leading-relaxed ${fontSizeClasses.sm}`,
+    () =>
+      `text-text-muted text-center mt-6 leading-relaxed ${fontSizeClasses.sm}`,
     [fontSizeClasses]
   );
 
@@ -65,19 +80,16 @@ export default function LoginScreen() {
     [fontSizeClasses]
   );
 
+  const errorClasses = useMemo(
+    () => `text-red-500 text-center mt-4 ${fontSizeClasses.sm}`,
+    [fontSizeClasses]
+  );
+
   /**
    * Handles sign-in button press
-   * TODO: Implement Google authentication logic
    */
   const handleSignIn = async () => {
-    setIsLoading(true);
-
-    // Simulate loading for demonstration
-    // Replace with actual Google auth implementation
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log('Sign in pressed - Authentication not yet implemented');
-    }, 1500);
+    await signIn();
   };
 
   return (
@@ -118,6 +130,13 @@ export default function LoginScreen() {
             </Button.Text>
           </Button>
         </View>
+
+        {/* Error Message */}
+        {error && (
+          <Text className={errorClasses} accessibilityRole="alert">
+            {error.message}
+          </Text>
+        )}
 
         {/* Disclaimer */}
         <Text className={disclaimerClasses}>

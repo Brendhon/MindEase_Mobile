@@ -46,32 +46,32 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   };
 
   return (
-    <View className={styles.content.container}>
+    <View className={styles.container}>
       {/* User Profile Section */}
       <View
-        className={`${styles.content.userProfile} ${spacingClasses.gap}`}
+        className={`${styles.userProfile} ${spacingClasses.gap}`}
       >
-        <View className={styles.content.userProfileHeader}>
+        <View className={styles.userProfileHeader}>
           {user?.image ? (
             <Image
               source={{ uri: user.image }}
-              className={styles.content.userProfileImage}
-              accessibilityLabel={getText('profile_image_aria')} 
+              className={styles.userProfileImage}
+              accessibilityLabel={getText('profile_image_aria')}
             />
           ) : (
-            <View className={styles.content.userProfileImage}>
+            <View className={styles.userProfileImage}>
               <UserIcon color={THEME_COLORS.textInverse} size={24} />
             </View>
           )}
-          <View className={styles.content.userProfileName}>
+          <View className={styles.userProfileName}>
             <Text
-              className={`${styles.content.userProfileName} ${fontSizeClasses.base}`}
+              className={`${styles.userProfileName} ${fontSizeClasses.base}`}
               accessibilityRole="text"
             >
               {user?.name || getText('user')}
             </Text>
             <Text
-              className={`${styles.content.userProfileEmail} ${fontSizeClasses.sm}`}
+              className={`${styles.userProfileEmail} ${fontSizeClasses.sm}`}
               accessibilityRole="text"
               numberOfLines={1}
             >
@@ -90,17 +90,17 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       </DrawerContentScrollView>
 
       {/* Logout Section */}
-      <View className={`${styles.content.logoutSection} ${spacingClasses.padding}`}>
+      <View className={`${styles.logoutSection} ${spacingClasses.padding}`}>
         <Pressable
           onPress={handleLogout}
           disabled={isLoading}
-          className={`${styles.content.logoutSectionButton} ${spacingClasses.padding}`}
+          className={`${styles.logoutSectionButton} ${spacingClasses.padding}`}
           accessibilityRole="button"
           accessibilityLabel={getText('header_logout_aria')}
           accessibilityHint={getText('header_logout_hint')}
         >
           <LogOutIcon color={THEME_COLORS.actionDanger} size={22} />
-          <Text className={`${styles.content.logoutSectionButtonText} ${fontSizeClasses.base}`}>
+          <Text className={`${styles.logoutSectionButtonText} ${fontSizeClasses.base}`}>
             {isLoading ? getText('header_logout_loading') : getText('logout')}
           </Text>
         </Pressable>
@@ -213,15 +213,13 @@ export default function AuthenticatedLayout() {
 }
 
 const styles = {
-  content: {
-    container: "flex-1 bg-surface-primary",
-    userProfile: "border-b border-border-subtle px-4 pb-4 pt-20",
-    userProfileHeader: "flex-row items-center gap-3",
-    userProfileImage: "h-12 w-12 rounded-full",
-    userProfileName: "font-semibold text-text-primary",
-    userProfileEmail: "text-text-muted",
-    logoutSection: "border-t border-border-subtle",
-    logoutSectionButton: "flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary",
-    logoutSectionButtonText: "font-medium text-action-danger",
-  } as const,
+  container: "flex-1 bg-surface-primary",
+  userProfile: "border-b border-border-subtle px-4 pb-4 pt-20",
+  userProfileHeader: "flex-row items-center gap-3",
+  userProfileImage: "h-12 w-12 rounded-full",
+  userProfileName: "font-semibold text-text-primary",
+  userProfileEmail: "text-text-muted",
+  logoutSection: "border-t border-border-subtle",
+  logoutSectionButton: "flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary",
+  logoutSectionButtonText: "font-medium text-action-danger",
 } as const;

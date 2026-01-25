@@ -1,14 +1,13 @@
-import { Redirect } from 'expo-router';
-import { View, Text, ActivityIndicator } from 'react-native';
-
 import { useAuth } from '@/hooks/auth';
+import { Redirect } from 'expo-router';
+import { ActivityIndicator, Text, View } from 'react-native';
 
 /**
  * Home page - Entry point of the application
  *
  * Redirects to login screen if user is not authenticated.
+ * Redirects to dashboard if user is authenticated.
  * Shows a loading state while checking authentication.
- * Renders the main content if authenticated.
  */
 export default function HomePage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -22,17 +21,7 @@ export default function HomePage() {
       </View>
     );
   }
-
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Redirect href="/login" />;
-  }
-
-  // TODO: Replace with actual home/dashboard content
-  return (
-    <View className="flex-1 items-center justify-center bg-bg-secondary">
-      <Text className="text-text-primary text-xl">Bem-vindo ao MindEase!</Text>
-      <Text className="mt-2 text-text-secondary">Você está autenticado.</Text>
-    </View>
-  );
+  
+  // Redirect to dashboard when authenticated
+  return isAuthenticated ? <Redirect href="/dashboard" /> : <Redirect href="/login" />;
 }

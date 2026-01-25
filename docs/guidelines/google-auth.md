@@ -68,14 +68,14 @@ cp environment.example .env
 npm install
 
 # Generate native code
-npx expo prebuild
+npm run prebuild
 
 # Run on Android
-npx expo run:android
+npm run android
 
 # Run on iOS (macOS only)
 cd ios && pod install && cd ..
-npx expo run:ios
+npm run ios
 ```
 
 ---
@@ -88,6 +88,7 @@ npx expo run:ios
 | `SIGN_IN_CANCELLED` | OAuth not configured | Check consent screen, add test users |
 | `Play Services not available` | Missing Google Play | Use emulator with Google Play image |
 | `Invalid bundle ID` | Bundle ID mismatch | Verify `app.json` matches Firebase |
+| `SDK location not found` | Missing `local.properties` | Create `android/local.properties` with `sdk.dir=C:\\Users\\USER\\AppData\\Local\\Android\\Sdk` |
 
 ### Get SHA-1
 

@@ -235,6 +235,21 @@ cd ios && pod install && cd ..
 npm run ios
 ```
 
+### Troubleshooting: Android SDK não encontrado
+
+Se ao executar `npm run android` você receber erro relacionado ao SDK não encontrado, crie manualmente o arquivo `android/local.properties`:
+
+```properties
+sdk.dir=C:\\Users\\SEU_USUARIO\\AppData\\Local\\Android\\Sdk
+```
+
+> **Por que isso acontece?** O Gradle precisa saber onde o Android SDK está instalado. Normalmente ele detecta via variável de ambiente `ANDROID_HOME`, mas no Windows isso pode falhar se a variável não estiver configurada ou o terminal foi aberto antes da configuração.
+
+**Para evitar isso no futuro**, configure a variável de ambiente:
+1. Abra "Variáveis de Ambiente" do Windows
+2. Adicione `ANDROID_HOME` com valor `C:\Users\SEU_USUARIO\AppData\Local\Android\Sdk`
+3. Reinicie o terminal/IDE
+
 ### Dispositivos Suportados
 
 | Plataforma | Requisito |

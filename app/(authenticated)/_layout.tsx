@@ -1,5 +1,6 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
+import { THEME_COLORS } from '@/utils/theme';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -14,37 +15,6 @@ import {
 } from 'lucide-react-native';
 import { Image, Pressable, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-/**
- * Theme colors extracted from tailwind.config.js
- * Used for inline styles where NativeWind classes don't apply (e.g., Drawer options)
- */
-const THEME_COLORS = {
-  // Backgrounds
-  bgPrimary: '#f9fafb',
-  bgSecondary: '#f3f4f6',
-  bgTertiary: '#e5e7eb',
-
-  // Surfaces
-  surfacePrimary: '#ffffff',
-  surfaceSecondary: '#f9fafb',
-
-  // Borders
-  borderSubtle: '#e5e7eb',
-  borderStrong: '#d1d5db',
-
-  // Text
-  textPrimary: '#111827',
-  textSecondary: '#374151',
-  textMuted: '#6b7280',
-  textInverse: '#f9fafb',
-
-  // Actions
-  actionPrimary: '#2563eb',
-  actionPrimaryHover: '#1d4ed8',
-  actionDanger: '#dc2626',
-  actionDangerHover: '#b91c1c',
-} as const;
 
 /**
  * Custom Drawer Content Component

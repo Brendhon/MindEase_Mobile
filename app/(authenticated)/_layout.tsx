@@ -14,8 +14,8 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { Drawer } from 'expo-router/drawer';
 import { useRouter } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
 import {
   CheckSquareIcon,
   LayoutDashboardIcon,

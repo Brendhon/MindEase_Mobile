@@ -168,14 +168,19 @@ O foco principal é validar **comportamento do usuário** e não implementação
 
 ## 📦 Como Rodar o Projeto
 
+> ⚠️ **Importante**: Este projeto utiliza módulos nativos e **NÃO funciona com Expo Go**. É necessário um **development build**.
+
 ### Pré-requisitos
 
-* **Node.js 22+**
-* **Expo CLI**
-* **Conta Firebase**
-* **Conta Google Cloud** (OAuth)
+| Requisito | Descrição |
+|-----------|-----------|
+| **Node.js 22+** | Runtime JavaScript |
+| **Android Studio** | Para builds Android (inclui emulador) |
+| **Xcode** | Para builds iOS (apenas macOS) |
+| **Conta Firebase** | Autenticação e banco de dados |
+| **Conta Google Cloud** | Configuração OAuth |
 
-### Instalação
+### 1. Instalação
 
 ```bash
 git clone https://github.com/Brendhon/MindEase-Mobile.git
@@ -183,15 +188,26 @@ cd MindEase-Mobile
 npm install
 ```
 
-### Variáveis de Ambiente
+### 2. Configuração do Firebase
 
-Copie o arquivo de exemplo e preencha com suas credenciais:
+Antes de executar o projeto, configure o Firebase e Google Sign-In:
+
+1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/)
+2. Habilite **Authentication > Google**
+3. Registre os apps Android e iOS
+4. Baixe os arquivos de configuração e coloque na raiz do projeto:
+   - `google-services.json` (Android)
+   - `GoogleService-Info.plist` (iOS)
+
+> 📖 Guia completo: [`docs/guidelines/google-auth.md`](docs/guidelines/google-auth.md)
+
+### 3. Variáveis de Ambiente
 
 ```bash
 cp environment.example .env
 ```
 
-O arquivo `.env` deve conter as seguintes variáveis:
+Preencha o `.env` com suas credenciais Firebase:
 
 ```bash
 EXPO_PUBLIC_FIREBASE_API_KEY=your-api-key
@@ -200,21 +216,31 @@ EXPO_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
 EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your-bucket
 EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
 EXPO_PUBLIC_FIREBASE_APP_ID=your-app-id
+
+# Google OAuth
+EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID=your-web-client-id
 ```
 
-> 💡 Consulte o arquivo `environment.example` para instruções detalhadas de configuração.
-
-### Execução
+### 4. Build e Execução
 
 ```bash
-npm run start
+# Gerar código nativo (obrigatório na primeira vez)
+npm run prebuild
+
+# Executar no Android
+npm run android
+
+# Executar no iOS (apenas macOS)
+cd ios && pod install && cd ..
+npm run ios
 ```
 
-Abra no:
+### Dispositivos Suportados
 
-* Expo Go (Android / iOS)
-* Emulador Android
-* Simulador iOS
+| Plataforma | Requisito |
+|------------|-----------|
+| **Android** | Emulador com Google Play ou dispositivo físico |
+| **iOS** | Simulador ou dispositivo físico (apenas macOS) |
 
 ---
 

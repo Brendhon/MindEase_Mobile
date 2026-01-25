@@ -15,6 +15,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
+import { useRouter } from 'expo-router';
 import {
   CheckSquareIcon,
   LayoutDashboardIcon,
@@ -33,12 +34,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
  * Integrates with accessibility settings for dynamic font sizes and spacing.
  */
 function CustomDrawerContent(props: DrawerContentComponentProps) {
+  const router = useRouter();
   const { user, signOut, isLoading } = useAuth();
   const { fontSizeClasses, spacingClasses, spacingValue } =
     useAccessibilityClasses();
 
   const handleLogout = async () => {
     await signOut();
+    router.replace('/login');
   };
 
   return (

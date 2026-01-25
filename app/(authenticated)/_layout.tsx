@@ -1,6 +1,14 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
-import { THEME_COLORS } from '@/utils/theme';
+import { useCognitiveSettings } from '@/hooks/cognitive-settings';
+import {
+  getBorderRadius,
+  getDrawerWidth,
+  getFontSizePixelValue,
+  getIconSize,
+  getSpacingPixelValue,
+  THEME_COLORS,
+} from '@/utils/theme';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -34,32 +42,32 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   };
 
   return (
-    <View className="flex-1 bg-surface-primary">
+    <View className={styles.content.container}>
       {/* User Profile Section */}
       <View
-        className={`border-b border-border-subtle px-4 pb-4 pt-20 ${spacingClasses.gap}`}
+        className={`${styles.content.userProfile} ${spacingClasses.gap}`}
       >
-        <View className="flex-row items-center gap-3">
+        <View className={styles.content.userProfileHeader}>
           {user?.image ? (
             <Image
               source={{ uri: user.image }}
-              className="h-12 w-12 rounded-full"
+              className={styles.content.userProfileImage}
               accessibilityLabel="Foto de perfil do usuário"
             />
           ) : (
-            <View className="h-12 w-12 items-center justify-center rounded-full bg-action-primary">
+            <View className={styles.content.userProfileImage}>
               <UserIcon color={THEME_COLORS.textInverse} size={24} />
             </View>
           )}
-          <View className="flex-1">
+          <View className={styles.content.userProfileName}>
             <Text
-              className={`font-semibold text-text-primary ${fontSizeClasses.base}`}
+              className={`${styles.content.userProfileName} ${fontSizeClasses.base}`}
               accessibilityRole="text"
             >
               {user?.name || 'Usuário'}
             </Text>
             <Text
-              className={`text-text-muted ${fontSizeClasses.sm}`}
+              className={`${styles.content.userProfileEmail} ${fontSizeClasses.sm}`}
               accessibilityRole="text"
               numberOfLines={1}
             >
@@ -78,17 +86,17 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       </DrawerContentScrollView>
 
       {/* Logout Section */}
-      <View className={`border-t border-border-subtle ${spacingClasses.padding}`}>
+      <View className={`${styles.content.logoutSection} ${spacingClasses.padding}`}>
         <Pressable
           onPress={handleLogout}
           disabled={isLoading}
-          className="flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary"
+          className={`${styles.content.logoutSectionButton} ${spacingClasses.padding}`}
           accessibilityRole="button"
           accessibilityLabel="Sair da conta"
           accessibilityHint="Encerra sua sessão e retorna à tela de login"
         >
           <LogOutIcon color={THEME_COLORS.actionDanger} size={22} />
-          <Text className={`font-medium text-action-danger ${fontSizeClasses.base}`}>
+          <Text className={`${styles.content.logoutSectionButtonText} ${fontSizeClasses.base}`}>
             {isLoading ? 'Saindo...' : 'Sair'}
           </Text>
         </Pressable>
@@ -119,6 +127,15 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
  */
 export default function AuthenticatedLayout() {
   const { getText } = useTextDetail();
+  const { settings } = useCognitiveSettings();
+
+  // Calculate dynamic values based on accessibility preferences
+  const drawerWidth = getDrawerWidth(settings.spacing);
+  const fontSize = getFontSizePixelValue(settings.fontSize, 'base');
+  const headerFontSize = getFontSizePixelValue(settings.fontSize, 'lg');
+  const spacingValue = getSpacingPixelValue(settings.spacing);
+  const borderRadius = getBorderRadius(settings.spacing);
+  const iconSize = getIconSize(settings.fontSize);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -134,28 +151,30 @@ export default function AuthenticatedLayout() {
           headerTintColor: THEME_COLORS.textPrimary,
           headerTitleStyle: {
             color: THEME_COLORS.textPrimary,
+            fontSize: headerFontSize,
           },
           drawerStyle: {
             backgroundColor: THEME_COLORS.surfacePrimary,
-            width: 300,
+            width: drawerWidth,
           },
           drawerActiveTintColor: THEME_COLORS.actionPrimaryHover,
           drawerInactiveTintColor: THEME_COLORS.textMuted,
           drawerLabelStyle: {
-            fontSize: 14,
+            fontSize: fontSize,
           },
           drawerItemStyle: {
-            borderRadius: 8,
-            marginHorizontal: 2,
-            paddingHorizontal: 2,
+            borderRadius: borderRadius,
+            marginHorizontal: spacingValue / 4,
+            paddingHorizontal: spacingValue / 4,
+            paddingVertical: spacingValue / 2,
           },
         }}
       >
         <Drawer.Screen
           name="dashboard"
           options={{
-            drawerIcon: ({ color, size }: { color: string; size: number }) => (
-              <LayoutDashboardIcon color={color} size={size} />
+            drawerIcon: ({ color }: { color: string; size: number }) => (
+              <LayoutDashboardIcon color={color} size={iconSize} />
             ),
             title: getText('sidebar_dashboard'),
             drawerLabel: getText('sidebar_dashboard'),
@@ -165,8 +184,8 @@ export default function AuthenticatedLayout() {
         <Drawer.Screen
           name="tasks"
           options={{
-            drawerIcon: ({ color, size }: { color: string; size: number }) => (
-              <CheckSquareIcon color={color} size={size} />
+            drawerIcon: ({ color }: { color: string; size: number }) => (
+              <CheckSquareIcon color={color} size={iconSize} />
             ),
             title: getText('sidebar_tasks'),
             drawerLabel: getText('sidebar_tasks'),
@@ -176,8 +195,8 @@ export default function AuthenticatedLayout() {
         <Drawer.Screen
           name="profile"
           options={{
-            drawerIcon: ({ color, size }: { color: string; size: number }) => (
-              <UserIcon color={color} size={size} />
+            drawerIcon: ({ color }: { color: string; size: number }) => (
+              <UserIcon color={color} size={iconSize} />
             ),
             title: getText('sidebar_profile'),
             drawerLabel: getText('sidebar_profile'),
@@ -188,3 +207,17 @@ export default function AuthenticatedLayout() {
     </GestureHandlerRootView>
   );
 }
+
+const styles = {
+  content: {
+    container: "flex-1 bg-surface-primary",
+    userProfile: "border-b border-border-subtle px-4 pb-4 pt-20",
+    userProfileHeader: "flex-row items-center gap-3",
+    userProfileImage: "h-12 w-12 rounded-full",
+    userProfileName: "font-semibold text-text-primary",
+    userProfileEmail: "text-text-muted",
+    logoutSection: "border-t border-border-subtle",
+    logoutSectionButton: "flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary",
+    logoutSectionButtonText: "font-medium text-action-danger",
+  } as const,
+} as const;

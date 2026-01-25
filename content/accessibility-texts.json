@@ -41,7 +41,9 @@
     "dashboard_stats_completed": "Tarefas Concluídas",
     "dashboard_alert_title": "⚠️ Alerta Cognitivo",
     "dashboard_alert_message": "Você está há muito tempo nesta tarefa. Que tal fazer uma pausa curta? Uma pausa pode ajudar a manter seu foco e bem-estar. Você pode retomar depois.",
+    "user": "Usuário",
     "profile": "Seu perfil de usuário",
+    "profile_image_aria": "Foto de perfil do usuário",
     "profile_title": "Perfil",
     "profile_description": "Aqui você encontra suas informações pessoais e pode ajustar as configurações do sistema para sua preferência.",
     "profile_section_visual": "Configurações Visuais",
@@ -264,6 +266,7 @@
     "page_404_button_login": "Ir para o login",
     "header_menu_open": "Abrir menu de navegação",
     "header_logout_aria": "Sair da conta",
+    "header_logout_hint": "Encerra sua sessão e retorna à tela de login",
     "header_logout_loading": "Saindo..."
   },
   "summary": {
@@ -308,7 +311,9 @@
     "dashboard_stats_completed": "Concluídas",
     "dashboard_alert_title": "⚠️ Alerta",
     "dashboard_alert_message": "Muito tempo nesta tarefa. Que tal uma pausa? Você pode retomar depois.",
+    "user": "Usuário",
     "profile": "Perfil",
+    "profile_image_aria": "Foto de perfil",
     "profile_title": "Perfil",
     "profile_description": "Suas informações e configurações.",
     "profile_section_visual": "Visual",
@@ -531,6 +536,7 @@
     "page_404_button_login": "Login",
     "header_menu_open": "Abrir menu",
     "header_logout_aria": "Sair",
+    "header_logout_hint": "Encerra sessão e volta ao login",
     "header_logout_loading": "Saindo..."
   }
 }

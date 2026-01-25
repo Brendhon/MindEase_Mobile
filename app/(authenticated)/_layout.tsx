@@ -36,6 +36,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   const router = useRouter();
   const { user, signOut, isLoading } = useAuth();
+  const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses, spacingValue } =
     useAccessibilityClasses();
 
@@ -55,7 +56,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Image
               source={{ uri: user.image }}
               className={styles.content.userProfileImage}
-              accessibilityLabel="Foto de perfil do usuário"
+              accessibilityLabel={getText('profile_image_aria')} 
             />
           ) : (
             <View className={styles.content.userProfileImage}>
@@ -67,7 +68,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
               className={`${styles.content.userProfileName} ${fontSizeClasses.base}`}
               accessibilityRole="text"
             >
-              {user?.name || 'Usuário'}
+              {user?.name || getText('user')}
             </Text>
             <Text
               className={`${styles.content.userProfileEmail} ${fontSizeClasses.sm}`}
@@ -95,12 +96,12 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
           disabled={isLoading}
           className={`${styles.content.logoutSectionButton} ${spacingClasses.padding}`}
           accessibilityRole="button"
-          accessibilityLabel="Sair da conta"
-          accessibilityHint="Encerra sua sessão e retorna à tela de login"
+          accessibilityLabel={getText('header_logout_aria')}
+          accessibilityHint={getText('header_logout_hint')}
         >
           <LogOutIcon color={THEME_COLORS.actionDanger} size={22} />
           <Text className={`${styles.content.logoutSectionButtonText} ${fontSizeClasses.base}`}>
-            {isLoading ? 'Saindo...' : 'Sair'}
+            {isLoading ? getText('header_logout_loading') : getText('logout')}
           </Text>
         </Pressable>
       </View>

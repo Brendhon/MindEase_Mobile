@@ -1,20 +1,19 @@
-import { Drawer } from 'expo-router/drawer';
-import { View, Text, Pressable, Image } from 'react-native';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useAuth } from '@/hooks/auth/useAuth';
 import {
+  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerContentComponentProps,
 } from '@react-navigation/drawer';
+import { Drawer } from 'expo-router/drawer';
 import {
-  UserIcon,
+  CheckSquareIcon,
   LayoutDashboardIcon,
-  ListIcon,
   LogOutIcon,
+  UserIcon,
 } from 'lucide-react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-import { useAuth } from '@/hooks/auth/useAuth';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
 
 /**
  * Theme colors extracted from tailwind.config.js
@@ -146,8 +145,11 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
  * - Visual feedback on press states
  * - Dynamic font sizes and spacing based on user preferences
  * - High contrast support for better readability
+ * - Dynamic text labels based on text detail preference (detailed/summary)
  */
 export default function AuthenticatedLayout() {
+  const { getText } = useTextDetail();
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer
@@ -161,24 +163,21 @@ export default function AuthenticatedLayout() {
           },
           headerTintColor: THEME_COLORS.textPrimary,
           headerTitleStyle: {
-            fontWeight: '600',
             color: THEME_COLORS.textPrimary,
           },
           drawerStyle: {
             backgroundColor: THEME_COLORS.surfacePrimary,
-            width: 280,
+            width: 300,
           },
           drawerActiveTintColor: THEME_COLORS.actionPrimaryHover,
           drawerInactiveTintColor: THEME_COLORS.textMuted,
-          drawerActiveBackgroundColor: 'rgba(37, 99, 235, 0.1)', // action-primary with opacity
           drawerLabelStyle: {
-            fontSize: 15,
-            fontWeight: '500',
+            fontSize: 14,
           },
           drawerItemStyle: {
             borderRadius: 8,
-            marginHorizontal: 8,
-            paddingHorizontal: 8,
+            marginHorizontal: 2,
+            paddingHorizontal: 2,
           },
         }}
       >
@@ -188,20 +187,20 @@ export default function AuthenticatedLayout() {
             drawerIcon: ({ color, size }: { color: string; size: number }) => (
               <LayoutDashboardIcon color={color} size={size} />
             ),
-            title: 'Dashboard',
-            drawerLabel: 'Início',
-            headerTitle: 'Dashboard',
+            title: getText('sidebar_dashboard'),
+            drawerLabel: getText('sidebar_dashboard'),
+            headerTitle: getText('sidebar_dashboard'),
           }}
         />
         <Drawer.Screen
           name="tasks"
           options={{
             drawerIcon: ({ color, size }: { color: string; size: number }) => (
-              <ListIcon color={color} size={size} />
+              <CheckSquareIcon color={color} size={size} />
             ),
-            title: 'Tarefas',
-            drawerLabel: 'Tarefas',
-            headerTitle: 'Tarefas',
+            title: getText('sidebar_tasks'),
+            drawerLabel: getText('sidebar_tasks'),
+            headerTitle: getText('sidebar_tasks'),
           }}
         />
         <Drawer.Screen
@@ -210,9 +209,9 @@ export default function AuthenticatedLayout() {
             drawerIcon: ({ color, size }: { color: string; size: number }) => (
               <UserIcon color={color} size={size} />
             ),
-            title: 'Perfil',
-            drawerLabel: 'Perfil',
-            headerTitle: 'Perfil',
+            title: getText('sidebar_profile'),
+            drawerLabel: getText('sidebar_profile'),
+            headerTitle: getText('sidebar_profile'),
           }}
         />
       </Drawer>

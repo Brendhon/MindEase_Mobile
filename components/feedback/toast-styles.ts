@@ -6,7 +6,7 @@
 export const styles = {
   // Container styles
   managerContainer: 'absolute bottom-12 left-4 right-4 z-50',
-  itemContainer: 'flex-row items-center rounded-lg shadow-md',
+  itemContainer: 'flex-row items-center rounded-lg',
 
   // Element styles
   icon: 'mr-3',

@@ -47,6 +47,19 @@ module.exports = {
     // Border contrast classes
     'border-border-strong',
     'border-border-subtle',
+    // Feedback color classes (for toast notifications)
+    'bg-feedback-success',
+    'bg-feedback-error',
+    'bg-feedback-warning',
+    'bg-feedback-info',
+    'text-white',
+    // Feedback border classes (for high contrast mode)
+    'border-feedback-success',
+    'border-feedback-error',
+    'border-feedback-warning',
+    'border-feedback-info',
+    'border-4',
+    'shadow-lg',
   ],
   theme: {
     extend: {

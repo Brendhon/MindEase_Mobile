@@ -11,14 +11,13 @@
  * - Consistent with web version design
  * - Uses cognitive accessibility hooks for dynamic text/styling
  */
-import { LogIn } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
-import React, { useEffect, useMemo } from 'react';
-import { Text, View } from 'react-native';
-
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
+import { useRouter } from 'expo-router';
+ import { LogIn } from 'lucide-react-native';
+import React, { useEffect, useMemo } from 'react';
+import { Text, View } from 'react-native';
 
 /**
  * LoginScreen Component
@@ -113,8 +112,8 @@ export default function LoginScreen() {
             accessibilityLabel={getText('login_button_aria')}
             accessibilityHint={getText('login_button_hint')}
           >
-            <Button.Icon icon={LogIn} position="left" size="lg" />
-            <Button.Text className={buttonTextClasses}>
+            <Button.Icon icon={LogIn} position="left" size="lg" variant="primary" />
+            <Button.Text className={buttonTextClasses} variant="primary">
               {getText('login_button')}
             </Button.Text>
           </Button>

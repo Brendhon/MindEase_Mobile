@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { LogOut, Trash2 } from 'lucide-react-native';
 import React, { useMemo } from 'react';
@@ -49,8 +49,8 @@ export function ProfileActions({
           testID ? `${testID}-logout-button` : 'profile-logout-button'
         }
       >
-        <Button.Icon icon={LogOut} position="left" size="md" />
-        <Button.Text>{getText('logout')}</Button.Text>
+        <Button.Icon icon={LogOut} position="left" size="md" variant="secondary" />
+        <Button.Text variant="secondary">{getText('logout')}</Button.Text>
       </Button>
       <Button
         variant="danger"
@@ -63,8 +63,8 @@ export function ProfileActions({
             : 'profile-delete-account-button'
         }
       >
-        <Button.Icon icon={Trash2} position="left" size="md" />
-        <Button.Text>{getText('profile_delete_account')}</Button.Text>
+        <Button.Icon icon={Trash2} position="left" size="md" variant="danger" />
+        <Button.Text variant="danger">{getText('profile_delete_account')}</Button.Text>
       </Button>
     </View>
   );

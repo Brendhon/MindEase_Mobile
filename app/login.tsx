@@ -11,7 +11,7 @@
  * - Consistent with web version design
  * - Uses cognitive accessibility hooks for dynamic text/styling
  */
-import { MaterialIcons } from '@expo/vector-icons';
+import { LogIn } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -19,13 +19,6 @@ import { Text, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
-
-/**
- * Login icon component for the button
- */
-function LoginIcon({ size, color }: { size?: number; color?: string }) {
-  return <MaterialIcons name="login" size={size} color={color} />;
-}
 
 /**
  * LoginScreen Component
@@ -120,7 +113,7 @@ export default function LoginScreen() {
             accessibilityLabel={getText('login_button_aria')}
             accessibilityHint={getText('login_button_hint')}
           >
-            <Button.Icon icon={LoginIcon} position="left" size="lg" />
+            <Button.Icon icon={LogIn} position="left" size="lg" />
             <Button.Text className={buttonTextClasses}>
               {getText('login_button')}
             </Button.Text>
@@ -156,5 +149,5 @@ const styles = {
   buttonContainer: 'w-full',
   button: 'w-full',
   buttonText: '',
-  error: 'text-red-500 text-center mt-4',
+  error: 'text-feedback-error text-center mt-4',
 } as const;

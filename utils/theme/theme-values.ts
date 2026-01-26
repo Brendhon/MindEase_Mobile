@@ -130,3 +130,73 @@ export function getBorderRadius(spacing: UserPreferences['spacing']): number {
       return 8;
   }
 }
+
+/**
+ * Get toast icon size
+ * Main icon size for toast notifications (matches web w-5 h-5 = 20px)
+ * Can optionally adjust based on font size preference
+ *
+ * @param fontSize - Optional font size preference for dynamic sizing
+ * @returns Icon size in pixels
+ *
+ * @example
+ * ```tsx
+ * const size = getToastIconSize(); // 20px (default)
+ * const size = getToastIconSize('large'); // 22px (adjusted)
+ * ```
+ */
+export function getToastIconSize(
+  fontSize?: UserPreferences['fontSize']
+): number {
+  const baseSize = 20; // w-5 h-5 equivalent
+
+  if (!fontSize) {
+    return baseSize;
+  }
+
+  // Slight adjustment based on font size preference
+  switch (fontSize) {
+    case 'small':
+      return 18;
+    case 'large':
+      return 22;
+    case 'normal':
+    default:
+      return baseSize;
+  }
+}
+
+/**
+ * Get toast dismiss icon size
+ * Dismiss button icon size (matches web w-4 h-4 = 16px)
+ * Can optionally adjust based on font size preference
+ *
+ * @param fontSize - Optional font size preference for dynamic sizing
+ * @returns Icon size in pixels
+ *
+ * @example
+ * ```tsx
+ * const size = getToastDismissIconSize(); // 16px (default)
+ * const size = getToastDismissIconSize('large'); // 18px (adjusted)
+ * ```
+ */
+export function getToastDismissIconSize(
+  fontSize?: UserPreferences['fontSize']
+): number {
+  const baseSize = 16; // w-4 h-4 equivalent
+
+  if (!fontSize) {
+    return baseSize;
+  }
+
+  // Slight adjustment based on font size preference
+  switch (fontSize) {
+    case 'small':
+      return 14;
+    case 'large':
+      return 18;
+    case 'normal':
+    default:
+      return baseSize;
+  }
+}

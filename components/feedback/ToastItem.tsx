@@ -1,10 +1,17 @@
+import { X } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Animated, Pressable, Text } from 'react-native';
+import { Animated, Pressable, Text, View } from 'react-native';
 
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import type { ToastMessage } from '@/hooks/toast';
-import { getTypeIcon, getTypeStyles } from './toast-utils';
+import {
+  getToastDismissIconSize,
+  getToastIconSize,
+  THEME_COLORS,
+} from '@/utils/theme';
 import { styles } from './toast-styles';
+import { getTypeIcon, getTypeStyles } from './toast-utils';
 
 /**
  * ToastItem Component - MindEase Mobile
@@ -25,12 +32,23 @@ export function ToastItem({ toast, onRemove, testID }: ToastItemProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses, animationsEnabled } =
     useAccessibilityClasses();
+  const { settings } = useCognitiveSettings();
 
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(20)).current;
 
   const typeStyles = useMemo(() => getTypeStyles(toast.type), [toast.type]);
-  const icon = useMemo(() => getTypeIcon(toast.type), [toast.type]);
+  const IconComponent = useMemo(() => getTypeIcon(toast.type), [toast.type]);
+
+  // Icon sizes from centralized theme utilities
+  const iconSize = useMemo(
+    () => getToastIconSize(settings.fontSize),
+    [settings.fontSize]
+  );
+  const dismissIconSize = useMemo(
+    () => getToastDismissIconSize(settings.fontSize),
+    [settings.fontSize]
+  );
 
   // Generate accessible classes with memoization
   const containerClasses = useMemo(
@@ -43,20 +61,13 @@ export function ToastItem({ toast, onRemove, testID }: ToastItemProps) {
     ]
   );
 
-  const iconClasses = useMemo(
-    () => `${styles.icon} ${fontSizeClasses.lg} ${typeStyles.iconColor}`,
-    [fontSizeClasses.lg, typeStyles.iconColor]
-  );
-
   const messageClasses = useMemo(
     () => `${styles.message} ${fontSizeClasses.sm} ${typeStyles.textColor}`,
     [fontSizeClasses.sm, typeStyles.textColor]
   );
 
-  const dismissIconClasses = useMemo(
-    () => `${fontSizeClasses.lg} ${typeStyles.iconColor}`,
-    [fontSizeClasses.lg, typeStyles.iconColor]
-  );
+  // Icon color from centralized theme (white for all types)
+  const iconColor = useMemo(() => THEME_COLORS.textWhite, []);
 
   useEffect(() => {
     const animationDuration = animationsEnabled ? 200 : 0;
@@ -142,7 +153,9 @@ export function ToastItem({ toast, onRemove, testID }: ToastItemProps) {
       testID={testID}
     >
       {/* Icon */}
-      <Text className={iconClasses}>{icon}</Text>
+      <View className={styles.icon}>
+        <IconComponent size={iconSize} color={iconColor} />
+      </View>
 
       {/* Message */}
       <Text className={messageClasses}>{getText(toast.messageKey)}</Text>
@@ -155,7 +168,7 @@ export function ToastItem({ toast, onRemove, testID }: ToastItemProps) {
         accessibilityLabel="Dismiss"
         testID={testID ? `${testID}-dismiss-button` : 'toast-dismiss-button'}
       >
-        <Text className={dismissIconClasses}>×</Text>
+        <X size={dismissIconSize} color={iconColor} />
       </Pressable>
     </Animated.View>
   );

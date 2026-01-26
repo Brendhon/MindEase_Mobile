@@ -1,55 +1,56 @@
+import {
+  AlertCircle,
+  AlertTriangle,
+  CheckCircle2,
+  Info,
+} from 'lucide-react-native';
+import type { ComponentType } from 'react';
+
 import type { ToastType } from '@/hooks/toast';
+import { getFeedbackColorClasses } from '@/utils/theme';
 
 /**
  * Get colors for toast type
+ * Uses design system feedback tokens for consistency with web
+ * Delegates to centralized theme utility function
  */
 export function getTypeStyles(type: ToastType): {
   bgColor: string;
   textColor: string;
   iconColor: string;
 } {
-  switch (type) {
-    case 'success':
-      return {
-        bgColor: 'bg-green-100',
-        textColor: 'text-green-800',
-        iconColor: 'text-green-500',
-      };
-    case 'error':
-      return {
-        bgColor: 'bg-red-100',
-        textColor: 'text-red-800',
-        iconColor: 'text-red-500',
-      };
-    case 'warning':
-      return {
-        bgColor: 'bg-yellow-100',
-        textColor: 'text-yellow-800',
-        iconColor: 'text-yellow-500',
-      };
-    case 'info':
-    default:
-      return {
-        bgColor: 'bg-blue-100',
-        textColor: 'text-blue-800',
-        iconColor: 'text-blue-500',
-      };
-  }
+  return getFeedbackColorClasses(type);
 }
 
 /**
- * Get icon character for toast type
+ * Icon configuration for toast types
+ * Uses Lucide React Native icons for consistency with web
  */
-export function getTypeIcon(type: ToastType): string {
-  switch (type) {
-    case 'success':
-      return '✓';
-    case 'error':
-      return '✕';
-    case 'warning':
-      return '⚠';
-    case 'info':
-    default:
-      return 'ℹ';
-  }
+const iconConfig = {
+  success: {
+    icon: CheckCircle2,
+    ariaLabel: 'Success',
+  },
+  error: {
+    icon: AlertCircle,
+    ariaLabel: 'Error',
+  },
+  warning: {
+    icon: AlertTriangle,
+    ariaLabel: 'Warning',
+  },
+  info: {
+    icon: Info,
+    ariaLabel: 'Information',
+  },
+} as const;
+
+/**
+ * Get icon component for toast type
+ */
+export function getTypeIcon(type: ToastType): ComponentType<{
+  size?: number;
+  color?: string;
+}> {
+  return iconConfig[type].icon;
 }

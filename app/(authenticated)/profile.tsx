@@ -1,22 +1,29 @@
-import { View, Text } from 'react-native';
+import { ProfileInfo } from '@/components/profile/ProfileInfo';
+import { useAccessibilityClasses } from '@/hooks/accessibility';
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 /**
  * Profile Screen - MindEase Mobile
  *
- * User profile and settings screen.
+ * User profile page with identity and session information
  *
- * TODO: Implement profile content
- * - User info display
- * - Cognitive settings
- * - Theme preferences
- * - Notification settings
+ * Features:
+ * - Display user information (email, name, image)
  * - Logout functionality
+ * - Delete account functionality
+ * - Simple, focused interface
+ * - Accessible design (WCAG compliant)
  */
 export default function ProfileScreen() {
+  const { spacingClasses } = useAccessibilityClasses();
+
   return (
-    <View className="flex-1 items-center justify-center bg-bg-secondary">
-      <Text className="text-text-primary text-xl">Perfil</Text>
-      <Text className="mt-2 text-text-secondary">Em construção</Text>
-    </View>
+    <ScrollView
+      className={`flex-1 bg-bg-secondary ${spacingClasses.padding}`}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
+      <ProfileInfo testID="profile-page-container" />
+    </ScrollView>
   );
 }

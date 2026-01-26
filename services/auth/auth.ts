@@ -13,6 +13,8 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 import { auth } from '@/config/firebase';
+import { tasksService } from '../tasks';
+import { userPreferencesService } from '../user-preferences';
 
 /**
  * Auth Service - MindEase Mobile
@@ -41,6 +43,14 @@ export interface AuthService {
    * Attempts silent sign-in for seamless user experience
    */
   signInSilently: () => Promise<void>;
+
+  /**
+   * Delete user account and all associated data
+   * 1. Delete all user tasks
+   * 2. Delete user preferences
+   * 3. Sign out the user
+   */
+  deleteAccount: (userId: string) => Promise<void>;
 }
 
 /**
@@ -167,5 +177,27 @@ export const authService: AuthService = {
 
     // Always sign out from Firebase
     await firebaseSignOut(auth);
+  },
+
+  /**
+   * Delete user account and all associated data
+   * 1. Delete all user tasks
+   * 2. Delete user preferences
+   * 3. Sign out the user
+   */
+  deleteAccount: async (userId: string): Promise<void> => {
+    try {
+      // Delete all tasks
+      await tasksService.deleteAllTasks(userId);
+
+      // Delete user preferences
+      await userPreferencesService.deleteUserPreferences(userId);
+
+      // Sign out the user
+      await authService.signOut();
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      throw error;
+    }
   },
 };

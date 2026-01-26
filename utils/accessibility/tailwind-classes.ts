@@ -108,6 +108,7 @@ export function getSpacingClasses(spacing: UserPreferences['spacing']): {
   padding: string;
   gap: string;
   margin: string;
+  marginBottom: string;
 } {
   switch (spacing) {
     case 'compact':
@@ -115,12 +116,14 @@ export function getSpacingClasses(spacing: UserPreferences['spacing']): {
         padding: 'p-2',
         gap: 'gap-2',
         margin: 'm-2',
+        marginBottom: 'mb-2',
       };
     case 'relaxed':
       return {
         padding: 'p-6',
         gap: 'gap-6',
         margin: 'm-6',
+        marginBottom: 'mb-6',
       };
     case 'normal':
     default:
@@ -128,6 +131,7 @@ export function getSpacingClasses(spacing: UserPreferences['spacing']): {
         padding: 'p-4',
         gap: 'gap-4',
         margin: 'm-4',
+        marginBottom: 'mb-4',
       };
   }
 }

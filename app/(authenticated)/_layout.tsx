@@ -23,6 +23,7 @@ import {
   LogOutIcon,
   UserIcon,
 } from 'lucide-react-native';
+import { useMemo } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -40,6 +41,13 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses, spacingValue } =
     useAccessibilityClasses();
+
+  // Memoize contentContainerStyle to avoid Reanimated warnings
+  // This prevents accessing spacingValue during render
+  const contentContainerStyle = useMemo(
+    () => ({ paddingTop: spacingValue * 2 }),
+    [spacingValue]
+  );
 
   const handleLogout = async () => {
     await signOut();
@@ -85,7 +93,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       {/* Navigation Items */}
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ paddingTop: spacingValue * 2 }}
+        contentContainerStyle={contentContainerStyle}
       >
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -134,13 +142,68 @@ export default function AuthenticatedLayout() {
   const { getText } = useTextDetail();
   const { settings } = useCognitiveSettings();
 
-  // Calculate dynamic values based on accessibility preferences
-  const drawerWidth = getDrawerWidth(settings.spacing);
-  const fontSize = getFontSizePixelValue(settings.fontSize, 'base');
-  const headerFontSize = getFontSizePixelValue(settings.fontSize, 'lg');
-  const spacingValue = getSpacingPixelValue(settings.spacing);
-  const borderRadius = getBorderRadius(settings.spacing);
-  const iconSize = getIconSize(settings.fontSize);
+  // Memoize dynamic values based on accessibility preferences
+  // This prevents Reanimated warnings about accessing values during render
+  const drawerWidth = useMemo(
+    () => getDrawerWidth(settings.spacing),
+    [settings.spacing]
+  );
+  const fontSize = useMemo(
+    () => getFontSizePixelValue(settings.fontSize, 'base'),
+    [settings.fontSize]
+  );
+  const headerFontSize = useMemo(
+    () => getFontSizePixelValue(settings.fontSize, 'lg'),
+    [settings.fontSize]
+  );
+  const spacingValue = useMemo(
+    () => getSpacingPixelValue(settings.spacing),
+    [settings.spacing]
+  );
+  const borderRadius = useMemo(
+    () => getBorderRadius(settings.spacing),
+    [settings.spacing]
+  );
+  const iconSize = useMemo(
+    () => getIconSize(settings.fontSize),
+    [settings.fontSize]
+  );
+
+  // Memoize screen options to prevent Reanimated warnings
+  const screenOptions = useMemo(
+    () => ({
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: THEME_COLORS.surfacePrimary,
+      },
+      headerTintColor: THEME_COLORS.textPrimary,
+      headerTitleStyle: {
+        color: THEME_COLORS.textPrimary,
+        fontSize: headerFontSize,
+      },
+      drawerStyle: {
+        backgroundColor: THEME_COLORS.surfacePrimary,
+        width: drawerWidth,
+      },
+      drawerActiveTintColor: THEME_COLORS.actionPrimaryHover,
+      drawerInactiveTintColor: THEME_COLORS.textMuted,
+      drawerLabelStyle: {
+        fontSize: fontSize,
+      },
+      drawerItemStyle: {
+        borderRadius: borderRadius,
+        marginHorizontal: spacingValue / 4,
+        padding: spacingValue / 4,
+      },
+    }),
+    [
+      headerFontSize,
+      drawerWidth,
+      fontSize,
+      borderRadius,
+      spacingValue,
+    ]
+  );
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -148,31 +211,7 @@ export default function AuthenticatedLayout() {
         drawerContent={(props: DrawerContentComponentProps) => (
           <CustomDrawerContent {...props} />
         )}
-        screenOptions={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: THEME_COLORS.surfacePrimary,
-          },
-          headerTintColor: THEME_COLORS.textPrimary,
-          headerTitleStyle: {
-            color: THEME_COLORS.textPrimary,
-            fontSize: headerFontSize,
-          },
-          drawerStyle: {
-            backgroundColor: THEME_COLORS.surfacePrimary,
-            width: drawerWidth,
-          },
-          drawerActiveTintColor: THEME_COLORS.actionPrimaryHover,
-          drawerInactiveTintColor: THEME_COLORS.textMuted,
-          drawerLabelStyle: {
-            fontSize: fontSize,
-          },
-          drawerItemStyle: {
-            borderRadius: borderRadius,
-            marginHorizontal: spacingValue / 4,
-            padding: spacingValue / 4,
-          },
-        }}
+        screenOptions={screenOptions}
       >
         <Drawer.Screen
           name="dashboard"

@@ -1,6 +1,7 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
+import { PAGE_ROUTES } from '@/utils/routes';
 import {
   getBorderRadius,
   getDrawerWidth,
@@ -42,7 +43,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const handleLogout = async () => {
     await signOut();
-    router.replace('/login');
+    router.replace(PAGE_ROUTES.LOGIN);
   };
 
   return (

@@ -52,36 +52,32 @@ export default function LoginScreen() {
 
   // Generate dynamic classes based on user preferences
   const cardClasses = useMemo(
-    () =>
-      `w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft ${spacingClasses.padding}`,
+    () => `${styles.card} ${spacingClasses.padding}`,
     [spacingClasses.padding]
   );
 
   const titleClasses = useMemo(
-    () =>
-      `font-semibold text-text-primary text-center mb-4 ${fontSizeClasses['3xl']}`,
+    () => `${styles.title} ${fontSizeClasses['3xl']}`,
     [fontSizeClasses]
   );
 
   const descriptionClasses = useMemo(
-    () =>
-      `text-text-secondary text-center leading-relaxed mb-8 ${fontSizeClasses.base}`,
+    () => `${styles.description} ${fontSizeClasses.base}`,
     [fontSizeClasses]
   );
 
   const disclaimerClasses = useMemo(
-    () =>
-      `text-text-muted text-center mt-6 leading-relaxed ${fontSizeClasses.sm}`,
+    () => `${styles.disclaimer} ${fontSizeClasses.sm}`,
     [fontSizeClasses]
   );
 
   const buttonTextClasses = useMemo(
-    () => fontSizeClasses.lg,
+    () => `${styles.buttonText} ${fontSizeClasses.lg}`,
     [fontSizeClasses]
   );
 
   const errorClasses = useMemo(
-    () => `text-red-500 text-center mt-4 ${fontSizeClasses.sm}`,
+    () => `${styles.error} ${fontSizeClasses.sm}`,
     [fontSizeClasses]
   );
 
@@ -122,7 +118,7 @@ export default function LoginScreen() {
             isLoading={isLoading}
             className={styles.button}
             accessibilityLabel={getText('login_button_aria')}
-            accessibilityHint="Pressione para fazer login com sua conta Google"
+            accessibilityHint={getText('login_button_hint')}
           >
             <Button.Icon icon={LoginIcon} position="left" size="lg" />
             <Button.Text className={buttonTextClasses}>
@@ -153,6 +149,12 @@ export default function LoginScreen() {
  */
 const styles = {
   container: 'flex-1 items-center justify-center bg-bg-secondary px-4',
+  card: 'w-full bg-surface-primary border border-border-subtle rounded-lg shadow-soft',
+  title: 'font-semibold text-text-primary text-center mb-4',
+  description: 'text-text-secondary text-center leading-relaxed mb-8',
+  disclaimer: 'text-text-muted text-center mt-6 leading-relaxed',
   buttonContainer: 'w-full',
   button: 'w-full',
+  buttonText: '',
+  error: 'text-red-500 text-center mt-4',
 } as const;

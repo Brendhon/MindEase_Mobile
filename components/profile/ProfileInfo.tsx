@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/auth';
 import { useToast } from '@/hooks/toast';
 import { AuthUser } from '@/models/auth';
 import { authService } from '@/services/auth';
+import { PAGE_ROUTES } from '@/utils/routes';
 import { useRouter } from 'expo-router';
 import React, { useCallback, useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -63,7 +64,7 @@ export function ProfileInfo({
   // Handle logout
   const handleLogout = useCallback(async () => {
     await signOut();
-    router.replace('/login');
+    router.replace(PAGE_ROUTES.LOGIN);
   }, [signOut, router]);
 
   // Delete account confirmation
@@ -85,7 +86,7 @@ export function ProfileInfo({
           success('toast_success_account_deleted');
 
           // Route to login page
-          router.replace('/login');
+          router.replace(PAGE_ROUTES.LOGIN);
         } catch (err) {
           console.error('Error deleting account:', err);
           showError('toast_error_account_deletion_failed');

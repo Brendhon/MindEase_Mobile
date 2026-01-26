@@ -20,10 +20,14 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView
-      className={`flex-1 bg-bg-secondary ${spacingClasses.padding}`}
+      className={`${styles.container} ${spacingClasses.padding}`}
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <ProfileInfo testID="profile-page-container" />
     </ScrollView>
   );
 }
+
+const styles = {
+  container: "flex-1 bg-bg-secondary",
+};

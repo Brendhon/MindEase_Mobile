@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'expo-router';
- import { LogIn } from 'lucide-react-native';
+import { LogIn } from 'lucide-react-native';
 import React, { useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
 

@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 import { useCognitiveSettingsContext } from '@/contexts/cognitive-settings';
+import type { UserPreferences } from '@/models/user-preferences';
 import {
   getCombinedAccessibilityClasses,
   getContrastClasses,
@@ -77,6 +78,51 @@ export function useAccessibilityClasses() {
     [settings.focusMode]
   );
 
+  // Memoize dynamic class generators to avoid accessing settings during render
+  // These functions are only called when needed, not during render
+  const getContrastClassesFn = useCallback(
+    (contrast?: UserPreferences['contrast']) =>
+      getContrastClasses(contrast ?? settings.contrast),
+    [settings.contrast]
+  );
+
+  const getSpacingClassesFn = useCallback(
+    (spacing?: UserPreferences['spacing']) =>
+      getSpacingClasses(spacing ?? settings.spacing),
+    [settings.spacing]
+  );
+
+  const getSpacingValueFn = useCallback(
+    (spacing?: UserPreferences['spacing']) =>
+      getSpacingValue(spacing ?? settings.spacing),
+    [settings.spacing]
+  );
+
+  const getFontSizeClassesFn = useCallback(
+    (fontSize?: UserPreferences['fontSize']) =>
+      getFontSizeClasses(fontSize ?? settings.fontSize),
+    [settings.fontSize]
+  );
+
+  const getAnimationsEnabledFn = useCallback(
+    (animations?: boolean) =>
+      getAnimationsEnabled(animations ?? settings.animations),
+    [settings.animations]
+  );
+
+  const getFocusModeClassesFn = useCallback(
+    (focusMode?: boolean) =>
+      getFocusModeClasses(focusMode ?? settings.focusMode),
+    [settings.focusMode]
+  );
+
+  const getCombinedClassesFn = useCallback(
+    (
+      context: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' = 'base'
+    ) => getCombinedAccessibilityClasses(settings, context),
+    [settings.fontSize, settings.focusMode]
+  );
+
   return {
     // Pre-computed classes (re-render only when relevant setting changes)
     contrastClasses,
@@ -87,19 +133,12 @@ export function useAccessibilityClasses() {
     focusModeClasses,
 
     // Dynamic class generators (for custom settings)
-    getContrastClasses: (contrast = settings.contrast) =>
-      getContrastClasses(contrast),
-    getSpacingClasses: (spacing = settings.spacing) =>
-      getSpacingClasses(spacing),
-    getSpacingValue: (spacing = settings.spacing) => getSpacingValue(spacing),
-    getFontSizeClasses: (fontSize = settings.fontSize) =>
-      getFontSizeClasses(fontSize),
-    getAnimationsEnabled: (animations = settings.animations) =>
-      getAnimationsEnabled(animations),
-    getFocusModeClasses: (focusMode = settings.focusMode) =>
-      getFocusModeClasses(focusMode),
-    getCombinedClasses: (
-      context: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' = 'base'
-    ) => getCombinedAccessibilityClasses(settings, context),
+    getContrastClasses: getContrastClassesFn,
+    getSpacingClasses: getSpacingClassesFn,
+    getSpacingValue: getSpacingValueFn,
+    getFontSizeClasses: getFontSizeClassesFn,
+    getAnimationsEnabled: getAnimationsEnabledFn,
+    getFocusModeClasses: getFocusModeClassesFn,
+    getCombinedClasses: getCombinedClassesFn,
   };
 }

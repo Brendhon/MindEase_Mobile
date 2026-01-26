@@ -1,14 +1,12 @@
-import React, { useState, useMemo } from 'react';
-import { Pressable, PressableProps, View } from 'react-native';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useCognitiveSettings } from '@/hooks/cognitive-settings';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Pressable, PressableProps, View } from 'react-native';
 import {
-  ButtonVariant,
-  ButtonSize,
-  variantStyles,
   baseStyles,
+  ButtonSize,
+  ButtonVariant,
   getSizeClasses,
-  getContrastClasses,
+  variantStyles,
 } from './button-styles';
 import { ButtonIcon } from './ButtonIcon';
 import { ButtonLoading } from './ButtonLoading';
@@ -75,18 +73,8 @@ export function ButtonRoot({
     spacingClasses, // Recalculates only when settings.spacing changes
   } = useAccessibilityClasses();
 
-  // Get contrast setting directly from cognitive settings
-  // Only re-renders when contrast changes
-  const { settings } = useCognitiveSettings();
-
   // Generate size classes (padding, border radius)
   const sizeClasses = useMemo(() => getSizeClasses(size), [size]);
-
-  // Generate contrast classes with button-specific logic (variant-based borders)
-  const contrastClasses = useMemo(
-    () => getContrastClasses(settings.contrast, variant),
-    [settings.contrast, variant]
-  );
 
   // Get fontSize class based on size prop and user preference
   // Map button size to fontSize context: sm -> sm, md -> base, lg -> lg
@@ -99,18 +87,26 @@ export function ButtonRoot({
     return fontSizeClasses[sizeToFontContext[size]];
   }, [fontSizeClasses, size]);
 
-  // Get variant styles
+  // Get variant styles (static, no need to memoize)
   const variantStyle = variantStyles[variant];
 
-  // Build className with all styles
+  // Memoize press handlers to avoid recreating functions on every render
+  const handlePressIn = useCallback(() => {
+    setIsPressed(true);
+  }, []);
+
+  const handlePressOut = useCallback(() => {
+    setIsPressed(false);
+  }, []);
+
+  // Build className with all styles - memoized to avoid recalculating
   const baseClassName = useMemo(() => {
     return [
       baseStyles.container,
       sizeClasses,
       isPressed ? variantStyle.pressed : variantStyle.base,
-      fontSizeClass, // Dynamically updates based on settings.fontSize
-      spacingClasses.gap, // Dynamically updates based on settings.spacing (internal spacing between icon/text)
-      contrastClasses,
+      fontSizeClass,
+      spacingClasses.gap,
       isDisabled && baseStyles.disabled,
       className,
     ]
@@ -122,7 +118,6 @@ export function ButtonRoot({
     variantStyle,
     fontSizeClass,
     spacingClasses.gap,
-    contrastClasses,
     isDisabled,
     className,
   ]);
@@ -132,8 +127,8 @@ export function ButtonRoot({
       disabled={isDisabled}
       accessibilityRole="button"
       accessibilityState={{ disabled: isDisabled, busy: isLoading }}
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       className={baseClassName}
       {...props}
     >

@@ -4,5 +4,9 @@
  */
 
 export { ToastManager } from './ToastManager';
-export { ToastItem } from './ToastItem';
-export type { ToastItemProps } from './ToastItem';
+export { ToastItemAnimated } from './ToastItemAnimated';
+export { ToastItemStatic } from './ToastItemStatic';
+export { ToastItemContent } from './ToastItemContent';
+export type { ToastItemAnimatedProps } from './ToastItemAnimated';
+export type { ToastItemStaticProps } from './ToastItemStatic';
+export type { ToastItemContentProps } from './ToastItemContent';

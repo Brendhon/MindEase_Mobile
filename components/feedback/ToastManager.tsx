@@ -3,9 +3,11 @@ import {
   unregisterToastManager,
   type ToastMessage,
 } from '@/hooks/toast';
+import { useAccessibilityClasses } from '@/hooks/accessibility';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { ToastItem } from './ToastItem';
+import { ToastItemAnimated } from './ToastItemAnimated';
+import { ToastItemStatic } from './ToastItemStatic';
 import { styles } from './toast-styles';
 
 /**
@@ -37,6 +39,7 @@ import { styles } from './toast-styles';
  */
 export function ToastManager() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const { animationsEnabled } = useAccessibilityClasses();
 
   useEffect(() => {
     // Register this manager with the singleton
@@ -60,14 +63,23 @@ export function ToastManager() {
 
   return (
     <View className={styles.managerContainer} pointerEvents="box-none">
-      {toasts.map((toast) => (
-        <ToastItem
-          key={toast.id}
-          toast={toast}
-          onRemove={removeToast}
-          testID={`toast-item-${toast.id}`}
-        />
-      ))}
+      {toasts.map((toast) =>
+        animationsEnabled ? (
+          <ToastItemAnimated
+            key={toast.id}
+            toast={toast}
+            onRemove={removeToast}
+            testID={`toast-item-${toast.id}`}
+          />
+        ) : (
+          <ToastItemStatic
+            key={toast.id}
+            toast={toast}
+            onRemove={removeToast}
+            testID={`toast-item-${toast.id}`}
+          />
+        )
+      )}
     </View>
   );
 }

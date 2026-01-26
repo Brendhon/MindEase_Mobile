@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/Card';
+import { Card } from '@/components/ui/card';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { AuthUser } from '@/models/auth';

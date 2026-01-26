@@ -1,9 +1,7 @@
 import { Container } from '@/components/Container';
-import { DialogManager } from '@/components/feedback/DialogManager';
 import { ToastManager } from '@/components/feedback/ToastManager';
 import { CognitiveSettingsProvider } from '@/contexts/cognitive-settings';
 import { AuthProvider } from '@/providers/auth';
-import { DialogProvider } from '@/providers/dialog';
 import { FeedbackProvider } from '@/providers/feedback';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -22,21 +20,17 @@ import '../global.css';
  * 1. AuthProvider - provides user authentication state
  * 2. CognitiveSettingsProvider - loads user preferences (requires auth context)
  * 3. FeedbackProvider - provides global feedback/toast management
- * 4. DialogProvider - provides global dialog management
  */
 export default function RootLayout() {
   return (
     <AuthProvider>
       <CognitiveSettingsProvider>
         <FeedbackProvider>
-          <DialogProvider>
-            <StatusBar style="dark" translucent backgroundColor="transparent" />
-            <Container edges={['bottom', 'left', 'right']}>
-              <Slot />
-            </Container>
-            <ToastManager />
-            <DialogManager />
-          </DialogProvider>
+          <StatusBar style="dark" translucent backgroundColor="transparent" />
+          <Container edges={['bottom', 'left', 'right']}>
+            <Slot />
+          </Container>
+          <ToastManager />
         </FeedbackProvider>
       </CognitiveSettingsProvider>
     </AuthProvider>

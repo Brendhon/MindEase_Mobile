@@ -1,13 +1,12 @@
 import { PageHeader } from '@/components/layout/PageHeader';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
-import { useDialog } from '@/hooks/dialog';
 import { useFeedback } from '@/hooks/feedback';
 import { AuthUser } from '@/models/auth';
 import { authService } from '@/services/auth';
 import { useRouter } from 'expo-router';
 import React, { useCallback, useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { ProfileActions } from './ProfileActions';
 import { ProfileInfoCard } from './ProfileInfoCard';
 
@@ -36,7 +35,6 @@ export function ProfileInfo({
     useAccessibilityClasses();
   const { getText } = useTextDetail();
   const { error: showError, success } = useFeedback();
-  const { openDialog } = useDialog();
   const router = useRouter();
   // Generate accessible classes with memoization
   const labelClasses = useMemo(
@@ -65,30 +63,34 @@ export function ProfileInfo({
     router.replace('/login');
   }, [signOut, router]);
 
-  // Delete account dialog
+  // Delete account confirmation
   const deleteAccountDialog = useCallback(() => {
     if (!user?.uid) return;
 
-    openDialog({
-      titleKey: 'profile_delete_dialog_title',
-      descriptionKey: 'profile_delete_dialog_message',
-      cancelLabelKey: 'profile_delete_dialog_cancel',
-      confirmLabelKey: 'profile_delete_dialog_confirm',
-      confirmVariant: 'danger',
-      onCancel: () => {},
-      onConfirm: async () => {
-        try {
-          await authService.deleteAccount(user.uid);
-          success('toast_success_account_deleted');
-        } catch (err) {
-          console.error('Error deleting account:', err);
-          showError('toast_error_account_deletion_failed');
-          throw err;
-        }
-      },
-      testId: testID ? `${testID}-delete-dialog` : 'delete-account-dialog',
-    });
-  }, [user, openDialog, showError, success, testID]);
+    Alert.alert(
+      getText('profile_delete_dialog_title'),
+      getText('profile_delete_dialog_message'),
+      [
+        {
+          text: getText('profile_delete_dialog_cancel'),
+          style: 'cancel',
+        },
+        {
+          text: getText('profile_delete_dialog_confirm'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await authService.deleteAccount(user.uid);
+              success('toast_success_account_deleted');
+            } catch (err) {
+              console.error('Error deleting account:', err);
+              showError('toast_error_account_deletion_failed');
+            }
+          },
+        },
+      ]
+    );
+  }, [user?.uid, getText, showError, success]);
 
   const handleDeleteAccount = useCallback(() => {
     if (!user?.uid) {

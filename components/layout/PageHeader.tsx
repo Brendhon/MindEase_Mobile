@@ -21,9 +21,6 @@ import { Text, View } from 'react-native';
  * ```
  */
 export interface PageHeaderProps {
-  /** Title text key for accessibility text system */
-  titleKey: AccessibilityTextKey;
-
   /** Description text key for accessibility text system */
   descriptionKey: AccessibilityTextKey;
 
@@ -35,19 +32,12 @@ export interface PageHeaderProps {
 }
 
 export function PageHeader({
-  titleKey,
   descriptionKey,
   className = '',
   testID,
 }: PageHeaderProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses } = useAccessibilityClasses();
-
-  // Generate title classes with standardized 2xl size
-  const titleClasses = useMemo(
-    () => `font-semibold text-text-primary leading-tight ${fontSizeClasses['2xl']}`,
-    [fontSizeClasses]
-  );
 
   // Generate description classes with standardized base size
   const descriptionClasses = useMemo(
@@ -59,20 +49,12 @@ export function PageHeader({
   const headerClasses = `flex flex-col ${className}`;
 
   // Generate test IDs
-  const h1TestID = testID ? `${testID}-title` : 'page-header-title';
   const pTestID = testID
     ? `${testID}-description`
     : 'page-header-description';
 
   return (
     <View className={headerClasses} testID={testID || 'page-header'}>
-      <Text
-        className={titleClasses}
-        testID={h1TestID}
-        accessibilityRole="header"
-      >
-        {getText(titleKey)}
-      </Text>
       <Text className={descriptionClasses} testID={pTestID}>
         {getText(descriptionKey)}
       </Text>

@@ -1,12 +1,13 @@
 import { PageHeader } from '@/components/layout/PageHeader';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useAlert } from '@/hooks/alert';
 import { useAuth } from '@/hooks/auth';
 import { useFeedback } from '@/hooks/feedback';
 import { AuthUser } from '@/models/auth';
 import { authService } from '@/services/auth';
 import { useRouter } from 'expo-router';
 import React, { useCallback, useMemo } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ProfileActions } from './ProfileActions';
 import { ProfileInfoCard } from './ProfileInfoCard';
 
@@ -30,12 +31,13 @@ export function ProfileInfo({
   const auth = useAuth();
   const user = userProp || auth.user;
 
+  const router = useRouter();
   const { signOut } = auth;
-  const { fontSizeClasses, spacingClasses, animationsEnabled } =
-    useAccessibilityClasses();
+  const { fontSizeClasses, spacingClasses, animationsEnabled } = useAccessibilityClasses();
   const { getText } = useTextDetail();
   const { error: showError, success } = useFeedback();
-  const router = useRouter();
+  const { showConfirmation } = useAlert();
+
   // Generate accessible classes with memoization
   const labelClasses = useMemo(
     () => `text-text-secondary font-medium text-sm ${fontSizeClasses.sm}`,
@@ -67,30 +69,23 @@ export function ProfileInfo({
   const deleteAccountDialog = useCallback(() => {
     if (!user?.uid) return;
 
-    Alert.alert(
-      getText('profile_delete_dialog_title'),
-      getText('profile_delete_dialog_message'),
-      [
-        {
-          text: getText('profile_delete_dialog_cancel'),
-          style: 'cancel',
-        },
-        {
-          text: getText('profile_delete_dialog_confirm'),
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await authService.deleteAccount(user.uid);
-              success('toast_success_account_deleted');
-            } catch (err) {
-              console.error('Error deleting account:', err);
-              showError('toast_error_account_deletion_failed');
-            }
-          },
-        },
-      ]
-    );
-  }, [user?.uid, getText, showError, success]);
+    showConfirmation({
+      titleKey: 'profile_delete_dialog_title',
+      messageKey: 'profile_delete_dialog_message',
+      cancelLabelKey: 'profile_delete_dialog_cancel',
+      confirmLabelKey: 'profile_delete_dialog_confirm',
+      confirmStyle: 'destructive',
+      onConfirm: async () => {
+        try {
+          await authService.deleteAccount(user.uid);
+          success('toast_success_account_deleted');
+        } catch (err) {
+          console.error('Error deleting account:', err);
+          showError('toast_error_account_deletion_failed');
+        }
+      },
+    });
+  }, [user?.uid, showConfirmation, showError, success]);
 
   const handleDeleteAccount = useCallback(() => {
     if (!user?.uid) {
@@ -118,7 +113,6 @@ export function ProfileInfo({
       testID={testID || 'profile-info-container'}
     >
       <PageHeader
-        titleKey="profile_title"
         descriptionKey="profile_description"
         testID={testID ? `${testID}-header` : 'profile-info-header'}
       />

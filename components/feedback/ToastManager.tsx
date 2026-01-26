@@ -1,14 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Animated, Pressable } from 'react-native';
 
-import { useFeedbackContext } from '@/contexts/feedback';
 import { useTextDetail } from '@/hooks/accessibility';
-import { FeedbackMessage, FeedbackType } from '@/models/feedback';
+import {
+  registerToastManager,
+  unregisterToastManager,
+  type ToastMessage,
+  type ToastType,
+} from '@/hooks/toast';
 
 /**
- * Get colors for feedback type
+ * Get colors for toast type
  */
-function getTypeStyles(type: FeedbackType): {
+function getTypeStyles(type: ToastType): {
   bgColor: string;
   textColor: string;
   iconColor: string;
@@ -43,9 +47,9 @@ function getTypeStyles(type: FeedbackType): {
 }
 
 /**
- * Get icon character for feedback type
+ * Get icon character for toast type
  */
-function getTypeIcon(type: FeedbackType): string {
+function getTypeIcon(type: ToastType): string {
   switch (type) {
     case 'success':
       return '✓';
@@ -63,18 +67,18 @@ function getTypeIcon(type: FeedbackType): string {
  * Individual Toast Item
  */
 function ToastItem({
-  feedback,
+  toast,
   onRemove,
 }: {
-  feedback: FeedbackMessage;
+  toast: ToastMessage;
   onRemove: (id: string) => void;
 }) {
   const { getText } = useTextDetail();
   const opacity = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(-20)).current;
+  const translateY = useRef(new Animated.Value(20)).current;
 
-  const styles = getTypeStyles(feedback.type);
-  const icon = getTypeIcon(feedback.type);
+  const styles = getTypeStyles(toast.type);
+  const icon = getTypeIcon(toast.type);
 
   useEffect(() => {
     // Animate in
@@ -92,7 +96,7 @@ function ToastItem({
     ]).start();
 
     // Auto dismiss
-    const duration = feedback.duration || 5000;
+    const duration = toast.duration || 5000;
     const timer = setTimeout(() => {
       // Animate out
       Animated.parallel([
@@ -102,17 +106,17 @@ function ToastItem({
           useNativeDriver: true,
         }),
         Animated.timing(translateY, {
-          toValue: -20,
+          toValue: 20,
           duration: 200,
           useNativeDriver: true,
         }),
       ]).start(() => {
-        onRemove(feedback.id);
+        onRemove(toast.id);
       });
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [feedback, opacity, translateY, onRemove]);
+  }, [toast, opacity, translateY, onRemove]);
 
   const handleDismiss = () => {
     Animated.parallel([
@@ -122,12 +126,12 @@ function ToastItem({
         useNativeDriver: true,
       }),
       Animated.timing(translateY, {
-        toValue: -20,
+        toValue: 20,
         duration: 150,
         useNativeDriver: true,
       }),
     ]).start(() => {
-      onRemove(feedback.id);
+      onRemove(toast.id);
     });
   };
 
@@ -143,7 +147,7 @@ function ToastItem({
 
       {/* Message */}
       <Text className={`flex-1 text-sm font-medium ${styles.textColor}`}>
-        {getText(feedback.messageKey)}
+        {getText(toast.messageKey)}
       </Text>
 
       {/* Dismiss button */}
@@ -162,7 +166,7 @@ function ToastItem({
 /**
  * ToastManager Component - MindEase Mobile
  *
- * Renders toast notifications from feedback context.
+ * Renders toast notifications using singleton pattern.
  * Should be placed in the root layout of the app.
  *
  * Features:
@@ -171,36 +175,51 @@ function ToastItem({
  * - Manual dismiss on tap
  * - Accessibility support (announcements)
  * - Multiple concurrent toasts
+ * - No Context/Provider needed (uses singleton)
  *
  * @example
  * ```tsx
  * // In _layout.tsx
  * export default function RootLayout() {
  *   return (
- *     <FeedbackProvider>
+ *     <>
  *       <Stack />
  *       <ToastManager />
- *     </FeedbackProvider>
+ *     </>
  *   );
  * }
  * ```
  */
 export function ToastManager() {
-  const { feedbacks, removeFeedback } = useFeedbackContext();
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  if (feedbacks.length === 0) return null;
+  useEffect(() => {
+    // Register this manager with the singleton
+    registerToastManager({
+      showToast: (toast: ToastMessage) => {
+        setToasts((prev) => [...prev, toast]);
+      },
+    });
+
+    // Unregister on unmount
+    return () => {
+      unregisterToastManager();
+    };
+  }, []);
+
+  const removeToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  if (toasts.length === 0) return null;
 
   return (
     <View
-      className="absolute top-12 left-4 right-4 z-50"
+      className="absolute bottom-12 left-4 right-4 z-50"
       pointerEvents="box-none"
     >
-      {feedbacks.map((feedback) => (
-        <ToastItem
-          key={feedback.id}
-          feedback={feedback}
-          onRemove={removeFeedback}
-        />
+      {toasts.map((toast) => (
+        <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
       ))}
     </View>
   );

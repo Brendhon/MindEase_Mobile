@@ -2,7 +2,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAlert } from '@/hooks/alert';
 import { useAuth } from '@/hooks/auth';
-import { useFeedback } from '@/hooks/feedback';
+import { useToast } from '@/hooks/toast';
 import { AuthUser } from '@/models/auth';
 import { authService } from '@/services/auth';
 import { useRouter } from 'expo-router';
@@ -36,7 +36,7 @@ export function ProfileInfo({
   const { signOut } = auth;
   const { fontSizeClasses, spacingClasses, animationsEnabled } = useAccessibilityClasses();
   const { getText } = useTextDetail();
-  const { error: showError, success } = useFeedback();
+  const { error: showError, success } = useToast();
   const { showConfirmation } = useAlert();
 
   // Generate accessible classes with memoization
@@ -78,8 +78,14 @@ export function ProfileInfo({
       confirmStyle: 'destructive',
       onConfirm: async () => {
         try {
+          // Delete account
           await authService.deleteAccount(user.uid);
+
+          // Show success toast
           success('toast_success_account_deleted');
+
+          // Route to login page
+          router.replace('/login');
         } catch (err) {
           console.error('Error deleting account:', err);
           showError('toast_error_account_deletion_failed');

@@ -15,6 +15,7 @@ import {
 import { auth } from '@/config/firebase';
 import { tasksService } from '../tasks';
 import { userPreferencesService } from '../user-preferences';
+import { router } from 'expo-router';
 
 /**
  * Auth Service - MindEase Mobile

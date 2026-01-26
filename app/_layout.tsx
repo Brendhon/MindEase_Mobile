@@ -2,7 +2,6 @@ import { Container } from '@/components/Container';
 import { ToastManager } from '@/components/feedback/ToastManager';
 import { CognitiveSettingsProvider } from '@/contexts/cognitive-settings';
 import { AuthProvider } from '@/providers/auth';
-import { FeedbackProvider } from '@/providers/feedback';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import '../global.css';
@@ -19,19 +18,16 @@ import '../global.css';
  * Provider order is important:
  * 1. AuthProvider - provides user authentication state
  * 2. CognitiveSettingsProvider - loads user preferences (requires auth context)
- * 3. FeedbackProvider - provides global feedback/toast management
  */
 export default function RootLayout() {
   return (
     <AuthProvider>
       <CognitiveSettingsProvider>
-        <FeedbackProvider>
-          <StatusBar style="dark" translucent backgroundColor="transparent" />
-          <Container edges={['bottom', 'left', 'right']}>
-            <Slot />
-          </Container>
-          <ToastManager />
-        </FeedbackProvider>
+        <StatusBar style="dark" translucent backgroundColor="transparent" />
+        <Container edges={['bottom', 'left', 'right']}>
+          <Slot />
+        </Container>
+        <ToastManager />
       </CognitiveSettingsProvider>
     </AuthProvider>
   );

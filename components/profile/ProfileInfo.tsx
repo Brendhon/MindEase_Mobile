@@ -10,6 +10,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { ProfileActions } from './ProfileActions';
 import { ProfileInfoCard } from './ProfileInfoCard';
+import { styles } from './profile-styles';
 
 /**
  * ProfileInfo Component - MindEase Mobile
@@ -40,22 +41,22 @@ export function ProfileInfo({
 
   // Generate accessible classes with memoization
   const labelClasses = useMemo(
-    () => `text-text-secondary font-medium text-sm ${fontSizeClasses.sm}`,
+    () => `${styles.label} ${fontSizeClasses.sm}`,
     [fontSizeClasses.sm]
   );
 
   const valueClasses = useMemo(
-    () => `text-text-primary font-normal break-words ${fontSizeClasses.base}`,
+    () => `${styles.value} ${fontSizeClasses.base}`,
     [fontSizeClasses.base]
   );
 
   const containerClasses = useMemo(
-    () => `flex flex-col w-full max-w-4xl mx-auto ${spacingClasses.gap} ${animationsEnabled ? '' : ''}`,
+    () => `${styles.container} ${spacingClasses.gap} ${animationsEnabled ? '' : ''}`,
     [spacingClasses.gap, animationsEnabled]
   );
 
   const errorClasses = useMemo(
-    () => `text-action-danger text-center ${fontSizeClasses.base}`,
+    () => `${styles.error} ${fontSizeClasses.base}`,
     [fontSizeClasses.base]
   );
 

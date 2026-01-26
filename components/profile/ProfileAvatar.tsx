@@ -3,6 +3,7 @@ import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { getBorderContrastClasses } from '@/utils/accessibility';
 import React, { useMemo } from 'react';
 import { Image, Text, View } from 'react-native';
+import { styles } from './profile-styles';
 
 /**
  * ProfileAvatar Component - MindEase Mobile
@@ -56,16 +57,16 @@ export function ProfileAvatar({
   const { settings } = useCognitiveSettings();
 
   // Generate accessible classes with memoization
-  const containerClasses = `flex justify-center ${className}`;
-
   const borderClasses = useMemo(
     () => getBorderContrastClasses(settings.contrast, 'subtle'),
     [settings.contrast]
   );
 
-  const avatarClasses = `rounded-full w-24 h-24 border-2 ${borderClasses} shadow-md`;
+  const containerClasses = `${styles.avatarContainer} ${className}`;
 
-  const initialsContainerClasses = `rounded-full w-24 h-24 flex items-center justify-center ${AVATAR_BG_COLOR} border-2 ${borderClasses} shadow-md`;
+  const avatarClasses = `${styles.avatar} ${borderClasses}`;
+
+  const initialsContainerClasses = `${styles.initialsContainer} ${AVATAR_BG_COLOR} ${borderClasses}`;
 
   return (
     <View className={containerClasses} testID={testID}>
@@ -82,9 +83,7 @@ export function ProfileAvatar({
           accessibilityLabel={name ? `${name} avatar` : 'User avatar'}
           testID={testID ? `${testID}-initials` : 'profile-avatar-initials'}
         >
-          <Text className="text-text-inverse font-semibold text-2xl leading-none">
-            {initials}
-          </Text>
+          <Text className={styles.initialsText}>{initials}</Text>
         </View>
       )}
     </View>

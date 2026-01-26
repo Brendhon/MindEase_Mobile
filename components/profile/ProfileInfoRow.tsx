@@ -2,6 +2,7 @@ import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
+import { styles } from './profile-styles';
 
 /**
  * ProfileInfoRow Component - MindEase Mobile
@@ -41,17 +42,17 @@ export function ProfileInfoRow({
 
   // Generate accessible classes with memoization
   const rowClasses = useMemo(
-    () => `flex flex-col gap-1.5 ${spacingClasses.gap} ${className}`,
+    () => `${styles.infoRow} ${spacingClasses.gap} ${className}`,
     [spacingClasses.gap, className]
   );
 
   const labelClasses = useMemo(
-    () => `text-text-secondary font-medium text-sm ${fontSizeClasses.sm} ${labelClassName}`,
+    () => `${styles.label} ${fontSizeClasses.sm} ${labelClassName}`,
     [fontSizeClasses.sm, labelClassName]
   );
 
   const valueClasses = useMemo(
-    () => `text-text-primary font-normal break-words ${fontSizeClasses.base} ${valueClassName}`,
+    () => `${styles.value} ${fontSizeClasses.base} ${valueClassName}`,
     [fontSizeClasses.base, valueClassName]
   );
 

@@ -41,12 +41,12 @@ export function PageHeader({
 
   // Generate description classes with standardized base size
   const descriptionClasses = useMemo(
-    () => `text-text-secondary leading-relaxed mt-2 ${fontSizeClasses.base}`,
+    () => `${styles.description} ${fontSizeClasses.base}`,
     [fontSizeClasses]
   );
 
   // Generate header classes
-  const headerClasses = `flex flex-col ${className}`;
+  const headerClasses = `${styles.header} ${className}`;
 
   // Generate test IDs
   const pTestID = testID
@@ -63,3 +63,12 @@ export function PageHeader({
 }
 
 PageHeader.displayName = 'PageHeader';
+
+/**
+ * PageHeader Styles - MindEase Mobile
+ * Centralized styles for PageHeader component
+ */
+const styles = {
+  header: 'flex flex-col',
+  description: 'text-text-secondary leading-relaxed mt-2',
+} as const;

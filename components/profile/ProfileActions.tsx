@@ -3,6 +3,7 @@ import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { LogOut, Trash2 } from 'lucide-react-native';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
+import { styles } from './profile-styles';
 
 /**
  * ProfileActions Component - MindEase Mobile
@@ -33,7 +34,7 @@ export function ProfileActions({
 
   // Generate accessible classes with memoization
   const actionsClasses = useMemo(
-    () => `flex justify-end gap-3 ${spacingClasses.gap} ${className}`,
+    () => `${styles.actions} ${spacingClasses.gap} ${className}`,
     [spacingClasses.gap, className]
   );
 

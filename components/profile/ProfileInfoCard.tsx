@@ -7,6 +7,7 @@ import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { ProfileAvatar } from './ProfileAvatar';
 import { ProfileInfoRow } from './ProfileInfoRow';
+import { styles } from './profile-styles';
 
 /**
  * ProfileInfoCard Component - MindEase Mobile
@@ -47,18 +48,18 @@ export function ProfileInfoCard({
 
   const cardClasses = useMemo(
     () =>
-      `flex flex-col items-center gap-6 ${spacingClasses.gap} ${borderClasses} ${className}`,
+      `${styles.infoCard} ${spacingClasses.gap} ${borderClasses} ${className}`,
     [spacingClasses.gap, borderClasses, className]
   );
 
   const infoSectionClasses = useMemo(
-    () => `flex flex-col gap-4 flex-1 ${spacingClasses.gap}`,
+    () => `${styles.infoSection} ${spacingClasses.gap}`,
     [spacingClasses.gap]
   );
 
   return (
     <Card className={cardClasses} testID={testID}>
-      <View className="flex-shrink-0">
+      <View className={styles.avatarSection}>
         <ProfileAvatar
           image={user?.image || null}
           name={user?.name || null}

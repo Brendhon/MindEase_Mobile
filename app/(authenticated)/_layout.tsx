@@ -1,6 +1,13 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
+import {
+  ExcessiveTimeAlertProvider,
+  MissingBreakAlertProvider,
+  ProlongedNavigationAlertProvider,
+} from '@/providers/cognitive-alerts';
+import { TasksProvider } from '@/providers/tasks';
+import { BreakTimerProvider, FocusTimerProvider } from '@/providers/timer';
 import { PAGE_ROUTES } from '@/utils/routes';
 import {
   getBorderRadius,
@@ -206,48 +213,60 @@ export default function AuthenticatedLayout() {
   );
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer
-        drawerContent={(props: DrawerContentComponentProps) => (
-          <CustomDrawerContent {...props} />
-        )}
-        screenOptions={screenOptions}
-      >
-        <Drawer.Screen
-          name="dashboard"
-          options={{
-            drawerIcon: ({ color }: { color: string; size: number }) => (
-              <LayoutDashboardIcon color={color} size={iconSize} />
-            ),
-            title: getText('sidebar_dashboard'),
-            drawerLabel: getText('sidebar_dashboard'),
-            headerTitle: getText('sidebar_dashboard'),
-          }}
-        />
-        <Drawer.Screen
-          name="tasks"
-          options={{
-            drawerIcon: ({ color }: { color: string; size: number }) => (
-              <CheckSquareIcon color={color} size={iconSize} />
-            ),
-            title: getText('sidebar_tasks'),
-            drawerLabel: getText('sidebar_tasks'),
-            headerTitle: getText('sidebar_tasks'),
-          }}
-        />
-        <Drawer.Screen
-          name="profile"
-          options={{
-            drawerIcon: ({ color }: { color: string; size: number }) => (
-              <UserIcon color={color} size={iconSize} />
-            ),
-            title: getText('sidebar_profile'),
-            drawerLabel: getText('sidebar_profile'),
-            headerTitle: getText('sidebar_profile'),
-          }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
+    <TasksProvider>
+      <FocusTimerProvider>
+        <BreakTimerProvider>
+          <ExcessiveTimeAlertProvider>
+            <MissingBreakAlertProvider>
+              <ProlongedNavigationAlertProvider>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                  <Drawer
+                    drawerContent={(props: DrawerContentComponentProps) => (
+                      <CustomDrawerContent {...props} />
+                    )}
+                    screenOptions={screenOptions}
+                  >
+                    <Drawer.Screen
+                      name="dashboard"
+                      options={{
+                        drawerIcon: ({ color }: { color: string; size: number }) => (
+                          <LayoutDashboardIcon color={color} size={iconSize} />
+                        ),
+                        title: getText('sidebar_dashboard'),
+                        drawerLabel: getText('sidebar_dashboard'),
+                        headerTitle: getText('sidebar_dashboard'),
+                      }}
+                    />
+                    <Drawer.Screen
+                      name="tasks"
+                      options={{
+                        drawerIcon: ({ color }: { color: string; size: number }) => (
+                          <CheckSquareIcon color={color} size={iconSize} />
+                        ),
+                        title: getText('sidebar_tasks'),
+                        drawerLabel: getText('sidebar_tasks'),
+                        headerTitle: getText('sidebar_tasks'),
+                      }}
+                    />
+                    <Drawer.Screen
+                      name="profile"
+                      options={{
+                        drawerIcon: ({ color }: { color: string; size: number }) => (
+                          <UserIcon color={color} size={iconSize} />
+                        ),
+                        title: getText('sidebar_profile'),
+                        drawerLabel: getText('sidebar_profile'),
+                        headerTitle: getText('sidebar_profile'),
+                      }}
+                    />
+                  </Drawer>
+                </GestureHandlerRootView>
+              </ProlongedNavigationAlertProvider>
+            </MissingBreakAlertProvider>
+          </ExcessiveTimeAlertProvider>
+        </BreakTimerProvider>
+      </FocusTimerProvider>
+    </TasksProvider>
   );
 }
 

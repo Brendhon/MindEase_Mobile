@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { RotateCcw } from 'lucide-react-native';
 import { useTextDetail } from '@/hooks/accessibility';
-import React from 'react';
+
 import { View } from 'react-native';
 import { styles } from './dashboard-styles';
 

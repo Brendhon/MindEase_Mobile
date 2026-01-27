@@ -1,6 +1,4 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import { BellRing, X } from 'lucide-react-native';
@@ -45,22 +43,21 @@ export function CognitiveAlertBanner({
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses } =
     useAccessibilityClasses();
-  const { settings } = useCognitiveSettings();
 
   // Generate accessible classes with memoization
   const bannerClasses = useMemo(
     () =>
-      `flex flex-col items-start justify-between gap-3 rounded-lg bg-surface-primary border-2 border-action-warning/50 shadow-md ${spacingClasses.padding}`,
+      `${styles.cognitiveAlertBanner.banner} ${spacingClasses.padding}`,
     [spacingClasses.padding]
   );
 
   const titleClasses = useMemo(
-    () => `font-semibold ${fontSizeClasses.base}`,
+    () => `${styles.cognitiveAlertBanner.title} ${fontSizeClasses.base}`,
     [fontSizeClasses.base]
   );
 
   const messageClasses = useMemo(
-    () => `text-text-secondary mt-1 ${fontSizeClasses.sm}`,
+    () => `${styles.cognitiveAlertBanner.message} ${fontSizeClasses.sm}`,
     [fontSizeClasses.sm]
   );
 
@@ -77,15 +74,15 @@ export function CognitiveAlertBanner({
       accessibilityRole="alert"
       testID={testID || 'cognitive-alert-banner'}
     >
-      <View className="flex flex-row items-start gap-3 flex-1">
-        <View className="flex items-center justify-center flex-shrink-0">
+      <View className={styles.cognitiveAlertBanner.bannerContainer}>
+        <View className={styles.cognitiveAlertBanner.icon}>
           <BellRing
             size={24}
             color={THEME_COLORS.actionWarning}
             accessibilityElementsHidden={true}
           />
         </View>
-        <View className="flex flex-col flex-1 min-w-0">
+        <View className={styles.cognitiveAlertBanner.bannerContent}>
           <Text className={titleClasses}>{getText(titleKey)}</Text>
           <Text className={messageClasses}>{getText(messageKey)}</Text>
         </View>
@@ -93,7 +90,7 @@ export function CognitiveAlertBanner({
           onPress={onDismiss}
           accessibilityLabel={dismissAriaLabel}
           accessibilityRole="button"
-          className="flex items-center justify-center w-8 h-8 rounded-md active:bg-action-info/20"
+          className={styles.cognitiveAlertBanner.dismissButton}
           testID={testID ? `${testID}-dismiss` : 'cognitive-alert-dismiss'}
         >
           <X size={16} color={THEME_COLORS.actionPrimary} />

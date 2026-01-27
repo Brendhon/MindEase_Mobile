@@ -4,6 +4,7 @@ import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useMemo } from 'react';
 import { Text, View } from 'react-native';
+import { styles } from './dashboard-styles';
 import { SettingsSection } from './SettingsSection';
 
 /**
@@ -27,7 +28,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
   const { getText } = useTextDetail();
 
   const timerSettingsClasses = useMemo(
-    () => `flex flex-col ${spacingClasses.gap}`,
+    () => `${styles.interactionSettings.timerSettingsContainer} ${spacingClasses.gap}`,
     [spacingClasses.gap]
   );
 
@@ -88,7 +89,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
           checked={settings.animations}
           onChange={(checked) => updateSetting('animations', checked)}
         />
-        <View className="flex flex-col">
+        <View className={styles.interactionSettings.switchContainer}>
           <Switch.Label
             onPress={() => updateSetting('animations', !settings.animations)}
             testID="profile-animations-label"
@@ -107,7 +108,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
           checked={settings.focusMode}
           onChange={(checked) => updateSetting('focusMode', checked)}
         />
-        <View className="flex flex-col">
+        <View className={styles.interactionSettings.switchContainer}>
           <Switch.Label
             onPress={() => updateSetting('focusMode', !settings.focusMode)}
             testID="profile-focus-mode-label"
@@ -133,7 +134,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
             items={focusDurationItems}
             testID="profile-focus-duration"
           />
-          <Text className="text-sm text-text-secondary mt-1">
+          <Text className={styles.interactionSettings.selectDescription}>
             {getText('profile_setting_focus_duration_desc')}
           </Text>
         </Select>
@@ -151,7 +152,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
             items={breakDurationItems}
             testID="profile-break-duration"
           />
-          <Text className="text-sm text-text-secondary mt-1">
+          <Text className={styles.interactionSettings.selectDescription}>
             {getText('profile_setting_break_duration_desc')}
           </Text>
         </Select>

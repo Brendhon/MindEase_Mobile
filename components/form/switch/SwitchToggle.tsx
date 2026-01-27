@@ -1,5 +1,5 @@
 import { THEME_COLORS } from '@/utils/theme/theme-colors';
-import React from 'react';
+
 import { Switch as RNSwitch, View } from 'react-native';
 
 /**

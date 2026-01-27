@@ -42,21 +42,21 @@ export function StatCard({
 
   // Generate card classes with memoization
   const cardClasses = useMemo(
-    () => `${styles.statsCard} ${spacingClasses.gap}`,
+    () => `${styles.dashboardStatsCards.card} ${spacingClasses.gap}`,
     [spacingClasses.gap]
   );
 
   return (
     <Card className={cardClasses} testID={testID}>
       <Card.Content>
-        <View className="flex flex-row items-center gap-2">
+        <View className={styles.dashboardStatsCards.cardHeader}>
           <Icon size={20} color={THEME_COLORS.textSecondary} />
-          <Text className={`text-text-secondary font-medium ${titleClasses}`}>
+          <Text className={`${styles.dashboardStatsCards.titleBase} ${titleClasses}`}>
             {title}
           </Text>
         </View>
-        <View className="flex items-center mt-2">
-          <Text className={`font-semibold text-text-primary ${valueClasses}`}>
+        <View className={styles.dashboardStatsCards.valueContainer}>
+          <Text className={`${styles.dashboardStatsCards.valueBase} ${valueClasses}`}>
             {value}
           </Text>
         </View>

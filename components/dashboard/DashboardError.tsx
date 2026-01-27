@@ -33,7 +33,7 @@ export function DashboardError({
       accessibilityRole="alert"
       testID={testID || 'dashboard-error'}
     >
-      <Text className="text-action-danger">{message}</Text>
+      <Text className={styles.dashboardErrorText}>{message}</Text>
     </View>
   );
 }

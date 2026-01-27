@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { View } from 'react-native';
 import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import { ButtonSize, ButtonVariant, iconSizes } from './button-styles';

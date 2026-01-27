@@ -37,17 +37,17 @@ export function DashboardStatsCards({
   }, [tasks]);
 
   const containerClasses = useMemo(
-    () => `${styles.statsContainer} ${spacingClasses.gap}`,
+    () => `${styles.dashboardStatsCards.container} ${spacingClasses.gap}`,
     [spacingClasses.gap]
   );
 
   const titleClasses = useMemo(
-    () => `text-sm ${fontSizeClasses.sm}`,
+    () => `${styles.dashboardStatsCards.title} ${fontSizeClasses.sm}`,
     [fontSizeClasses.sm]
   );
 
   const valueClasses = useMemo(
-    () => `text-2xl ${fontSizeClasses['2xl']}`,
+    () => `${styles.dashboardStatsCards.value} ${fontSizeClasses['2xl']}`,
     [fontSizeClasses['2xl']]
   );
 

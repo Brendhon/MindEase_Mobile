@@ -2,7 +2,7 @@ import { SettingsSection } from './SettingsSection';
 import { RadioGroup } from '@/components/form/radio-group';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useTextDetail } from '@/hooks/accessibility';
-import React from 'react';
+
 
 /**
  * ContentSettings Component - MindEase Mobile

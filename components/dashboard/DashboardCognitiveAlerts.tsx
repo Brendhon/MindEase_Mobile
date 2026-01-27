@@ -3,7 +3,7 @@ import {
   useMissingBreakAlert,
   useProlongedNavigationAlert,
 } from '@/hooks/cognitive-alerts';
-import React from 'react';
+
 import { View } from 'react-native';
 import { CognitiveAlertExcessiveTime } from './CognitiveAlertExcessiveTime';
 import { CognitiveAlertMissingBreak } from './CognitiveAlertMissingBreak';

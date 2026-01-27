@@ -1,5 +1,5 @@
-import { Container } from '@/components/Container';
 import { ToastManager } from '@/components/feedback/ToastManager';
+import { Container } from '@/components/layout';
 import { CognitiveSettingsProvider } from '@/contexts/cognitive-settings';
 import { AuthProvider } from '@/providers/auth';
 import { Slot } from 'expo-router';

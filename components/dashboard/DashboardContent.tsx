@@ -1,4 +1,4 @@
-import { PageHeader } from '@/components/layout/PageHeader';
+import { PageHeader } from '@/components/layout';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useTextDetail } from '@/hooks/accessibility';

@@ -15,7 +15,7 @@ export const styles = {
   settingsContainer: 'flex flex-col gap-4',
 
   // Reset button container
-  resetButtonContainer: 'flex justify-end mt-6',
+  resetButtonContainer: 'flex justify-end my-8',
 
   // Cognitive alert banner styles
   cognitiveAlertBanner: {

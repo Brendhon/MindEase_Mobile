@@ -8,16 +8,15 @@ import { TasksError } from './TasksError';
 import { TasksToolbar } from './TasksToolbar';
 import { styles } from './tasks-styles';
 
-/** Demo message for mock actions */
+/** Demo message for mock actions (New Task, Edit) */
 const DEMO_NEW_TASK_MESSAGE = 'Criação de tarefas será implementada em breve.';
 const DEMO_EDIT_MESSAGE = 'Edição de tarefas será implementada em breve.';
-const DEMO_DELETE_MESSAGE = 'Exclusão de tarefas será implementada em breve.';
 const DEMO_ALERT_TITLE = 'Em breve';
 
 /**
  * TasksContent Component - MindEase Mobile
  * Container: PageHeader, TasksError, TasksToolbar, TaskList.
- * All actions (New Task, Edit, Delete) are mocked with Alert feedback.
+ * Delete: real deletion with confirmation (same flow as web). New Task / Edit: demo Alert for now.
  */
 export interface TasksContentProps {
   /** Tasks data */
@@ -26,6 +25,9 @@ export interface TasksContentProps {
   /** Error message if any */
   error?: string | null;
 
+  /** Callback to delete a task (after confirmation in TaskCard); same contract as web handleDeleteTask */
+  onDelete?: (taskId: string) => void | Promise<void>;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -33,6 +35,7 @@ export interface TasksContentProps {
 export function TasksContent({
   tasks,
   error,
+  onDelete,
   testID,
 }: TasksContentProps) {
   const { spacingClasses } = useAccessibilityClasses();
@@ -43,10 +46,6 @@ export function TasksContent({
 
   const handleEdit = useCallback((_task: Task) => {
     Alert.alert(DEMO_ALERT_TITLE, DEMO_EDIT_MESSAGE, [{ text: 'OK' }]);
-  }, []);
-
-  const handleRequestDelete = useCallback((_taskId: string) => {
-    Alert.alert(DEMO_ALERT_TITLE, DEMO_DELETE_MESSAGE, [{ text: 'OK' }]);
   }, []);
 
   const containerClasses = useMemo(
@@ -87,7 +86,7 @@ export function TasksContent({
         <TaskList
           tasks={tasks}
           onEdit={handleEdit}
-          onDelete={handleRequestDelete}
+          onDelete={onDelete}
           testID={testID ? `${testID}-list` : 'tasks-list'}
         />
       </View>

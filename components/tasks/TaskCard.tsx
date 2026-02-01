@@ -1,11 +1,11 @@
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useAlert } from '@/hooks/alert/useAlert';
 import { Task } from '@/models/task';
 import { Pencil, Trash2 } from 'lucide-react-native';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { Button } from '@/components/ui/button';
 import { styles } from './tasks-styles';
 
 /**
@@ -35,6 +35,22 @@ export function TaskCard({
 }: TaskCardProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
+  const { showConfirmation } = useAlert();
+
+  /** Request delete: show confirmation dialog (same flow as web), then call onDelete on confirm */
+  const handleRequestDelete = useCallback(() => {
+    if (!onDelete) return;
+    showConfirmation({
+      titleKey: 'tasks_delete_confirm_title',
+      messageKey: 'tasks_delete_confirm_message',
+      cancelLabelKey: 'button_cancel',
+      confirmLabelKey: 'tasks_delete_confirm_button',
+      onConfirm: () => {
+        onDelete(task.id);
+      },
+      confirmStyle: 'destructive',
+    });
+  }, [onDelete, task.id, showConfirmation]);
 
   const statusLabel = useMemo(() => {
     switch (task.status) {
@@ -134,7 +150,7 @@ export function TaskCard({
                 variant="danger"
                 size="sm"
                 className={styles.actionButton}
-                onPress={() => onDelete(task.id)}
+                onPress={handleRequestDelete}
                 accessibilityLabel={getText('tasks_action_delete_aria')}
                 accessibilityRole="button"
                 testID={testID ? `${testID}-delete` : `task-card-delete-${task.id}`}

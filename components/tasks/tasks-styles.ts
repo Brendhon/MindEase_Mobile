@@ -20,7 +20,7 @@ export const styles = {
   toolbarContainer: 'flex justify-end',
 
   // Task list styles
-  listContainer: 'flex flex-col w-full',
+  listContainer: 'flex flex-col w-full mb-10',
   emptyContainer: 'flex flex-col items-center justify-center py-12',
   emptyText: 'text-text-primary font-semibold mb-2',
   emptyDescription: 'text-text-secondary',
@@ -44,7 +44,7 @@ export const styles = {
   statusInProgress: 'bg-action-primary/10 text-action-primary',
   statusDone: 'bg-action-success/10 text-action-success',
   description: 'text-text-secondary mt-2',
-  progressText: 'text-text-secondary text-sm mt-1',
+  progressText: 'text-text-secondary text-sm my-2',
   actions: 'flex flex-row items-center gap-2 mt-3',
   actionButton: 'flex-1',
 } as const;

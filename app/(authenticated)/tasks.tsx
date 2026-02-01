@@ -1,31 +1,48 @@
-import { TasksContent } from '@/components/tasks';
-import { TasksLoading } from '@/components/tasks';
+import { TasksContent, TasksLoading } from '@/components/tasks';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
-import React, { useEffect } from 'react';
+import { useFocusTimer } from '@/hooks/timer';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 
 /**
  * Tasks Screen - MindEase Mobile
  *
- * Task management screen with list and demo actions.
+ * Task management screen with list and actions.
  *
- * Features (demo phase):
+ * Features:
  * - Task list in vertical sections (A Fazer, Em Progresso, Concluídas)
  * - Task cards with title, status, description, subtask progress
- * - New Task, Edit, Delete buttons (mock: Alert feedback only)
+ * - New Task, Edit, Delete (delete with confirmation, syncs with Firestore)
  */
 export default function TasksScreen() {
   const { spacingClasses } = useAccessibilityClasses();
   const { user } = useAuth();
-  const { tasks, loading, error, loadTasks } = useTasks();
+  const { tasks, loading, error, loadTasks, deleteTask } = useTasks();
+  const { timerState, stopTimer } = useFocusTimer();
 
   useEffect(() => {
     if (user?.uid) {
       loadTasks(user.uid);
     }
   }, [user?.uid, loadTasks]);
+
+  /** Delete task (after confirmation in TaskCard); stop timer if deleted task was active */
+  const handleDeleteTask = useCallback(
+    async (taskId: string) => {
+      if (!user?.uid) return;
+      try {
+        await deleteTask(user.uid, taskId);
+        if (timerState.activeTaskId === taskId) {
+          stopTimer();
+        }
+      } catch (err) {
+        console.error('Error deleting task:', err);
+      }
+    },
+    [user?.uid, deleteTask, timerState.activeTaskId, stopTimer]
+  );
 
   const showLoading = loading && tasks.length === 0;
 
@@ -40,6 +57,7 @@ export default function TasksScreen() {
         <TasksContent
           tasks={tasks}
           error={error}
+          onDelete={handleDeleteTask}
           testID="tasks-page-container"
         />
       )}

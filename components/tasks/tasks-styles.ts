@@ -48,4 +48,23 @@ export const styles = {
   actions: 'flex flex-col gap-2 mt-3',
   editActions: 'flex flex-row gap-2',
   actionButton: 'flex-1',
+
+  // Timer styles (focus/break on card)
+  timerIndicator: 'flex flex-col gap-1 mb-4 p-3 rounded-lg border',
+  focusTimer: 'bg-action-primary/5 border-action-primary/20',
+  breakTimer: 'bg-action-warning/5 border-action-warning/30',
+  timerLabel: 'text-text-secondary',
+  timerValue: 'font-semibold',
+  focusTimerValue: 'text-action-primary',
+  breakTimerValue: 'text-action-secondary',
+  timerStatus: 'text-text-secondary italic',
+
+  // Checklist styles
+  checklistContainer: 'flex flex-col gap-2',
+  checklistProgress: 'text-text-secondary mb-2',
+  checklistList: 'flex flex-col gap-2',
+  checklistItem: 'flex flex-row items-center gap-2',
+  checklistItemCompleted: 'opacity-60',
+  checklistItemNonInteractive: 'opacity-70',
+  checklistHint: 'text-text-secondary italic mt-2',
 } as const;

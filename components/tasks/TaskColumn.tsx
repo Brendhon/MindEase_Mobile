@@ -45,6 +45,9 @@ export interface TaskColumnProps {
   /** Returns whether break timer is running for the given task */
   getIsBreakRunning?: (taskId: string) => boolean;
 
+  /** Callback when subtask is toggled (task, subtaskId) */
+  onToggleSubtask?: (task: Task, subtaskId: string) => void;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -61,6 +64,7 @@ export function TaskColumn({
   getIsRunning,
   getHasActiveTask,
   getIsBreakRunning,
+  onToggleSubtask,
   testID,
 }: TaskColumnProps) {
   const { getText } = useTextDetail();
@@ -138,6 +142,11 @@ export function TaskColumn({
               onComplete={onComplete}
               onEdit={onEdit}
               onDelete={onDelete}
+              onToggleSubtask={
+                onToggleSubtask
+                  ? (subtaskId) => onToggleSubtask(task, subtaskId)
+                  : undefined
+              }
               isRunning={getIsRunning?.(task.id) ?? false}
               hasActiveTask={getHasActiveTask?.(task.id) ?? false}
               isBreakRunning={getIsBreakRunning?.(task.id) ?? false}

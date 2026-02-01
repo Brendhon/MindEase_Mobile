@@ -37,6 +37,9 @@ export interface TaskListProps {
   /** Returns whether break timer is running for the given task */
   getIsBreakRunning?: (taskId: string) => boolean;
 
+  /** Callback when subtask is toggled (task, subtaskId); parent may show focus-required alert if not in focus */
+  onToggleSubtask?: (task: Task, subtaskId: string) => void;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -51,6 +54,7 @@ export function TaskList({
   getIsRunning,
   getHasActiveTask,
   getIsBreakRunning,
+  onToggleSubtask,
   testID,
 }: TaskListProps) {
   const { getText } = useTextDetail();
@@ -102,6 +106,7 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        onToggleSubtask={onToggleSubtask}
         getIsRunning={getIsRunning}
         getHasActiveTask={getHasActiveTask}
         getIsBreakRunning={getIsBreakRunning}
@@ -116,6 +121,7 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        onToggleSubtask={onToggleSubtask}
         getIsRunning={getIsRunning}
         getHasActiveTask={getHasActiveTask}
         getIsBreakRunning={getIsBreakRunning}
@@ -130,6 +136,7 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        onToggleSubtask={onToggleSubtask}
         getIsRunning={getIsRunning}
         getHasActiveTask={getHasActiveTask}
         getIsBreakRunning={getIsBreakRunning}

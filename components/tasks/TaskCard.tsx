@@ -4,33 +4,38 @@ import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { TaskCardActions } from './TaskCardActions';
+import { TaskCardTimer } from './TaskCardTimer';
+import { TaskChecklist } from './TaskChecklist';
 import { styles } from './tasks-styles';
 
 /**
  * TaskCard Component - MindEase Mobile
- * Individual task card with title, status, description, optional subtask progress,
- * and action buttons (delegated to TaskCardActions: focus + edit).
+ * Individual task card with title, status, description, subtask checklist (like web),
+ * focus/break timer when in focus or on break, and action buttons.
  */
 export interface TaskCardProps {
   /** Task data */
   task: Task;
 
-  /** Callback when Start focus is pressed (demo: mock) */
+  /** Callback when Start focus is pressed */
   onStartFocus?: (task: Task) => void;
 
-  /** Callback when Stop focus is pressed (demo: mock) */
+  /** Callback when Stop focus is pressed */
   onStop?: (task: Task) => void;
 
-  /** Callback when Complete task is pressed (demo: mock) */
+  /** Callback when Complete task is pressed */
   onComplete?: (task: Task) => void;
 
-  /** Callback when Edit is pressed (demo: mock) */
+  /** Callback when Edit is pressed */
   onEdit?: (task: Task) => void;
 
-  /** Callback when Delete is pressed (demo: mock) */
+  /** Callback when Delete is pressed */
   onDelete?: (taskId: string) => void;
 
-  /** Whether this task's focus timer is running (hides edit, shows Stop + Complete) */
+  /** Callback when subtask is toggled (subtaskId); when not in focus, parent may show focus-required alert */
+  onToggleSubtask?: (subtaskId: string) => void;
+
+  /** Whether this task's focus timer is running (hides edit, shows Stop + Complete; enables checklist) */
   isRunning?: boolean;
 
   /** Whether another task is active (disables Start focus) */
@@ -50,6 +55,7 @@ export function TaskCard({
   onComplete,
   onEdit,
   onDelete,
+  onToggleSubtask,
   isRunning = false,
   hasActiveTask = false,
   isBreakRunning = false,
@@ -92,6 +98,13 @@ export function TaskCard({
 
   const showActions = task.status !== 2;
   const hasAnyAction = Boolean(onStartFocus ?? onStop ?? onComplete ?? onEdit ?? onDelete);
+  const isChecklistInteractive = isRunning;
+  const showContent =
+    true &&
+    (isRunning ||
+      isBreakRunning ||
+      (task.subtasks && task.subtasks.length > 0) ||
+      (showActions && hasAnyAction));
 
   return (
     <View
@@ -128,27 +141,33 @@ export function TaskCard({
               {task.description}
             </Text>
           ) : null}
-          {hasSubtasks ? (
-            <Text className={`${styles.progressText} ${fontSizeClasses.sm}`}>
-              {completedSubtasks} {getText('tasks_progress')} {totalSubtasks}{' '}
-              {getText('tasks_progress_steps')}
-            </Text>
-          ) : null}
         </Card.Header>
-        {showActions && hasAnyAction ? (
+        {showContent ? (
           <Card.Content>
-            <TaskCardActions
-              task={task}
-              isRunning={isRunning}
-              hasActiveTask={hasActiveTask}
-              isBreakRunning={isBreakRunning}
-              onStartFocus={onStartFocus}
-              onStop={onStop}
-              onComplete={onComplete}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              testID={testID}
-            />
+            <TaskCardTimer task={task} testID={testID} />
+            {task.subtasks && task.subtasks.length > 0 && (
+              <TaskChecklist
+                subtasks={task.subtasks}
+                onToggleSubtask={showActions ? onToggleSubtask : undefined}
+                interactive={isChecklistInteractive}
+                isInFocus={isChecklistInteractive}
+                testID={testID ? `${testID}-checklist` : `task-card-checklist-${task.id}`}
+              />
+            )}
+            {showActions && hasAnyAction ? (
+              <TaskCardActions
+                task={task}
+                isRunning={isRunning}
+                hasActiveTask={hasActiveTask}
+                isBreakRunning={isBreakRunning}
+                onStartFocus={onStartFocus}
+                onStop={onStop}
+                onComplete={onComplete}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                testID={testID}
+              />
+            ) : null}
           </Card.Content>
         ) : null}
       </Card>

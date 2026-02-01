@@ -1,5 +1,5 @@
 import { PageHeader } from '@/components/layout';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
 import { useBreakTimer, useFocusTimer } from '@/hooks/timer';
@@ -43,8 +43,9 @@ export function TasksContent({
   testID,
 }: TasksContentProps) {
   const { spacingClasses } = useAccessibilityClasses();
+  const { getText } = useTextDetail();
   const { user } = useAuth();
-  const { updateTaskStatus, hasTasksInProgress } = useTasks();
+  const { updateTaskStatus, hasTasksInProgress, toggleSubtask } = useTasks();
   const { startTimer, stopTimer, isRunning: focusIsRunning } = useFocusTimer();
   const { stopBreak, isActive: breakIsActive, isRunning: breakIsRunning } =
     useBreakTimer();
@@ -99,6 +100,30 @@ export function TasksContent({
     [breakIsActive, breakIsRunning]
   );
 
+  /** Toggle subtask: if task in focus, update; if break running show break alert; else show focus-required alert (same as web). */
+  const handleToggleSubtask = useCallback(
+    (task: Task, subtaskId: string) => {
+      if (breakIsActive(task.id) && breakIsRunning(task.id)) {
+        Alert.alert(
+          getText('tasks_subtask_break_required_title'),
+          getText('tasks_subtask_break_required_message'),
+          [{ text: 'OK' }]
+        );
+        return;
+      }
+      if (focusIsRunning(task.id) && uid) {
+        toggleSubtask(uid, task.id, subtaskId);
+      } else {
+        Alert.alert(
+          getText('tasks_subtask_focus_required_title'),
+          getText('tasks_subtask_focus_required_message'),
+          [{ text: 'OK' }]
+        );
+      }
+    },
+    [breakIsActive, breakIsRunning, focusIsRunning, uid, toggleSubtask, getText]
+  );
+
   const handleNewTask = useCallback(() => {
     Alert.alert(DEMO_ALERT_TITLE, DEMO_NEW_TASK_MESSAGE, [{ text: 'OK' }]);
   }, []);
@@ -149,6 +174,7 @@ export function TasksContent({
           onComplete={handleComplete}
           onEdit={handleEdit}
           onDelete={onDelete}
+          onToggleSubtask={handleToggleSubtask}
           getIsRunning={getIsRunning}
           getHasActiveTask={getHasActiveTask}
           getIsBreakRunning={getIsBreakRunning}

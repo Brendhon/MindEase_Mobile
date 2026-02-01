@@ -4,17 +4,7 @@ import { CognitiveSettingsProvider } from '@/contexts/cognitive-settings';
 import { AuthProvider } from '@/providers/auth';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated';
 import '../global.css';
-
-// This is the default configuration
-configureReanimatedLogger({
-  level: ReanimatedLogLevel.warn,
-  strict: true, // Reanimated runs in strict mode by default
-});
 
 /**
  * Root layout component for the Expo Router app

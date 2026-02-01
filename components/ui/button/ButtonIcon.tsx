@@ -31,7 +31,7 @@ export interface ButtonIconProps {
 export function ButtonIcon({
   icon: Icon,
   position = 'left',
-  size = 'md',
+  size = 'sm',
   variant = 'primary',
   className = '',
 }: ButtonIconProps) {
@@ -46,7 +46,7 @@ export function ButtonIcon({
       : THEME_COLORS.textWhite;
 
   return (
-    <View className={`${position === 'right' ? 'ml-1' : 'mr-1'} ${className}`}>
+    <View className={`${position === 'right' ? 'ml-3' : 'mr-3'} ${className}`}>
       <Icon size={iconSize} color={iconColor} />
     </View>
   );

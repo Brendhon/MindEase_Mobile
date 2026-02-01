@@ -117,27 +117,29 @@ export function TaskCard({
           <View className={`${styles.actions} ${spacingClasses.gap}`}>
             {onEdit ? (
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="sm"
+                className={styles.actionButton}
                 onPress={() => onEdit(task)}
                 accessibilityLabel={getText('tasks_action_edit_aria')}
                 accessibilityRole="button"
                 testID={testID ? `${testID}-edit` : `task-card-edit-${task.id}`}
               >
-                <Button.Icon icon={Pencil} position="left" variant="ghost" />
+                <Button.Icon icon={Pencil} position="left" variant="secondary" />
                 <Button.Text>{getText('tasks_action_edit')}</Button.Text>
               </Button>
             ) : null}
             {onDelete ? (
               <Button
-                variant="ghost"
+                variant="danger"
                 size="sm"
+                className={styles.actionButton}
                 onPress={() => onDelete(task.id)}
                 accessibilityLabel={getText('tasks_action_delete_aria')}
                 accessibilityRole="button"
                 testID={testID ? `${testID}-delete` : `task-card-delete-${task.id}`}
               >
-                <Button.Icon icon={Trash2} position="left" variant="ghost" />
+                <Button.Icon icon={Trash2} position="left" variant="danger" />
                 <Button.Text>{getText('tasks_action_delete')}</Button.Text>
               </Button>
             ) : null}

@@ -45,6 +45,7 @@ export const styles = {
   statusDone: 'bg-action-success/10 text-action-success',
   description: 'text-text-secondary mt-2',
   progressText: 'text-text-secondary text-sm my-2',
-  actions: 'flex flex-row items-center gap-2 mt-3',
+  actions: 'flex flex-col gap-2 mt-3',
+  editActions: 'flex flex-row gap-2',
   actionButton: 'flex-1',
 } as const;

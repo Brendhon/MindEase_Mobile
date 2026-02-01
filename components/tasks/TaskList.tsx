@@ -1,5 +1,4 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -14,6 +13,15 @@ export interface TaskListProps {
   /** Tasks to display */
   tasks: Task[];
 
+  /** Callback when Start focus is pressed (demo: mock) */
+  onStartFocus?: (task: Task) => void;
+
+  /** Callback when Stop focus is pressed (demo: mock) */
+  onStop?: (task: Task) => void;
+
+  /** Callback when Complete task is pressed (demo: mock) */
+  onComplete?: (task: Task) => void;
+
   /** Callback when task Edit is pressed (demo: mock) */
   onEdit?: (task: Task) => void;
 
@@ -26,6 +34,9 @@ export interface TaskListProps {
 
 export function TaskList({
   tasks,
+  onStartFocus,
+  onStop,
+  onComplete,
   onEdit,
   onDelete,
   testID,
@@ -74,6 +85,9 @@ export function TaskList({
         titleKey="tasks_column_todo"
         tasks={tasks}
         status={0}
+        onStartFocus={onStartFocus}
+        onStop={onStop}
+        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
         testID={`${listTestID}-todo`}
@@ -82,6 +96,9 @@ export function TaskList({
         titleKey="tasks_column_in_progress"
         tasks={tasks}
         status={1}
+        onStartFocus={onStartFocus}
+        onStop={onStop}
+        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
         testID={`${listTestID}-in-progress`}
@@ -90,6 +107,9 @@ export function TaskList({
         titleKey="tasks_column_done"
         tasks={tasks}
         status={2}
+        onStartFocus={onStartFocus}
+        onStop={onStop}
+        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
         testID={`${listTestID}-done`}

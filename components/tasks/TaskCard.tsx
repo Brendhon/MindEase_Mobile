@@ -1,21 +1,28 @@
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
-import { useAlert } from '@/hooks/alert/useAlert';
 import { Task } from '@/models/task';
-import { Pencil, Trash2 } from 'lucide-react-native';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
+import { TaskCardActions } from './TaskCardActions';
 import { styles } from './tasks-styles';
 
 /**
  * TaskCard Component - MindEase Mobile
  * Individual task card with title, status, description, optional subtask progress,
- * and demo action buttons (Edit, Delete - mock only).
+ * and action buttons (delegated to TaskCardActions: focus + edit).
  */
 export interface TaskCardProps {
   /** Task data */
   task: Task;
+
+  /** Callback when Start focus is pressed (demo: mock) */
+  onStartFocus?: (task: Task) => void;
+
+  /** Callback when Stop focus is pressed (demo: mock) */
+  onStop?: (task: Task) => void;
+
+  /** Callback when Complete task is pressed (demo: mock) */
+  onComplete?: (task: Task) => void;
 
   /** Callback when Edit is pressed (demo: mock) */
   onEdit?: (task: Task) => void;
@@ -23,34 +30,33 @@ export interface TaskCardProps {
   /** Callback when Delete is pressed (demo: mock) */
   onDelete?: (taskId: string) => void;
 
+  /** Whether this task's focus timer is running (hides edit, shows Stop + Complete) */
+  isRunning?: boolean;
+
+  /** Whether another task is active (disables Start focus) */
+  hasActiveTask?: boolean;
+
+  /** Whether break is running for this task (shows only Stop) */
+  isBreakRunning?: boolean;
+
   /** Test ID for testing */
   testID?: string;
 }
 
 export function TaskCard({
   task,
+  onStartFocus,
+  onStop,
+  onComplete,
   onEdit,
   onDelete,
+  isRunning = false,
+  hasActiveTask = false,
+  isBreakRunning = false,
   testID,
 }: TaskCardProps) {
   const { getText } = useTextDetail();
-  const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
-  const { showConfirmation } = useAlert();
-
-  /** Request delete: show confirmation dialog (same flow as web), then call onDelete on confirm */
-  const handleRequestDelete = useCallback(() => {
-    if (!onDelete) return;
-    showConfirmation({
-      titleKey: 'tasks_delete_confirm_title',
-      messageKey: 'tasks_delete_confirm_message',
-      cancelLabelKey: 'button_cancel',
-      confirmLabelKey: 'tasks_delete_confirm_button',
-      onConfirm: () => {
-        onDelete(task.id);
-      },
-      confirmStyle: 'destructive',
-    });
-  }, [onDelete, task.id, showConfirmation]);
+  const { fontSizeClasses } = useAccessibilityClasses();
 
   const statusLabel = useMemo(() => {
     switch (task.status) {
@@ -85,6 +91,7 @@ export function TaskCard({
   );
 
   const showActions = task.status !== 2;
+  const hasAnyAction = Boolean(onStartFocus ?? onStop ?? onComplete ?? onEdit ?? onDelete);
 
   return (
     <View
@@ -98,71 +105,53 @@ export function TaskCard({
         focused={false}
         testID={testID || `task-card-${task.id}`}
       >
-      <Card.Header>
-        <View className={styles.headerRow}>
-          <Text
-            className={`${styles.title} ${fontSizeClasses.base}`}
-            numberOfLines={2}
-          >
-            {task.title}
-          </Text>
-          <Text
-            className={statusBadgeClasses}
-            testID={testID ? `${testID}-status` : `task-card-status-${task.id}`}
-          >
-            {statusLabel}
-          </Text>
-        </View>
-        {task.description ? (
-          <Text
-            className={`${styles.description} ${fontSizeClasses.sm}`}
-            numberOfLines={2}
-          >
-            {task.description}
-          </Text>
-        ) : null}
-        {hasSubtasks ? (
-          <Text className={`${styles.progressText} ${fontSizeClasses.sm}`}>
-            {completedSubtasks} {getText('tasks_progress')} {totalSubtasks}{' '}
-            {getText('tasks_progress_steps')}
-          </Text>
-        ) : null}
-      </Card.Header>
-      {showActions && (onEdit || onDelete) ? (
-        <Card.Content>
-          <View className={`${styles.actions} ${spacingClasses.gap}`}>
-            {onEdit ? (
-              <Button
-                variant="secondary"
-                size="sm"
-                className={styles.actionButton}
-                onPress={() => onEdit(task)}
-                accessibilityLabel={getText('tasks_action_edit_aria')}
-                accessibilityRole="button"
-                testID={testID ? `${testID}-edit` : `task-card-edit-${task.id}`}
-              >
-                <Button.Icon icon={Pencil} position="left" variant="secondary" />
-                <Button.Text>{getText('tasks_action_edit')}</Button.Text>
-              </Button>
-            ) : null}
-            {onDelete ? (
-              <Button
-                variant="danger"
-                size="sm"
-                className={styles.actionButton}
-                onPress={handleRequestDelete}
-                accessibilityLabel={getText('tasks_action_delete_aria')}
-                accessibilityRole="button"
-                testID={testID ? `${testID}-delete` : `task-card-delete-${task.id}`}
-              >
-                <Button.Icon icon={Trash2} position="left" variant="danger" />
-                <Button.Text>{getText('tasks_action_delete')}</Button.Text>
-              </Button>
-            ) : null}
+        <Card.Header>
+          <View className={styles.headerRow}>
+            <Text
+              className={`${styles.title} ${fontSizeClasses.base}`}
+              numberOfLines={2}
+            >
+              {task.title}
+            </Text>
+            <Text
+              className={statusBadgeClasses}
+              testID={testID ? `${testID}-status` : `task-card-status-${task.id}`}
+            >
+              {statusLabel}
+            </Text>
           </View>
-        </Card.Content>
-      ) : null}
-    </Card>
+          {task.description ? (
+            <Text
+              className={`${styles.description} ${fontSizeClasses.sm}`}
+              numberOfLines={2}
+            >
+              {task.description}
+            </Text>
+          ) : null}
+          {hasSubtasks ? (
+            <Text className={`${styles.progressText} ${fontSizeClasses.sm}`}>
+              {completedSubtasks} {getText('tasks_progress')} {totalSubtasks}{' '}
+              {getText('tasks_progress_steps')}
+            </Text>
+          ) : null}
+        </Card.Header>
+        {showActions && hasAnyAction ? (
+          <Card.Content>
+            <TaskCardActions
+              task={task}
+              isRunning={isRunning}
+              hasActiveTask={hasActiveTask}
+              isBreakRunning={isBreakRunning}
+              onStartFocus={onStartFocus}
+              onStop={onStop}
+              onComplete={onComplete}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              testID={testID}
+            />
+          </Card.Content>
+        ) : null}
+      </Card>
     </View>
   );
 }

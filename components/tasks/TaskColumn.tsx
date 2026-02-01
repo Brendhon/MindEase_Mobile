@@ -21,6 +21,15 @@ export interface TaskColumnProps {
   /** Column status filter (0 = To Do, 1 = In Progress, 2 = Done) */
   status: number;
 
+  /** Callback when Start focus is pressed (demo: mock) */
+  onStartFocus?: (task: Task) => void;
+
+  /** Callback when Stop focus is pressed (demo: mock) */
+  onStop?: (task: Task) => void;
+
+  /** Callback when Complete task is pressed (demo: mock) */
+  onComplete?: (task: Task) => void;
+
   /** Callback when task Edit is pressed (demo: mock) */
   onEdit?: (task: Task) => void;
 
@@ -35,6 +44,9 @@ export function TaskColumn({
   titleKey,
   tasks,
   status,
+  onStartFocus,
+  onStop,
+  onComplete,
   onEdit,
   onDelete,
   testID,
@@ -109,6 +121,9 @@ export function TaskColumn({
             <TaskCard
               key={task.id}
               task={task}
+              onStartFocus={onStartFocus}
+              onStop={onStop}
+              onComplete={onComplete}
               onEdit={onEdit}
               onDelete={onDelete}
               testID={`${columnTestID}-item-${task.id}`}

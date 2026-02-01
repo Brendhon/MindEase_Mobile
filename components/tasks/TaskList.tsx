@@ -28,6 +28,15 @@ export interface TaskListProps {
   /** Callback when task Delete is pressed (demo: mock) */
   onDelete?: (taskId: string) => void;
 
+  /** Returns whether focus timer is running for the given task */
+  getIsRunning?: (taskId: string) => boolean;
+
+  /** Returns whether another task is in progress (to disable Start focus) */
+  getHasActiveTask?: (taskId: string) => boolean;
+
+  /** Returns whether break timer is running for the given task */
+  getIsBreakRunning?: (taskId: string) => boolean;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -39,6 +48,9 @@ export function TaskList({
   onComplete,
   onEdit,
   onDelete,
+  getIsRunning,
+  getHasActiveTask,
+  getIsBreakRunning,
   testID,
 }: TaskListProps) {
   const { getText } = useTextDetail();
@@ -90,6 +102,9 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        getIsRunning={getIsRunning}
+        getHasActiveTask={getHasActiveTask}
+        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-todo`}
       />
       <TaskColumn
@@ -101,6 +116,9 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        getIsRunning={getIsRunning}
+        getHasActiveTask={getHasActiveTask}
+        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-in-progress`}
       />
       <TaskColumn
@@ -112,6 +130,9 @@ export function TaskList({
         onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
+        getIsRunning={getIsRunning}
+        getHasActiveTask={getHasActiveTask}
+        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-done`}
       />
     </View>

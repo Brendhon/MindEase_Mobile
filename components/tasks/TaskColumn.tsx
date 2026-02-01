@@ -36,6 +36,15 @@ export interface TaskColumnProps {
   /** Callback when task Delete is pressed (demo: mock) */
   onDelete?: (taskId: string) => void;
 
+  /** Returns whether focus timer is running for the given task */
+  getIsRunning?: (taskId: string) => boolean;
+
+  /** Returns whether another task is in progress (to disable Start focus) */
+  getHasActiveTask?: (taskId: string) => boolean;
+
+  /** Returns whether break timer is running for the given task */
+  getIsBreakRunning?: (taskId: string) => boolean;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -49,6 +58,9 @@ export function TaskColumn({
   onComplete,
   onEdit,
   onDelete,
+  getIsRunning,
+  getHasActiveTask,
+  getIsBreakRunning,
   testID,
 }: TaskColumnProps) {
   const { getText } = useTextDetail();
@@ -126,6 +138,9 @@ export function TaskColumn({
               onComplete={onComplete}
               onEdit={onEdit}
               onDelete={onDelete}
+              isRunning={getIsRunning?.(task.id) ?? false}
+              hasActiveTask={getHasActiveTask?.(task.id) ?? false}
+              isBreakRunning={getIsBreakRunning?.(task.id) ?? false}
               testID={`${columnTestID}-item-${task.id}`}
             />
           ))

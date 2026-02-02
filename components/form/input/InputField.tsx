@@ -4,6 +4,7 @@ import React, { forwardRef, useMemo } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
 import { getBorderContrastClasses } from '@/utils/accessibility';
 import { styles } from './input-styles';
+import { THEME_COLORS } from '@/utils/theme';
 
 /**
  * Input.Field - Input field subcomponent
@@ -149,7 +150,7 @@ const InputFieldRoot = forwardRef<TextInput, InputFieldProps>(
         accessibilityState={{ disabled: isDisabled }}
         className={fieldClasses}
         testID={testID || 'input-field'}
-        placeholderTextColor="#6b7280"
+        placeholderTextColor={THEME_COLORS.textMuted}
         {...props}
       />
     );

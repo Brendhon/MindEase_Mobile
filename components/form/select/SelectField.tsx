@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { Picker, PickerProps } from '@react-native-picker/picker';
 import { getBorderContrastClasses } from '@/utils/accessibility';
+import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import { styles } from './select-styles';
 
 /**
@@ -82,6 +83,10 @@ export function SelectField({
   // Get contrast setting directly (only re-renders when contrast changes)
   const { settings } = useCognitiveSettings();
 
+  // Picker native component does not inherit View text color; set explicit
+  // color from theme so text is always visible (no dark mode in project).
+  const pickerTextColor = THEME_COLORS.textPrimary;
+
   // Generate contrast classes with select-specific logic
   const borderClasses = useMemo(
     () => getBorderContrastClasses(settings.contrast, 'subtle'),
@@ -126,6 +131,7 @@ export function SelectField({
         selectedValue={selectedValue}
         onValueChange={onValueChange}
         enabled={!isDisabled}
+        itemStyle={{ color: pickerTextColor }}
         accessibilityRole="combobox"
         accessibilityState={{
           disabled: isDisabled,
@@ -139,6 +145,7 @@ export function SelectField({
             key={item.value !== undefined ? String(item.value) : index}
             label={item.label}
             value={item.value}
+            color={pickerTextColor}
           />
         ))}
       </Picker>

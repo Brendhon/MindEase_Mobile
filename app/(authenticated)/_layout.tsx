@@ -1,5 +1,5 @@
 import { SessionCompleteAlerts } from '@/components/session-complete/SessionCompleteAlerts';
-import { HeaderWithActiveTaskBanner } from '@/components/tasks';
+import { HeaderWithActiveTaskBanner } from '@/components/tasks/active-task-banner';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';

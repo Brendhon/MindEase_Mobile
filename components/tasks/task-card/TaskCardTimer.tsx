@@ -5,7 +5,7 @@ import { Task } from '@/models/task';
 import { formatTime } from '@/utils/timer/timer-helpers';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { styles } from './tasks-styles';
+import { styles } from './task-card-styles';
 
 /**
  * TaskCardTimer Component - MindEase Mobile

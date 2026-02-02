@@ -2,7 +2,7 @@ import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { Subtask } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { styles } from './tasks-styles';
+import { styles } from './task-checklist-styles';
 
 /**
  * TaskChecklistItem Component - MindEase Mobile

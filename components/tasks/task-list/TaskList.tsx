@@ -2,8 +2,8 @@ import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { TaskColumn } from './TaskColumn';
-import { styles } from './tasks-styles';
+import { TaskColumn } from '../task-column';
+import { styles } from './task-list-styles';
 
 /**
  * TaskList Component - MindEase Mobile

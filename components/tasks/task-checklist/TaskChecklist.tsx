@@ -4,7 +4,7 @@ import { Subtask } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { TaskChecklistItem } from './TaskChecklistItem';
-import { styles } from './tasks-styles';
+import { styles } from './task-checklist-styles';
 
 /**
  * TaskChecklist Component - MindEase Mobile

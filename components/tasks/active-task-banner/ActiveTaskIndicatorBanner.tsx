@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { formatTime } from '@/utils/timer/timer-helpers';
-import { styles } from './tasks-styles';
+import { styles } from './active-task-banner-styles';
 
 /**
  * ActiveTaskIndicatorBanner - MindEase Mobile

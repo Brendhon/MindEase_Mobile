@@ -4,10 +4,10 @@ import { useTaskCard } from '@/hooks/tasks/useTaskCard';
 import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
+import { TaskChecklist } from '../task-checklist';
 import { TaskCardActions } from './TaskCardActions';
 import { TaskCardTimer } from './TaskCardTimer';
-import { TaskChecklist } from './TaskChecklist';
-import { styles } from './tasks-styles';
+import { styles } from './task-card-styles';
 
 /**
  * TaskCard Component - MindEase Mobile

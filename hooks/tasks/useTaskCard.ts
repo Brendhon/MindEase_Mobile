@@ -25,7 +25,7 @@ import type { UseTaskCardProps, UseTaskCardReturn } from '@/models/use-task-card
 import type { Subtask } from '@/models/task';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import { canCompleteTask, getPendingSubtasks } from '@/utils/tasks';
-import { styles } from '@/components/tasks/tasks-styles';
+import { styles } from '@/components/tasks/task-card/task-card-styles';
 import { useCallback, useMemo } from 'react';
 import { useTasks } from './useTasks';
 

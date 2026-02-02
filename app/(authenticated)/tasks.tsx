@@ -1,5 +1,5 @@
 import { PageScrollView } from '@/components/layout';
-import { TasksContent, TasksLoading } from '@/components/tasks';
+import { TasksContent, TasksLoading } from '@/components/tasks/tasks-content';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
 import { useFocusTimer } from '@/hooks/timer';

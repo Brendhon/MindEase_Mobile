@@ -4,7 +4,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { TaskCardEditActions } from './TaskCardEditActions';
 import { TaskCardFocusActions } from './TaskCardFocusActions';
-import { styles } from './tasks-styles';
+import { styles } from './task-card-styles';
 
 /**
  * TaskCardActions - MindEase Mobile

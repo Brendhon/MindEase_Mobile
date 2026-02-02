@@ -3,7 +3,7 @@ import { useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import { Check, Play, Square } from 'lucide-react-native';
 import React from 'react';
-import { styles } from './tasks-styles';
+import { styles } from './task-card-styles';
 
 /**
  * TaskCardFocusActions - MindEase Mobile

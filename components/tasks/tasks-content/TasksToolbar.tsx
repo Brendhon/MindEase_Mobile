@@ -3,7 +3,7 @@ import { useTextDetail } from '@/hooks/accessibility';
 import { Plus } from 'lucide-react-native';
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from './tasks-styles';
+import { styles } from './tasks-content-styles';
 
 /**
  * TasksToolbar Component - MindEase Mobile

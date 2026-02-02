@@ -3,8 +3,8 @@ import { Task } from '@/models/task';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { TaskCard } from './TaskCard';
-import { styles } from './tasks-styles';
+import { TaskCard } from '../task-card';
+import { styles } from './task-column-styles';
 
 /**
  * TaskColumn Component - MindEase Mobile

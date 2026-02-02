@@ -5,7 +5,7 @@ import { Task } from '@/models/task';
 import { Pencil, Trash2 } from 'lucide-react-native';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { styles } from './tasks-styles';
+import { styles } from './task-card-styles';
 
 /**
  * TaskCardEditActions - MindEase Mobile

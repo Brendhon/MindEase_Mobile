@@ -1,7 +1,7 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { styles } from './tasks-styles';
+import { styles } from './tasks-content-styles';
 
 /**
  * TasksError Component - MindEase Mobile

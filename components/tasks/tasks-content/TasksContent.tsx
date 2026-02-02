@@ -3,10 +3,10 @@ import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import React, { useCallback, useMemo } from 'react';
 import { Alert, View } from 'react-native';
-import { TaskList } from './TaskList';
+import { TaskList } from '../task-list';
 import { TasksError } from './TasksError';
 import { TasksToolbar } from './TasksToolbar';
-import { styles } from './tasks-styles';
+import { styles } from './tasks-content-styles';
 
 /** Demo message for mock actions (New Task, Edit) */
 const DEMO_NEW_TASK_MESSAGE = 'Criação de tarefas será implementada em breve.';

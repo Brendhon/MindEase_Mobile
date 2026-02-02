@@ -19,11 +19,18 @@ export interface InputLabelProps {
   /** Label text */
   children: string;
 
+  /** Native ID for association with field (a11y and testing) */
+  nativeID?: string;
+
   /** Test ID for testing */
   testID?: string;
 }
 
-export function InputLabel({ children, testID }: InputLabelProps) {
+export function InputLabel({
+  children,
+  nativeID,
+  testID,
+}: InputLabelProps) {
   // Use cognitive settings hook for automatic accessibility class generation
   // Font size automatically updates when user preferences change
   const { fontSizeClasses } = useAccessibilityClasses();
@@ -33,6 +40,7 @@ export function InputLabel({ children, testID }: InputLabelProps) {
 
   return (
     <Text
+      nativeID={nativeID}
       className={`${styles.label} ${fontSizeClass}`}
       testID={testID || 'input-label'}
       accessibilityRole="text"

@@ -3,6 +3,7 @@ import { TasksContent, TasksLoading } from '@/components/tasks/tasks-content';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
 import { useFocusTimer } from '@/hooks/timer';
+import { TaskDialogOutputData } from '@/schemas/task-dialog.schema';
 import React, { useCallback } from 'react';
 
 /**
@@ -13,11 +14,12 @@ import React, { useCallback } from 'react';
  * Features:
  * - Task list in vertical sections (A Fazer, Em Progresso, Concluídas)
  * - Task cards with title, status, description, subtask progress
- * - New Task, Edit, Delete (delete with confirmation, syncs with Firestore)
+ * - New Task, Edit (TaskDialog with Modal), Delete (delete with confirmation, syncs with Firestore)
  */
 export default function TasksScreen() {
   const { user } = useAuth();
-  const { tasks, loading, error, deleteTask } = useTasks();
+  const { tasks, loading, error, createTask, updateTask, deleteTask } =
+    useTasks();
   const { timerState, stopTimer } = useFocusTimer();
 
   /** Delete task (after confirmation in TaskCard); stop timer if deleted task was active */
@@ -36,6 +38,40 @@ export default function TasksScreen() {
     [user?.uid, deleteTask, timerState.activeTaskId, stopTimer]
   );
 
+  /** Create task from TaskDialog output */
+  const handleCreateTask = useCallback(
+    async (data: TaskDialogOutputData) => {
+      if (!user?.uid) return;
+      try {
+        await createTask(user.uid, {
+          title: data.title,
+          description: data.description,
+          subtasks: data.subtasks,
+        });
+      } catch (err) {
+        console.error('Error creating task:', err);
+      }
+    },
+    [user?.uid, createTask]
+  );
+
+  /** Update task from TaskDialog output */
+  const handleUpdateTask = useCallback(
+    async (taskId: string, data: TaskDialogOutputData) => {
+      if (!user?.uid) return;
+      try {
+        await updateTask(user.uid, taskId, {
+          title: data.title,
+          description: data.description,
+          subtasks: data.subtasks,
+        });
+      } catch (err) {
+        console.error('Error updating task:', err);
+      }
+    },
+    [user?.uid, updateTask]
+  );
+
   const showLoading = loading && tasks.length === 0;
 
   return (
@@ -47,6 +83,8 @@ export default function TasksScreen() {
           tasks={tasks}
           error={error}
           onDelete={handleDeleteTask}
+          onCreateTask={handleCreateTask}
+          onUpdateTask={handleUpdateTask}
           testID="tasks-page-container"
         />
       )}

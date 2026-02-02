@@ -121,14 +121,13 @@ export function useTasks() {
       _setError(null);
 
       try {
-        const newTask = await tasksService.createTask(userId, {
+        await tasksService.createTask(userId, {
           title: taskData.title,
           description: taskData.description,
           subtasks: taskData.subtasks,
           status: 0,
         });
-
-        _setTasks((prev) => [...prev, newTask]);
+        // State is updated by the Firestore subscription when the new doc is emitted; do not append here to avoid duplicate keys.
         // TODO: Add feedback when useFeedback is available
         // success('toast_success_task_created');
       } catch (err) {

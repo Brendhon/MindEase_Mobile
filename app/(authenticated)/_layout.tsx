@@ -1,7 +1,8 @@
+import { SessionCompleteAlerts } from '@/components/session-complete/SessionCompleteAlerts';
+import { HeaderWithActiveTaskBanner } from '@/components/tasks';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import { SessionCompleteAlerts } from '@/components/session-complete/SessionCompleteAlerts';
 import {
   ExcessiveTimeAlertProvider,
   MissingBreakAlertProvider,
@@ -19,6 +20,7 @@ import {
   THEME_COLORS,
 } from '@/utils/theme';
 import {
+  type DrawerHeaderProps,
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
@@ -191,6 +193,9 @@ export default function AuthenticatedLayout() {
   const screenOptions = useMemo(
     () => ({
       headerShown: true,
+      header: (props: DrawerHeaderProps) => (
+        <HeaderWithActiveTaskBanner {...props} />
+      ),
       headerStyle: {
         backgroundColor: THEME_COLORS.surfacePrimary,
       },

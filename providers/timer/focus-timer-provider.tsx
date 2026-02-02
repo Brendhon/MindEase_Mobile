@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback, useMemo, useReducer } from 'react';
 
 import { FocusTimerContext } from '@/contexts/timer';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import { useCountdownInterval } from '@/hooks/timer';
+import { useCountdownInterval, useSyncFocusTimerWithTasks } from '@/hooks/timer';
 import {
   FocusTimerAction,
   FocusTimerContextValue,
@@ -115,6 +115,9 @@ export function FocusTimerProvider({ children }: FocusTimerProviderProps) {
   const stopTimer = useCallback(() => {
     dispatch({ type: 'STOP', defaultDuration });
   }, [defaultDuration]);
+
+  // Sync focus timer with remote task changes (e.g. task completed on another device)
+  useSyncFocusTimerWithTasks(timerState.activeTaskId, stopTimer);
 
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo<FocusTimerContextValue>(

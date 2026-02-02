@@ -1,8 +1,7 @@
 import { DashboardContent } from '@/components/dashboard';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 
 /**
@@ -18,15 +17,7 @@ import { ScrollView } from 'react-native';
  */
 export default function DashboardScreen() {
   const { spacingClasses } = useAccessibilityClasses();
-  const { user } = useAuth();
-  const { tasks, loading, error, loadTasks } = useTasks();
-
-  // Load tasks when component mounts or user changes
-  useEffect(() => {
-    if (user?.uid) {
-      loadTasks(user.uid);
-    }
-  }, [user?.uid, loadTasks]);
+  const { tasks, loading, error } = useTasks();
 
   return (
     <ScrollView

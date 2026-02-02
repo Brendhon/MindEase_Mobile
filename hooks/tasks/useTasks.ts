@@ -1,6 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useTasksContext } from '@/contexts/tasks';
+import { useAuth } from '@/hooks/auth';
 import { Subtask, Task } from '@/models/task';
 import { tasksService } from '@/services/tasks';
 
@@ -33,6 +34,7 @@ import { tasksService } from '@/services/tasks';
 export function useTasks() {
   const { tasks, loading, error, _setTasks, _setLoading, _setError } =
     useTasksContext();
+  const { user } = useAuth();
 
   /**
    * Initialize tasks from server data
@@ -56,7 +58,7 @@ export function useTasks() {
   );
 
   /**
-   * Load tasks from Firestore
+   * Load tasks from Firestore (one-shot; for manual refresh e.g. pull-to-refresh)
    */
   const loadTasks = useCallback(
     async (userId: string) => {
@@ -78,6 +80,27 @@ export function useTasks() {
     },
     [_setTasks, _setLoading, _setError]
   );
+
+  /**
+   * Subscribe to tasks collection for real-time sync (web + mobile).
+   * Runs when user is available; cleanup on unmount or user change.
+   */
+  useEffect(() => {
+    if (!user?.uid) return;
+    const unsubscribe = tasksService.subscribeTasks(
+      user.uid,
+      (newTasks) => {
+        _setTasks(newTasks);
+        _setLoading(false);
+        _setError(null);
+      },
+      (err) => {
+        _setError(err.message);
+        _setLoading(false);
+      }
+    );
+    return () => unsubscribe();
+  }, [user?.uid, _setTasks, _setLoading, _setError]);
 
   /**
    * Create a new task

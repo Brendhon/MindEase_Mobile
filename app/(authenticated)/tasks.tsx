@@ -3,7 +3,7 @@ import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
 import { useFocusTimer } from '@/hooks/timer';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView } from 'react-native';
 
 /**
@@ -19,14 +19,8 @@ import { ScrollView } from 'react-native';
 export default function TasksScreen() {
   const { spacingClasses } = useAccessibilityClasses();
   const { user } = useAuth();
-  const { tasks, loading, error, loadTasks, deleteTask } = useTasks();
+  const { tasks, loading, error, deleteTask } = useTasks();
   const { timerState, stopTimer } = useFocusTimer();
-
-  useEffect(() => {
-    if (user?.uid) {
-      loadTasks(user.uid);
-    }
-  }, [user?.uid, loadTasks]);
 
   /** Delete task (after confirmation in TaskCard); stop timer if deleted task was active */
   const handleDeleteTask = useCallback(

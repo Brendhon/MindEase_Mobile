@@ -100,11 +100,15 @@ export function useTaskCard({
   const isChecklistInteractive = isActive && isRunning;
 
   const handleStartFocus = useCallback(() => {
-    startTimer(task.id);
+    const startTimerAndRecord = () => {
+      startTimer(task.id);
+      recordUserAction();
+    };
     if (uid) {
-      updateTaskStatus(uid, task.id, 1);
+      updateTaskStatus(uid, task.id, 1).then(startTimerAndRecord);
+    } else {
+      startTimerAndRecord();
     }
-    recordUserAction();
   }, [startTimer, task.id, uid, updateTaskStatus, recordUserAction]);
 
   const handleStop = useCallback(() => {

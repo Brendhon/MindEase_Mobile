@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from 'react';
-
 import { useTasksContext } from '@/contexts/tasks';
 import { useAuth } from '@/hooks/auth';
 import { Subtask, Task } from '@/models/task';
 import { tasksService } from '@/services/tasks';
+import { useCallback, useEffect } from 'react';
+import { useToast } from '../toast/useToast';
 
 /**
  * useTasks Hook - MindEase Mobile
@@ -35,6 +35,7 @@ export function useTasks() {
   const { tasks, loading, error, _setTasks, _setLoading, _setError } =
     useTasksContext();
   const { user } = useAuth();
+  const { success } = useToast();
 
   /**
    * Initialize tasks from server data
@@ -129,7 +130,7 @@ export function useTasks() {
         });
         // State is updated by the Firestore subscription when the new doc is emitted; do not append here to avoid duplicate keys.
         // TODO: Add feedback when useFeedback is available
-        // success('toast_success_task_created');
+        success('toast_success_task_created');
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : 'Failed to create task';

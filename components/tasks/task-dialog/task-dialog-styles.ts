@@ -4,7 +4,7 @@
  */
 
 export const styles = {
-  form: 'flex flex-col',
+  form: 'flex flex-col mt-4',
   checklistSection: 'flex flex-col',
   checklistHeader: 'flex flex-row items-center justify-between mb-2',
   checklist: 'flex flex-col',

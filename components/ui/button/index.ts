@@ -1,4 +1,4 @@
-export { Button, type ButtonProps, default } from './Button';
+export { Button, type ButtonProps } from './Button';
 export type { ButtonIconProps } from './ButtonIcon';
 export type { ButtonTextProps } from './ButtonText';
 export type { ButtonLoadingProps } from './ButtonLoading';

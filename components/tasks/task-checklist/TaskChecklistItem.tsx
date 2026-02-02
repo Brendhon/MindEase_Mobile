@@ -1,12 +1,13 @@
+import { Checkbox } from '@/components/form/checkbox';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { Subtask } from '@/models/task';
 import React, { useMemo } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './task-checklist-styles';
 
 /**
  * TaskChecklistItem Component - MindEase Mobile
- * Single checklist item with checkbox-like toggle.
+ * Single checklist item with checkbox.
  * Mirrors web TaskChecklistItem: interactive when task is in focus.
  */
 export interface TaskChecklistItemProps {
@@ -32,11 +33,13 @@ export function TaskChecklistItem({
   const itemClasses = useMemo(() => {
     const base = styles.checklistItem;
     const completed = isCompleted ? ` ${styles.checklistItemCompleted}` : '';
-    const nonInteractive = !interactive ? ` ${styles.checklistItemNonInteractive}` : '';
+    const nonInteractive = !interactive
+      ? ` ${styles.checklistItemNonInteractive}`
+      : '';
     return `${base}${completed}${nonInteractive}`;
   }, [isCompleted, interactive]);
 
-  const handlePress = () => {
+  const handleToggle = () => {
     onToggle?.(subtask.id);
   };
 
@@ -46,29 +49,37 @@ export function TaskChecklistItem({
     [subtask.title, isCompleted, interactive]
   );
 
+  const checkboxClassName = useMemo(() => {
+    const base = styles.checklistCheckboxWrapper;
+    const nonInteractive = !interactive
+      ? ` ${styles.checklistCheckboxNonInteractive}`
+      : '';
+    return `${base}${nonInteractive}`;
+  }, [interactive]);
+
   return (
-    <Pressable
-      onPress={handlePress}
+    <View
       className={itemClasses}
-      accessibilityRole="checkbox"
-      accessibilityState={{ checked: isCompleted }}
-      accessibilityLabel={accessibilityLabel}
       testID={testID || `task-checklist-item-${subtask.id}`}
     >
-      <View className="w-5 h-5 rounded border border-border-subtle items-center justify-center bg-background">
-        {isCompleted ? (
-          <Text className="text-action-success text-sm">✓</Text>
-        ) : (
-          <View className="w-3 h-3" />
-        )}
-      </View>
-      <Text
-        className={`flex-1 ${fontSizeClasses.sm} ${isCompleted ? 'line-through text-text-secondary' : 'text-text-primary'}`}
-        numberOfLines={2}
+      <Checkbox
+        checked={isCompleted}
+        onChange={() => handleToggle()}
+        disabled={false}
+        accessibilityLabel={accessibilityLabel}
+        testID={testID ? `${testID}-checkbox` : `task-checklist-checkbox-${subtask.id}`}
+        className={checkboxClassName}
       >
-        {subtask.title}
-      </Text>
-    </Pressable>
+        <Checkbox.Label
+          checked={isCompleted}
+          onPress={handleToggle}
+          className={fontSizeClasses.sm}
+          testID={testID ? `${testID}-label` : `task-checklist-checkbox-${subtask.id}-label`}
+        >
+          {subtask.title}
+        </Checkbox.Label>
+      </Checkbox>
+    </View>
   );
 }
 

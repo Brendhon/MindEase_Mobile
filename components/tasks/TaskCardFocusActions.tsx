@@ -9,15 +9,16 @@ import { styles } from './tasks-styles';
  * TaskCardFocusActions - MindEase Mobile
  * Focus-related buttons: Start focus, Stop, Complete.
  * Same layout as web: break → Stop only; running → Stop + Complete; else → Start (disabled if hasActiveTask).
+ * Callbacks are parameterless (task is in closure from useTaskCard).
  */
 export interface TaskCardFocusActionsProps {
   task: Task;
   isRunning?: boolean;
   hasActiveTask?: boolean;
   isBreakRunning?: boolean;
-  onStartFocus?: (task: Task) => void;
-  onStop?: (task: Task) => void;
-  onComplete?: (task: Task) => void;
+  onStartFocus?: () => void;
+  onStop?: () => void;
+  onComplete?: () => void;
   testID?: string;
 }
 
@@ -42,7 +43,7 @@ export function TaskCardFocusActions({
         variant="ghost"
         size="sm"
         className={styles.actionButton}
-        onPress={() => onStop(task)}
+        onPress={() => onStop()}
         accessibilityLabel={getText('tasks_action_stop_aria')}
         accessibilityRole="button"
         testID={testID ? `${testID}-stop-break` : `task-card-stop-break-${task.id}`}
@@ -61,7 +62,7 @@ export function TaskCardFocusActions({
             variant="ghost"
             size="sm"
             className={styles.actionButton}
-            onPress={() => onStop(task)}
+            onPress={() => onStop()}
             accessibilityLabel={getText('tasks_action_stop_aria')}
             accessibilityRole="button"
             testID={testID ? `${testID}-stop` : `task-card-stop-${task.id}`}
@@ -75,7 +76,7 @@ export function TaskCardFocusActions({
             variant="primary"
             size="sm"
             className={styles.actionButton}
-            onPress={() => onComplete(task)}
+            onPress={() => onComplete()}
             accessibilityLabel={getText('tasks_action_finish_aria')}
             accessibilityRole="button"
             testID={testID ? `${testID}-complete` : `task-card-complete-${task.id}`}
@@ -94,7 +95,7 @@ export function TaskCardFocusActions({
         variant="primary"
         size="sm"
         className={styles.actionButton}
-        onPress={() => onStartFocus(task)}
+        onPress={() => onStartFocus()}
         disabled={hasActiveTask}
         accessibilityLabel={getText('tasks_action_start_focus_aria')}
         accessibilityRole="button"

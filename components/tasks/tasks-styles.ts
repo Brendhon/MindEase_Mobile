@@ -35,7 +35,10 @@ export const styles = {
   columnEmptyText: 'text-text-secondary',
 
   // Task card styles
-  card: 'm-0',
+  // Keep ring-2 on card from first render to avoid css-interop "upgrade" when adding ring
+  // after focus start (which triggers stringify(originalProps) and NavigationStateContext error)
+  card: 'm-0 ring-2 ring-transparent',
+  cardActive: 'ring-action-primary',
   cardDone: 'opacity-60',
   headerRow: 'flex flex-row items-center justify-between gap-3',
   title: 'font-semibold text-text-primary flex-1',

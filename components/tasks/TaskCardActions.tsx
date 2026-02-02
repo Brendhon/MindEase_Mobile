@@ -10,17 +10,18 @@ import { styles } from './tasks-styles';
  * TaskCardActions - MindEase Mobile
  * Container for all task action buttons: focus actions + edit actions.
  * Edit actions are hidden during focus or break (same logic as web).
+ * Callbacks are parameterless (task is in closure from useTaskCard).
  */
 export interface TaskCardActionsProps {
   task: Task;
   isRunning?: boolean;
   hasActiveTask?: boolean;
   isBreakRunning?: boolean;
-  onStartFocus?: (task: Task) => void;
-  onStop?: (task: Task) => void;
-  onComplete?: (task: Task) => void;
-  onEdit?: (task: Task) => void;
-  onDelete?: (taskId: string) => void;
+  onStartFocus?: () => void;
+  onStop?: () => void;
+  onComplete?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
   testID?: string;
 }
 

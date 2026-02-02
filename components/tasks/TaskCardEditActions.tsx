@@ -10,11 +10,12 @@ import { styles } from './tasks-styles';
 /**
  * TaskCardEditActions - MindEase Mobile
  * Edit and Delete buttons. Delete shows confirmation dialog before calling onDelete.
+ * Callbacks are parameterless (task is in closure from useTaskCard).
  */
 export interface TaskCardEditActionsProps {
   task: Task;
-  onEdit?: (task: Task) => void;
-  onDelete?: (taskId: string) => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
   testID?: string;
 }
 
@@ -36,11 +37,11 @@ export function TaskCardEditActions({
       cancelLabelKey: 'button_cancel',
       confirmLabelKey: 'tasks_delete_confirm_button',
       onConfirm: () => {
-        onDelete(task.id);
+        onDelete();
       },
       confirmStyle: 'destructive',
     });
-  }, [onDelete, task.id, showConfirmation]);
+  }, [onDelete, showConfirmation]);
 
   if (!onEdit && !onDelete) return null;
 
@@ -51,7 +52,7 @@ export function TaskCardEditActions({
           variant="ghost"
           size="sm"
           className={styles.actionButton}
-          onPress={() => onEdit(task)}
+          onPress={() => onEdit()}
           accessibilityLabel={getText('tasks_action_edit_aria')}
           accessibilityRole="button"
           testID={testID ? `${testID}-edit` : `task-card-edit-${task.id}`}

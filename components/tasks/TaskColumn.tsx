@@ -1,5 +1,4 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import React, { useMemo } from 'react';
@@ -10,6 +9,7 @@ import { styles } from './tasks-styles';
 /**
  * TaskColumn Component - MindEase Mobile
  * Single column section: header (title + count) and vertical list of TaskCards.
+ * Each TaskCard uses useTaskCard for all focus/stop/complete/toggle logic.
  */
 export interface TaskColumnProps {
   /** Column title key */
@@ -21,32 +21,11 @@ export interface TaskColumnProps {
   /** Column status filter (0 = To Do, 1 = In Progress, 2 = Done) */
   status: number;
 
-  /** Callback when Start focus is pressed (demo: mock) */
-  onStartFocus?: (task: Task) => void;
-
-  /** Callback when Stop focus is pressed (demo: mock) */
-  onStop?: (task: Task) => void;
-
-  /** Callback when Complete task is pressed (demo: mock) */
-  onComplete?: (task: Task) => void;
-
-  /** Callback when task Edit is pressed (demo: mock) */
+  /** Callback when task Edit is pressed */
   onEdit?: (task: Task) => void;
 
-  /** Callback when task Delete is pressed (demo: mock) */
+  /** Callback when task Delete is confirmed */
   onDelete?: (taskId: string) => void;
-
-  /** Returns whether focus timer is running for the given task */
-  getIsRunning?: (taskId: string) => boolean;
-
-  /** Returns whether another task is in progress (to disable Start focus) */
-  getHasActiveTask?: (taskId: string) => boolean;
-
-  /** Returns whether break timer is running for the given task */
-  getIsBreakRunning?: (taskId: string) => boolean;
-
-  /** Callback when subtask is toggled (task, subtaskId) */
-  onToggleSubtask?: (task: Task, subtaskId: string) => void;
 
   /** Test ID for testing */
   testID?: string;
@@ -56,15 +35,8 @@ export function TaskColumn({
   titleKey,
   tasks,
   status,
-  onStartFocus,
-  onStop,
-  onComplete,
   onEdit,
   onDelete,
-  getIsRunning,
-  getHasActiveTask,
-  getIsBreakRunning,
-  onToggleSubtask,
   testID,
 }: TaskColumnProps) {
   const { getText } = useTextDetail();
@@ -137,19 +109,8 @@ export function TaskColumn({
             <TaskCard
               key={task.id}
               task={task}
-              onStartFocus={onStartFocus}
-              onStop={onStop}
-              onComplete={onComplete}
               onEdit={onEdit}
               onDelete={onDelete}
-              onToggleSubtask={
-                onToggleSubtask
-                  ? (subtaskId) => onToggleSubtask(task, subtaskId)
-                  : undefined
-              }
-              isRunning={getIsRunning?.(task.id) ?? false}
-              hasActiveTask={getHasActiveTask?.(task.id) ?? false}
-              isBreakRunning={getIsBreakRunning?.(task.id) ?? false}
               testID={`${columnTestID}-item-${task.id}`}
             />
           ))

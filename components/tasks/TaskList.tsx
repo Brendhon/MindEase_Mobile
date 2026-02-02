@@ -8,37 +8,17 @@ import { styles } from './tasks-styles';
 /**
  * TaskList Component - MindEase Mobile
  * Vertical layout: empty state or 3 column sections (A Fazer, Em Progresso, Concluídas).
+ * Each TaskCard uses useTaskCard for focus/stop/complete/toggle logic.
  */
 export interface TaskListProps {
   /** Tasks to display */
   tasks: Task[];
 
-  /** Callback when Start focus is pressed (demo: mock) */
-  onStartFocus?: (task: Task) => void;
-
-  /** Callback when Stop focus is pressed (demo: mock) */
-  onStop?: (task: Task) => void;
-
-  /** Callback when Complete task is pressed (demo: mock) */
-  onComplete?: (task: Task) => void;
-
-  /** Callback when task Edit is pressed (demo: mock) */
+  /** Callback when task Edit is pressed (e.g. demo) */
   onEdit?: (task: Task) => void;
 
-  /** Callback when task Delete is pressed (demo: mock) */
+  /** Callback when task Delete is confirmed */
   onDelete?: (taskId: string) => void;
-
-  /** Returns whether focus timer is running for the given task */
-  getIsRunning?: (taskId: string) => boolean;
-
-  /** Returns whether another task is in progress (to disable Start focus) */
-  getHasActiveTask?: (taskId: string) => boolean;
-
-  /** Returns whether break timer is running for the given task */
-  getIsBreakRunning?: (taskId: string) => boolean;
-
-  /** Callback when subtask is toggled (task, subtaskId); parent may show focus-required alert if not in focus */
-  onToggleSubtask?: (task: Task, subtaskId: string) => void;
 
   /** Test ID for testing */
   testID?: string;
@@ -46,15 +26,8 @@ export interface TaskListProps {
 
 export function TaskList({
   tasks,
-  onStartFocus,
-  onStop,
-  onComplete,
   onEdit,
   onDelete,
-  getIsRunning,
-  getHasActiveTask,
-  getIsBreakRunning,
-  onToggleSubtask,
   testID,
 }: TaskListProps) {
   const { getText } = useTextDetail();
@@ -101,45 +74,24 @@ export function TaskList({
         titleKey="tasks_column_todo"
         tasks={tasks}
         status={0}
-        onStartFocus={onStartFocus}
-        onStop={onStop}
-        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
-        onToggleSubtask={onToggleSubtask}
-        getIsRunning={getIsRunning}
-        getHasActiveTask={getHasActiveTask}
-        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-todo`}
       />
       <TaskColumn
         titleKey="tasks_column_in_progress"
         tasks={tasks}
         status={1}
-        onStartFocus={onStartFocus}
-        onStop={onStop}
-        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
-        onToggleSubtask={onToggleSubtask}
-        getIsRunning={getIsRunning}
-        getHasActiveTask={getHasActiveTask}
-        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-in-progress`}
       />
       <TaskColumn
         titleKey="tasks_column_done"
         tasks={tasks}
         status={2}
-        onStartFocus={onStartFocus}
-        onStop={onStop}
-        onComplete={onComplete}
         onEdit={onEdit}
         onDelete={onDelete}
-        onToggleSubtask={onToggleSubtask}
-        getIsRunning={getIsRunning}
-        getHasActiveTask={getHasActiveTask}
-        getIsBreakRunning={getIsBreakRunning}
         testID={`${listTestID}-done`}
       />
     </View>

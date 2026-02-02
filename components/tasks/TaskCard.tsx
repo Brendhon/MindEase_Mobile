@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useTaskCard } from '@/hooks/tasks/useTaskCard';
 import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -12,19 +13,11 @@ import { styles } from './tasks-styles';
  * TaskCard Component - MindEase Mobile
  * Individual task card with title, status, description, subtask checklist (like web),
  * focus/break timer when in focus or on break, and action buttons.
+ * All business logic is provided by useTaskCard hook.
  */
 export interface TaskCardProps {
   /** Task data */
   task: Task;
-
-  /** Callback when Start focus is pressed */
-  onStartFocus?: (task: Task) => void;
-
-  /** Callback when Stop focus is pressed */
-  onStop?: (task: Task) => void;
-
-  /** Callback when Complete task is pressed */
-  onComplete?: (task: Task) => void;
 
   /** Callback when Edit is pressed */
   onEdit?: (task: Task) => void;
@@ -32,35 +25,30 @@ export interface TaskCardProps {
   /** Callback when Delete is pressed */
   onDelete?: (taskId: string) => void;
 
-  /** Callback when subtask is toggled (subtaskId); when not in focus, parent may show focus-required alert */
-  onToggleSubtask?: (subtaskId: string) => void;
-
-  /** Whether this task's focus timer is running (hides edit, shows Stop + Complete; enables checklist) */
-  isRunning?: boolean;
-
-  /** Whether another task is active (disables Start focus) */
-  hasActiveTask?: boolean;
-
-  /** Whether break is running for this task (shows only Stop) */
-  isBreakRunning?: boolean;
-
   /** Test ID for testing */
   testID?: string;
 }
 
 export function TaskCard({
   task,
-  onStartFocus,
-  onStop,
-  onComplete,
   onEdit,
   onDelete,
-  onToggleSubtask,
-  isRunning = false,
-  hasActiveTask = false,
-  isBreakRunning = false,
   testID,
 }: TaskCardProps) {
+  const {
+    cardClasses,
+    isRunning,
+    hasActiveTask,
+    isBreakRunning,
+    isChecklistInteractive,
+    handleStartFocus,
+    handleStop,
+    handleComplete,
+    handleEdit,
+    handleDelete,
+    handleToggleSubtask,
+  } = useTaskCard({ task, onEdit, onDelete, testId: testID });
+
   const { getText } = useTextDetail();
   const { fontSizeClasses } = useAccessibilityClasses();
 
@@ -86,19 +74,13 @@ export function TaskCard({
   const totalSubtasks = task.subtasks?.length ?? 0;
   const hasSubtasks = totalSubtasks > 0;
 
-  const cardClasses = useMemo(
-    () => (task.status === 2 ? `${styles.card} ${styles.cardDone}` : styles.card),
-    [task.status]
-  );
-
   const accessibilityLabel = useMemo(
     () => `${task.title}, ${statusLabel}${hasSubtasks ? `, ${completedSubtasks} ${getText('tasks_progress')} ${totalSubtasks} ${getText('tasks_progress_steps')}` : ''}`,
     [task.title, statusLabel, hasSubtasks, completedSubtasks, totalSubtasks, getText]
   );
 
   const showActions = task.status !== 2;
-  const hasAnyAction = Boolean(onStartFocus ?? onStop ?? onComplete ?? onEdit ?? onDelete);
-  const isChecklistInteractive = isRunning;
+  const hasAnyAction = Boolean(handleStartFocus || handleStop || handleComplete || handleEdit || handleDelete);
   const showContent =
     true &&
     (isRunning ||
@@ -148,7 +130,7 @@ export function TaskCard({
             {task.subtasks && task.subtasks.length > 0 && (
               <TaskChecklist
                 subtasks={task.subtasks}
-                onToggleSubtask={showActions ? onToggleSubtask : undefined}
+                onToggleSubtask={showActions ? handleToggleSubtask : undefined}
                 interactive={isChecklistInteractive}
                 isInFocus={isChecklistInteractive}
                 testID={testID ? `${testID}-checklist` : `task-card-checklist-${task.id}`}
@@ -160,11 +142,11 @@ export function TaskCard({
                 isRunning={isRunning}
                 hasActiveTask={hasActiveTask}
                 isBreakRunning={isBreakRunning}
-                onStartFocus={onStartFocus}
-                onStop={onStop}
-                onComplete={onComplete}
-                onEdit={onEdit}
-                onDelete={onDelete}
+                onStartFocus={handleStartFocus}
+                onStop={handleStop}
+                onComplete={handleComplete}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
                 testID={testID}
               />
             ) : null}

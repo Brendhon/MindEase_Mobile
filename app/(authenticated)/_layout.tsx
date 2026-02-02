@@ -1,6 +1,7 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
+import { SessionCompleteAlerts } from '@/components/session-complete/SessionCompleteAlerts';
 import {
   ExcessiveTimeAlertProvider,
   MissingBreakAlertProvider,
@@ -30,7 +31,7 @@ import {
   LogOutIcon,
   UserIcon,
 } from 'lucide-react-native';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
@@ -230,12 +231,14 @@ export default function AuthenticatedLayout() {
             <MissingBreakAlertProvider>
               <ProlongedNavigationAlertProvider>
                 <GestureHandlerRootView style={{ flex: 1 }}>
-                  <Drawer
-                    drawerContent={(props: DrawerContentComponentProps) => (
-                      <CustomDrawerContent {...props} />
-                    )}
-                    screenOptions={screenOptions}
-                  >
+                  <Fragment>
+                    <SessionCompleteAlerts />
+                    <Drawer
+                      drawerContent={(props: DrawerContentComponentProps) => (
+                        <CustomDrawerContent {...props} />
+                      )}
+                      screenOptions={screenOptions}
+                    >
                     <Drawer.Screen
                       name="dashboard"
                       options={{
@@ -269,7 +272,8 @@ export default function AuthenticatedLayout() {
                         headerTitle: getText('sidebar_profile'),
                       }}
                     />
-                  </Drawer>
+                    </Drawer>
+                  </Fragment>
                 </GestureHandlerRootView>
               </ProlongedNavigationAlertProvider>
             </MissingBreakAlertProvider>

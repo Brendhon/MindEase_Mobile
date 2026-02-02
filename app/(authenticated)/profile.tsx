@@ -1,6 +1,5 @@
+import { PageScrollView } from '@/components/layout';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { ScrollView } from 'react-native';
 
 /**
  * Profile Screen - MindEase Mobile
@@ -15,18 +14,9 @@ import { ScrollView } from 'react-native';
  * - Accessible design (WCAG compliant)
  */
 export default function ProfileScreen() {
-  const { spacingClasses } = useAccessibilityClasses();
-
   return (
-    <ScrollView
-      className={`${styles.container} ${spacingClasses.padding}`}
-      contentContainerStyle={{ flexGrow: 1 }}
-    >
+    <PageScrollView testID="profile-page-scroll">
       <ProfileInfo testID="profile-page-container" />
-    </ScrollView>
+    </PageScrollView>
   );
 }
-
-const styles = {
-  container: "flex-1 bg-bg-secondary",
-};

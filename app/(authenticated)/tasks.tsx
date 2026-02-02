@@ -1,10 +1,9 @@
+import { PageScrollView } from '@/components/layout';
 import { TasksContent, TasksLoading } from '@/components/tasks';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useAuth } from '@/hooks/auth';
 import { useTasks } from '@/hooks/tasks';
 import { useFocusTimer } from '@/hooks/timer';
 import React, { useCallback } from 'react';
-import { ScrollView } from 'react-native';
 
 /**
  * Tasks Screen - MindEase Mobile
@@ -17,7 +16,6 @@ import { ScrollView } from 'react-native';
  * - New Task, Edit, Delete (delete with confirmation, syncs with Firestore)
  */
 export default function TasksScreen() {
-  const { spacingClasses } = useAccessibilityClasses();
   const { user } = useAuth();
   const { tasks, loading, error, deleteTask } = useTasks();
   const { timerState, stopTimer } = useFocusTimer();
@@ -41,10 +39,7 @@ export default function TasksScreen() {
   const showLoading = loading && tasks.length === 0;
 
   return (
-    <ScrollView
-      className={`${styles.container} ${spacingClasses.padding}`}
-      contentContainerStyle={{ flexGrow: 1 }}
-    >
+    <PageScrollView testID="tasks-page-scroll">
       {showLoading ? (
         <TasksLoading testID="tasks-page-loading" />
       ) : (
@@ -55,10 +50,6 @@ export default function TasksScreen() {
           testID="tasks-page-container"
         />
       )}
-    </ScrollView>
+    </PageScrollView>
   );
 }
-
-const styles = {
-  container: 'flex-1 bg-bg-secondary',
-};

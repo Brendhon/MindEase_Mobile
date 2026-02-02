@@ -1,8 +1,7 @@
+import { PageScrollView } from '@/components/layout';
 import { DashboardContent } from '@/components/dashboard';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useTasks } from '@/hooks/tasks';
 import React from 'react';
-import { ScrollView } from 'react-native';
 
 /**
  * Dashboard Screen - MindEase Mobile
@@ -16,23 +15,15 @@ import { ScrollView } from 'react-native';
  * - Settings reset functionality
  */
 export default function DashboardScreen() {
-  const { spacingClasses } = useAccessibilityClasses();
   const { tasks, loading, error } = useTasks();
 
   return (
-    <ScrollView
-      className={`${styles.container} ${spacingClasses.padding}`}
-      contentContainerStyle={{ flexGrow: 1 }}
-    >
+    <PageScrollView testID="dashboard-page-scroll">
       <DashboardContent
         tasks={tasks}
         error={error}
         testID="dashboard-page-container"
       />
-    </ScrollView>
+    </PageScrollView>
   );
 }
-
-const styles = {
-  container: 'flex-1 bg-bg-secondary',
-};

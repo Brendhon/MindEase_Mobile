@@ -77,6 +77,16 @@ export function useFocusSessionCompleteAlert() {
       current.activeTaskId !== null &&
       prev.activeTaskId === current.activeTaskId;
 
+    // Reset "shown" ref when user started a new focus session (idle -> running)
+    // so the next completion will show the alert again
+    const startedNewSession =
+      prev.timerState === 'idle' &&
+      current.timerState === 'running' &&
+      current.activeTaskId !== null;
+    if (startedNewSession) {
+      hasShownForCurrentCompletionRef.current = false;
+    }
+
     if (completed && !hasShownForCurrentCompletionRef.current) {
       const taskId = current.activeTaskId;
       if (!taskId || !uid) {

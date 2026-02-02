@@ -259,6 +259,14 @@ sdk.dir=C:\\Users\\SEU_USUARIO\\AppData\\Local\\Android\\Sdk
 
 ---
 
+## 📲 Gerar APK para Android (app de teste / distribuição)
+
+Para compartilhar um app de teste (por exemplo, via Google Drive) para outras pessoas instalarem no Android, é necessário gerar um APK. O passo a passo completo está em um documento dedicado:
+
+> 📖 **[Como gerar o APK para Android](docs/guidelines/building-android-apk.md)** — EAS Build (recomendado) e build local, assinatura e resumo para distribuição no Drive.
+
+---
+
 ## 🔁 Relação com o Projeto Web
 
 * O MindEase Mobile reutiliza a lógica central do projeto web

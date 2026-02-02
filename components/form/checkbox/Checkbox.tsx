@@ -92,7 +92,7 @@ function CheckboxRoot({
       >
         {checked && (
           <Check
-            size={12}
+            size={16}
             color={THEME_COLORS.textWhite}
             className={styles.checkboxIcon}
             strokeWidth={4}

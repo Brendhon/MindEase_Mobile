@@ -6,7 +6,7 @@
 export const styles = {
   checklistContainer: 'flex flex-col gap-2',
   checklistProgress: 'text-text-secondary mb-2',
-  checklistList: 'flex flex-col gap-2',
+  checklistList: 'flex flex-col gap-6',
   checklistItem: 'flex flex-row items-start gap-2',
   checklistItemCompleted: 'opacity-60',
   checklistItemNonInteractive: 'opacity-70',

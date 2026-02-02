@@ -1,4 +1,5 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
+import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import React, { ReactNode, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import { Check } from 'lucide-react-native';
@@ -90,7 +91,12 @@ function CheckboxRoot({
         accessibilityLabel={accessibilityLabel}
       >
         {checked && (
-          <Check size={14} className={styles.checkboxIcon} strokeWidth={3} />
+          <Check
+            size={12}
+            color={THEME_COLORS.textWhite}
+            className={styles.checkboxIcon}
+            strokeWidth={4}
+          />
         )}
       </Pressable>
       {children ? (

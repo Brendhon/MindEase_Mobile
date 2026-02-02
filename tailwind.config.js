@@ -53,6 +53,7 @@ module.exports = {
     'bg-feedback-warning',
     'bg-feedback-info',
     'text-white',
+    'text-text-inverse',
     // Feedback border classes (for high contrast mode)
     'border-feedback-success',
     'border-feedback-error',

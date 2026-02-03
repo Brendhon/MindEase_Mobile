@@ -27,6 +27,7 @@ import { canCompleteTask, getPendingSubtasks } from '@/utils/tasks';
 import { styles } from '@/components/tasks/task-card/task-card-styles';
 import { useCallback, useMemo } from 'react';
 import { useTasks } from './useTasks';
+import { useCognitiveSettings } from '../cognitive-settings/useCognitiveSettings';
 
 /**
  * Build message string for "complete pending subtasks" alert (native Alert does not support React content)
@@ -64,6 +65,7 @@ export function useTaskCard({
   testId,
 }: UseTaskCardProps): UseTaskCardReturn {
   const { user } = useAuth();
+  const { settings } = useCognitiveSettings();
   const uid = user?.uid ?? null;
   const { updateTaskStatus, toggleSubtask, hasTasksInProgress } = useTasks();
   const {
@@ -82,7 +84,7 @@ export function useTaskCard({
   const isActive = isFocusActive(task.id);
   const isRunning = isFocusRunning(task.id);
   const isBreakRunningForTask = isBreakActive(task.id) && isBreakRunning(task.id);
-  const isFocused = isActive || isBreakActive(task.id);
+  const isFocused = (isActive || isBreakActive(task.id)) && settings.focusMode;
 
   const hasPendingSubtasks = useMemo(() => !canCompleteTask(task), [task]);
   const pendingSubtasks = useMemo(() => getPendingSubtasks(task), [task]);

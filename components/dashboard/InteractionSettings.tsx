@@ -29,7 +29,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
 
   const timerSettingsClasses = useMemo(
     () => `${styles.interactionSettings.timerSettingsContainer} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
+    [spacingClasses]
   );
 
   // Prepare focus duration items

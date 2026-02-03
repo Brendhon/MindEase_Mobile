@@ -48,7 +48,7 @@ export function ToastItemAnimated({ toast, onRemove, testID }: ToastItemAnimated
   const containerClasses = useMemo(
     () =>
       `${styles.itemContainer} ${spacingClasses.padding} ${spacingClasses.marginBottom} ${typeStyles.bgColor}`,
-    [spacingClasses.padding, spacingClasses.marginBottom, typeStyles.bgColor]
+    [spacingClasses, typeStyles.bgColor]
   );
 
   // Animate in on mount

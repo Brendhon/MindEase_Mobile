@@ -46,17 +46,17 @@ export function CognitiveAlertBanner({
   // Generate accessible classes with memoization
   const bannerClasses = useMemo(
     () => `${styles.cognitiveAlertBanner.banner} ${spacingClasses.padding}`,
-    [spacingClasses.padding]
+    [spacingClasses]
   );
 
   const titleClasses = useMemo(
     () => `${styles.cognitiveAlertBanner.title} ${fontSizeClasses.base}`,
-    [fontSizeClasses.base]
+    [fontSizeClasses]
   );
 
   const messageClasses = useMemo(
     () => `${styles.cognitiveAlertBanner.message} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
+    [fontSizeClasses]
   );
 
   const dismissAriaLabel = getText('cognitive_alerts_dismiss_aria') || 'Dismiss alert';

@@ -50,13 +50,10 @@ export function DashboardContent({ tasks, error, testID }: DashboardContentProps
   // Generate container classes with memoization
   const containerClasses = useMemo(
     () => `${styles.container} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
+    [spacingClasses]
   );
 
-  const contentClasses = useMemo(
-    () => `${styles.content} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
-  );
+  const contentClasses = useMemo(() => `${styles.content} ${spacingClasses.gap}`, [spacingClasses]);
 
   return (
     <View className={containerClasses} testID={testID || 'dashboard-content-container'}>

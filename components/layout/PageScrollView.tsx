@@ -1,5 +1,5 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { ScrollView } from 'react-native';
 
 /**
@@ -37,7 +37,10 @@ export const PageScrollView = forwardRef<ScrollView, PageScrollViewProps>(functi
 ) {
   const { spacingClasses } = useAccessibilityClasses();
 
-  const scrollClassName = `${styles.container} ${spacingClasses.padding} ${className}`.trim();
+  const scrollClassName = useMemo(
+    () => `${styles.container} ${spacingClasses.padding} ${className}`.trim(),
+    [spacingClasses, className]
+  );
 
   return (
     <ScrollView

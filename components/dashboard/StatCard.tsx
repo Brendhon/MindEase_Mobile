@@ -43,7 +43,7 @@ export function StatCard({
   // Generate card classes with memoization
   const cardClasses = useMemo(
     () => `${styles.dashboardStatsCards.card} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
+    [spacingClasses]
   );
 
   return (

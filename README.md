@@ -1,192 +1,140 @@
 # 🧠 MindEase – Plataforma de Acessibilidade Cognitiva (Mobile)
 
-Aplicação **mobile** desenvolvida com **React Native + Expo**, derivada do projeto **MindEase Web**, como evolução multiplataforma da proposta criada no **Hackathon Final da Pós-Graduação FIAP (Front-End)**.
+> Aplicação **mobile** do projeto **MindEase**, desenvolvida com React Native + Expo para oferecer uma experiência de acessibilidade cognitiva adaptada a dispositivos móveis.
 
-O foco central permanece o mesmo: **Acessibilidade Cognitiva**, com atenção especial a usuários que enfrentam desafios como:
+Este projeto é a evolução multiplataforma da [aplicação web](https://github.com/Brendhon/MindEase), focada em usuários com TDAH, TEA, Dislexia, Burnout e outras neurodivergências que impactam a interação com interfaces digitais.
 
-- TDAH
-- TEA (Autismo)
+---
+
+## 📜 Sumário
+
+- [🧠 MindEase – Plataforma de Acessibilidade Cognitiva (Mobile)](#-mindease--plataforma-de-acessibilidade-cognitiva-mobile)
+  - [📜 Sumário](#-sumário)
+  - [🎯 Sobre o Projeto](#-sobre-o-projeto)
+  - [✨ Funcionalidades Principais](#-funcionalidades-principais)
+    - [🔐 Autenticação Segura](#-autenticação-segura)
+    - [🧠 Dashboard Cognitivo](#-dashboard-cognitivo)
+    - [⏱️ Sessão de Foco](#️-sessão-de-foco)
+    - [🚨 Alertas Cognitivos](#-alertas-cognitivos)
+    - [✅ Organizador de Tarefas](#-organizador-de-tarefas)
+    - [⚙️ Perfil e Preferências](#️-perfil-e-preferências)
+  - [♿ Acessibilidade Cognitiva: O Pilar Central](#-acessibilidade-cognitiva-o-pilar-central)
+  - [🧱 Arquitetura e Stack](#-arquitetura-e-stack)
+    - [Arquitetura](#arquitetura)
+    - [Stack Tecnológica](#stack-tecnológica)
+  - [🚀 Como Rodar o Projeto](#-como-rodar-o-projeto)
+    - [Pré-requisitos](#pré-requisitos)
+    - [1. Instalação](#1-instalação)
+    - [2. Configuração do Firebase](#2-configuração-do-firebase)
+    - [3. Variáveis de Ambiente](#3-variáveis-de-ambiente)
+    - [4. Build e Execução](#4-build-e-execução)
+      - [Troubleshooting: Android SDK não encontrado](#troubleshooting-android-sdk-não-encontrado)
+  - [🧪 Testes e Qualidade de Código](#-testes-e-qualidade-de-código)
+    - [Rodar os testes unitários](#rodar-os-testes-unitários)
+    - [Qualidade de Código e CI](#qualidade-de-código-e-ci)
+  - [📲 Gerar APK para Android (app de teste / distribuição)](#-gerar-apk-para-android-app-de-teste--distribuição)
+  - [🌐 Relação com o Projeto Web](#-relação-com-o-projeto-web)
+  - [👥 Autor](#-autor)
+
+---
+
+## 🎯 Sobre o Projeto
+
+O MindEase Mobile expande o ecossistema MindEase, oferecendo uma **experiência nativa** projetada para reduzir a carga cognitiva em dispositivos móveis. O foco é garantir uma interação previsível, guiada e com baixa sobrecarga sensorial.
+
+A plataforma é desenhada para atender, com especial atenção, usuários que enfrentam desafios como:
+
+- TDAH (Transtorno do Déficit de Atenção com Hiperatividade)
+- TEA (Transtorno do Espectro Autista)
 - Dislexia
 - Burnout e sobrecarga mental
 - Ansiedade em interfaces digitais
 - Dificuldades de foco, organização e autorregulação
 
-O **MindEase Mobile** não é uma simples adaptação visual da versão web. Ele foi **reprojetado para o contexto mobile**, respeitando limitações, padrões de interação e recursos nativos, mantendo o máximo possível da **lógica de domínio, regras e estados compartilhados**.
+Diferente da web, o ambiente mobile impõe desafios de interação (toque, gestos) e cognição. Por isso, a aplicação foi estruturada para minimizar decisões simultâneas, guiar o usuário por fluxos claros e reduzir estímulos visuais desnecessários.
 
 ---
 
-## 🎯 Objetivo do Projeto
+## ✨ Funcionalidades Principais
 
-O objetivo do projeto é expandir o MindEase para o ecossistema mobile, garantindo:
+Cada funcionalidade foi desenhada com uma **responsabilidade única** para evitar sobrecarga cognitiva.
 
-- Reuso de lógica e regras de negócio da versão web
-- Arquitetura limpa e sustentável (Clean Architecture)
-- Experiência mobile previsível, guiada e com baixa carga cognitiva
-- Uso consciente de recursos nativos (gestos, notificações, acessibilidade)
-- Persistência de preferências por usuário
-- Autenticação segura
+### 🔐 Autenticação Segura
 
-Além do aspecto técnico, o projeto prioriza **decisões de UX baseadas em neurodiversidade**, adaptadas ao uso em dispositivos móveis.
+- Login simplificado com Google (Firebase Authentication).
+- Fluxo nativo via Expo, sem formulários complexos.
+- Criação automática do perfil de usuário no Firestore.
 
----
+### 🧠 Dashboard Cognitivo
 
-## 📱 Contexto Mobile
-
-Diferente da web, o ambiente mobile apresenta desafios específicos:
-
-- Interação predominantemente por toque e gestos
-- Ausência de teclado físico como padrão
-- Navegação não baseada em URLs
-- Acessibilidade orientada a leitores de tela e gestos
-
-Por isso, o MindEase Mobile foi estruturado para:
-
-- Minimizar decisões simultâneas
-- Guiar o usuário por fluxos claros
-- Reduzir estímulos visuais desnecessários
-- Manter consistência entre telas
-
----
-
-## ♿ Acessibilidade Cognitiva (Pilar Central)
-
-A aplicação segue princípios práticos de **Cognitive Load Reduction**, aplicados especificamente ao mobile:
-
-- Sessões de foco com tempo controlado e pausas orientadas
-- Modo foco para reduzir estímulos visuais
-- Alertas cognitivos contextuais e não intrusivos
-- Ritmo guiado de uso (evita hiperfoco prolongado)
-- Interface progressiva (menos informações por tela)
-- Animações opcionais e controladas
-
-### Acessibilidade no React Native
-
-A aplicação utiliza recursos nativos de acessibilidade:
-
-- `accessibilityLabel`
-- `accessibilityHint`
-- `accessibilityRole`
-- Compatibilidade com leitores de tela (TalkBack / VoiceOver)
-
-> ⚠️ Diferente da web, não há dependência de ARIA ou navegação por teclado.
-
----
-
-## 🧠 Estrutura Funcional e Responsabilidade das Telas
-
-Cada tela possui **responsabilidade única**, evitando sobrecarga cognitiva.
-
-### 🔐 Autenticação
-
-- Login com Google via Firebase Authentication
-- Fluxo compatível com Expo (OAuth nativo)
-- Criação automática do perfil do usuário no Firestore
-
-### 🧠 Home / Dashboard Cognitivo
-
-- Visão resumida do estado atual do usuário
-- Ativação rápida do modo foco
-- Acesso direto às sessões de foco e tarefas
-- Exibição apenas de informações relevantes no momento
+- Visão resumida e centralizada do estado do usuário.
+- Acesso rápido ao modo foco e às tarefas principais.
+- Exibição de informações contextuais e relevantes.
 
 ### ⏱️ Sessão de Foco
 
-- Timer adaptável inspirado no Pomodoro
-- Opções pré-definidas de foco e pausa
-- Pausas obrigatórias para evitar hiperfoco
-- Feedback visual e cognitivo claro ao final de ciclos
+- Timer adaptável inspirado no método Pomodoro, com ciclos de foco e pausa.
+- Pausas orientadas para evitar hiperfoco e fadiga mental.
+- Feedback claro ao final de cada ciclo.
 
 ### 🚨 Alertas Cognitivos
 
-- Intervenções conscientes, não notificações constantes
-- Exibidos apenas quando:
-  - O tempo de foco ultrapassa limites seguros
-  - É necessário iniciar ou encerrar uma pausa
-  - O usuário retorna ao app após inatividade
+- Intervenções conscientes e não intrusivas.
+- Acionados em momentos estratégicos, como excesso de tempo em uma tarefa ou necessidade de pausa, para auxiliar na autorregulação.
 
 ### ✅ Organizador de Tarefas
 
-- Tarefas simples e hierarquizadas
-- Subtarefas em checklist
-- Redução de decisões simultâneas
-- Integração opcional com sessões de foco
+- Criação de tarefas simples com subtarefas (checklist).
+- Interface desenhada para reduzir a paralisia decisória.
+- Integração opcional com as sessões de foco.
 
 ### ⚙️ Perfil e Preferências
 
-- Tamanho de fonte
-- Espaçamento
-- Contraste
-- Redução de movimento
-- Persistência automática por usuário
+- Ajustes de acessibilidade como tamanho de fonte, espaçamento e contraste.
+- Opção para reduzir movimento e animações.
+- Preferências salvas automaticamente por usuário.
 
 ---
 
-## 🧱 Arquitetura
+## ♿ Acessibilidade Cognitiva: O Pilar Central
 
-O projeto segue **Clean Architecture**, com separação clara entre:
+A aplicação utiliza recursos nativos de acessibilidade do React Native (`accessibilityLabel`, `accessibilityHint`, etc.) e é compatível com leitores de tela (TalkBack/VoiceOver).
 
-- **Domain**: regras de negócio, lógica de foco, alertas e validações
-- **Application**: hooks e contexts compartilhados
-- **Infrastructure**: Firebase, storage, autenticação
-- **UI (Mobile)**: componentes e telas React Native
+Os princípios de **Cognitive Load Reduction** são aplicados de forma prática:
 
-A lógica compartilhada foi extraída da versão web sempre que possível, evitando duplicação.
+- **Ritmo Guiado**: A interface evita hiperfoco prolongado e guia o usuário.
+- **Interface Progressiva**: Menos informações são exibidas por tela.
+- **Estímulos Controlados**: Animações e alertas são opcionais e contextuais.
 
----
-
-## 🚀 Stack Utilizada (Mobile)
-
-### Mobile
-
-- **React Native**
-- **Expo**
-- **TypeScript**
-- **NativeWind** (Tailwind no React Native)
-- **Expo Router**
-- **Firebase Authentication**
-- **Firestore**
-- **Zod**
-
-### Animações
-
-- **react-native-reanimated** (uso pontual e opcional)
+> ⚠️ Diferente da web, não há dependência de ARIA ou navegação por teclado. A acessibilidade é focada em gestos e leitores de tela.
 
 ---
 
-## 🧪 Testes
+## 🧱 Arquitetura e Stack
 
-Os testes no ambiente mobile seguem abordagens específicas:
+### Arquitetura
 
-- **Testes unitários**: Jest + jest-expo + React Native Testing Library (funções puras e poucos componentes simples).
-- Testes de lógica e domínio reutilizados
-- Testes de componentes com Testing Library (React Native)
-- Testes E2E planejados com Detox (futuro)
+O projeto segue os princípios da **Clean Architecture**, garantindo separação de responsabilidades e reuso de código. A lógica de domínio (regras de negócio, validações) é compartilhada com a versão web sempre que possível.
 
-O foco principal é validar **comportamento do usuário** e não implementação interna.
+- **Domain**: Regras de negócio, lógica de foco e alertas.
+- **Application**: Hooks e contexts que orquestram o fluxo de dados.
+- **Infrastructure**: Serviços externos como Firebase (Auth, Firestore).
+- **UI (Mobile)**: Componentes e telas em React Native.
 
-### Rodar os testes unitários
+### Stack Tecnológica
 
-```bash
-npm run test
-```
-
-Para modo watch (re-executa ao alterar arquivos):
-
-```bash
-npm run test:watch
-```
-
-Os arquivos de teste ficam em pastas `__tests__` ao lado do código (ex.: `utils/timer/__tests__/timer-helpers-test.ts`, `components/ui/button/__tests__/ButtonText-test.tsx`).
-
-### Qualidade de código e CI
-
-**Antes do commit (local):** o [Husky](.husky/) configura um hook **pre-commit** que roda [lint-staged](.lintstagedrc.json) nos arquivos staged — Prettier e ESLint (`--fix`). Assim o código já entra formatado e sem erros de lint no commit.
-
-**No pull request:** o CI executa automaticamente **testes** (`npm run test`) e **lint** (`npm run lint`) para validar as mudanças antes do merge. O workflow está em [`.github/workflows/ci-mobile.yml`](.github/workflows/ci-mobile.yml).
+- **React Native** e **Expo**: Base do desenvolvimento mobile.
+- **TypeScript**: Tipagem estática para segurança e manutenibilidade.
+- **NativeWind**: Tailwind CSS para React Native.
+- **Expo Router**: Sistema de navegação baseado em arquivos.
+- **Firebase**: Autenticação e banco de dados (Firestore).
+- **React Hook Form** e **Zod**: Formulários e validação de dados.
+- **Vitest**: Testes unitários e de componentes.
+- **React Native Reanimated**: Animações pontuais e opcionais.
 
 ---
 
-## 📦 Como Rodar o Projeto
+## 🚀 Como Rodar o Projeto
 
 **Quer apenas experimentar o app?** Baixe o [APK de testes no Google Drive](https://drive.google.com/file/d/1Tp_kh-MkFM5MhrZDHKaDKd1Hi_QDf4E8/view?usp=drive_link) e instale no Android. Não é necessário configurar ambiente nem Firebase para testar.
 
@@ -257,28 +205,38 @@ cd ios && pod install && cd ..
 npm run ios
 ```
 
-### Troubleshooting: Android SDK não encontrado
+#### Troubleshooting: Android SDK não encontrado
 
 Se ao executar `npm run android` você receber erro relacionado ao SDK não encontrado, crie manualmente o arquivo `android/local.properties`:
 
 ```properties
-sdk.dir=C:\\Users\\SEU_USUARIO\\AppData\\Local\\Android\\Sdk
+sdk.dir=C:\Users\SEU_USUARIO\AppData\Local\Android\Sdk
 ```
 
-> **Por que isso acontece?** O Gradle precisa saber onde o Android SDK está instalado. Normalmente ele detecta via variável de ambiente `ANDROID_HOME`, mas no Windows isso pode falhar se a variável não estiver configurada ou o terminal foi aberto antes da configuração.
+Para evitar isso no futuro, configure a variável de ambiente `ANDROID_HOME` com o caminho do SDK.
 
-**Para evitar isso no futuro**, configure a variável de ambiente:
+---
 
-1. Abra "Variáveis de Ambiente" do Windows
-2. Adicione `ANDROID_HOME` com valor `C:\Users\SEU_USUARIO\AppData\Local\Android\Sdk`
-3. Reinicie o terminal/IDE
+## 🧪 Testes e Qualidade de Código
 
-### Dispositivos Suportados
+### Rodar os testes unitários
 
-| Plataforma  | Requisito                                      |
-| ----------- | ---------------------------------------------- |
-| **Android** | Emulador com Google Play ou dispositivo físico |
-| **iOS**     | Simulador ou dispositivo físico (apenas macOS) |
+Os testes validam principalmente o comportamento do usuário e as regras de negócio.
+
+```bash
+npm run test
+```
+
+Para modo watch (re-executa ao alterar arquivos):
+
+```bash
+npm run test:watch
+```
+
+### Qualidade de Código e CI
+
+- **Husky + lint-staged**: Antes de cada commit, `Prettier` e `ESLint` são executados para garantir formatação e qualidade do código.
+- **GitHub Actions**: Em cada pull request, o workflow de CI executa testes e lint para validar as mudanças. Veja a configuração em [`.github/workflows/ci-mobile.yml`](.github/workflows/ci-mobile.yml).
 
 ---
 
@@ -290,13 +248,13 @@ Para compartilhar um app de teste (por exemplo, via Google Drive) para outras pe
 
 ---
 
-## 🔁 Relação com o Projeto Web
+## 🌐 Relação com o Projeto Web
 
-- O MindEase Mobile reutiliza a lógica central do projeto web
-- UI e navegação foram recriadas para mobile
-- Acessibilidade foi reinterpretada para leitores de tela e gestos
+- O MindEase Mobile reutiliza a lógica central do projeto web.
+- A UI e navegação foram recriadas para o contexto mobile.
+- A acessibilidade foi reinterpretada para leitores de tela e gestos.
 
-Projeto Web:
+**Projeto Web:**
 
 - Site: [https://mind-ease-web.vercel.app](https://mind-ease-web.vercel.app)
 - GitHub: [https://github.com/Brendhon/MindEase](https://github.com/Brendhon/MindEase)

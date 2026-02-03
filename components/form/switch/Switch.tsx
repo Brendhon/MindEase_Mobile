@@ -50,13 +50,18 @@ function SwitchRoot({
     [spacingClasses.gap, className]
   );
 
+  const [toggle, ...content] = React.Children.toArray(children);
+
   return (
     <View
       className={containerClasses}
       testID={testID || 'switch-container'}
       accessibilityRole="none"
     >
-      {children}
+      {toggle}
+      {content.length > 0 && (
+        <View className={styles.content}>{content}</View>
+      )}
     </View>
   );
 }

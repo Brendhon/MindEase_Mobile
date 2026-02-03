@@ -188,7 +188,9 @@ Os arquivos de teste ficam em pastas `__tests__` ao lado do código (ex.: `utils
 
 ## 📦 Como Rodar o Projeto
 
-> ⚠️ **Importante**: Este projeto utiliza módulos nativos e **NÃO funciona com Expo Go**. É necessário um **development build**.
+**Quer apenas experimentar o app?** Baixe o [APK de testes no Google Drive](https://drive.google.com/file/d/1Tp_kh-MkFM5MhrZDHKaDKd1Hi_QDf4E8/view?usp=drive_link) e instale no Android. Não é necessário configurar ambiente nem Firebase para testar.
+
+> ⚠️ **Importante**: Para rodar o projeto a partir do código-fonte, este projeto utiliza módulos nativos e **NÃO funciona com Expo Go**. É necessário um **development build**.
 
 ### Pré-requisitos
 

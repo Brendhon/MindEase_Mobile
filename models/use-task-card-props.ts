@@ -18,6 +18,9 @@ export interface UseTaskCardProps {
   /** Callback when task is deleted */
   onDelete?: (taskId: string) => void;
 
+  /** Callback when task moves to another column (e.g. for scroll-into-view; newStatus 0/1/2) */
+  onTaskMovedToColumn?: (newStatus: number) => void;
+
   /** Test ID for testing (used internally by hook) */
   testId?: string;
 }

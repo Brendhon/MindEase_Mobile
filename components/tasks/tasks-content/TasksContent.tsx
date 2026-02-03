@@ -4,6 +4,7 @@ import { Task } from '@/models/task';
 import { TaskDialogOutputData } from '@/schemas/task-dialog.schema';
 import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
+import type { LayoutChangeEvent } from 'react-native';
 import { TaskDialog } from '../task-dialog';
 import { TaskList } from '../task-list';
 import { TasksError } from './TasksError';
@@ -22,6 +23,15 @@ export interface TasksContentProps {
 
   /** Error message if any */
   error?: string | null;
+
+  /** Callback when the task list area (wrapper of TaskList) has layout; used for scroll-into-view */
+  onTaskListAreaLayout?: (layout: { y: number }) => void;
+
+  /** Callback when a column has layout (index 0|1|2, layout); used for scroll-into-view */
+  onColumnLayout?: (index: 0 | 1 | 2, layout: { y: number; height: number }) => void;
+
+  /** Callback to scroll to a column when a task moves (0 = To Do, 1 = In Progress, 2 = Done) */
+  onScrollToColumn?: (status: number) => void;
 
   /** Callback to delete a task (after confirmation in TaskCard); same contract as web handleDeleteTask */
   onDelete?: (taskId: string) => void | Promise<void>;
@@ -42,6 +52,9 @@ export interface TasksContentProps {
 export function TasksContent({
   tasks,
   error,
+  onTaskListAreaLayout,
+  onColumnLayout,
+  onScrollToColumn,
   onDelete,
   onCreateTask,
   onUpdateTask,
@@ -113,9 +126,19 @@ export function TasksContent({
         testID={testID ? `${testID}-toolbar` : 'tasks-toolbar'}
       />
 
-      <View className={contentClasses}>
+      <View
+        className={contentClasses}
+        onLayout={
+          onTaskListAreaLayout
+            ? (e: LayoutChangeEvent) =>
+                onTaskListAreaLayout(e.nativeEvent.layout)
+            : undefined
+        }
+      >
         <TaskList
           tasks={tasks}
+          onColumnLayout={onColumnLayout}
+          onScrollToColumn={onScrollToColumn}
           onEdit={handleEdit}
           onDelete={onDelete}
           testID={testID ? `${testID}-list` : 'tasks-list'}

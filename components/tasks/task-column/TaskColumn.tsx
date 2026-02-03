@@ -1,7 +1,7 @@
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { TaskCard } from '../task-card';
 import { styles } from './task-column-styles';
@@ -27,18 +27,29 @@ export interface TaskColumnProps {
   /** Callback when task Delete is confirmed */
   onDelete?: (taskId: string) => void;
 
+  /** Callback when this column has layout (index 0|1|2, layout); used for scroll-into-view */
+  onColumnLayout?: (index: 0 | 1 | 2, layout: { y: number; height: number }) => void;
+
+  /** Callback when a task moves to another column (for scroll-into-view) */
+  onScrollToColumn?: (status: number) => void;
+
   /** Test ID for testing */
   testID?: string;
 }
 
-export function TaskColumn({
-  titleKey,
-  tasks,
-  status,
-  onEdit,
-  onDelete,
-  testID,
-}: TaskColumnProps) {
+export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
+  {
+    titleKey,
+    tasks,
+    status,
+    onEdit,
+    onDelete,
+    onColumnLayout,
+    onScrollToColumn,
+    testID,
+  },
+  ref
+) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
 
@@ -78,12 +89,23 @@ export function TaskColumn({
 
   const columnTestID = testID || `task-column-${status}`;
 
+  const handleLayout = useMemo(
+    () =>
+      onColumnLayout && status >= 0 && status <= 2
+        ? (e: { nativeEvent: { layout: { y: number; height: number } } }) =>
+            onColumnLayout(status as 0 | 1 | 2, e.nativeEvent.layout)
+        : undefined,
+    [onColumnLayout, status]
+  );
+
   return (
     <View
+      ref={ref}
       className={styles.column}
       testID={columnTestID}
       accessibilityRole="summary"
       accessibilityLabel={columnLabel}
+      onLayout={handleLayout}
     >
       <View className={columnHeaderClasses}>
         <Text className={columnTitleClasses}>{getText(titleKey)}</Text>
@@ -111,6 +133,7 @@ export function TaskColumn({
               task={task}
               onEdit={onEdit}
               onDelete={onDelete}
+              onTaskMovedToColumn={onScrollToColumn}
               testID={`${columnTestID}-item-${task.id}`}
             />
           ))
@@ -118,6 +141,6 @@ export function TaskColumn({
       </View>
     </View>
   );
-}
+});
 
 TaskColumn.displayName = 'TaskColumn';

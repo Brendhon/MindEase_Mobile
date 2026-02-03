@@ -61,6 +61,7 @@ export function useTaskCard({
   task,
   onEdit,
   onDelete,
+  onTaskMovedToColumn,
   testId,
 }: UseTaskCardProps): UseTaskCardReturn {
   const { user } = useAuth();
@@ -103,13 +104,14 @@ export function useTaskCard({
     const startTimerAndRecord = () => {
       startTimer(task.id);
       recordUserAction();
+      onTaskMovedToColumn?.(1);
     };
     if (uid) {
       updateTaskStatus(uid, task.id, 1).then(startTimerAndRecord);
     } else {
       startTimerAndRecord();
     }
-  }, [startTimer, task.id, uid, updateTaskStatus, recordUserAction]);
+  }, [startTimer, task.id, uid, updateTaskStatus, recordUserAction, onTaskMovedToColumn]);
 
   const handleStop = useCallback(() => {
     stopBreak();
@@ -118,7 +120,8 @@ export function useTaskCard({
       updateTaskStatus(uid, task.id, 0);
     }
     recordTaskFinished();
-  }, [stopBreak, stopTimer, task.id, uid, updateTaskStatus, recordTaskFinished]);
+    onTaskMovedToColumn?.(0);
+  }, [stopBreak, stopTimer, task.id, uid, updateTaskStatus, recordTaskFinished, onTaskMovedToColumn]);
 
   const handleComplete = useCallback(() => {
     if (hasPendingSubtasks) {
@@ -137,6 +140,7 @@ export function useTaskCard({
         updateTaskStatus(uid, task.id, 2);
       }
       recordTaskFinished();
+      onTaskMovedToColumn?.(2);
     }
   }, [
     hasPendingSubtasks,
@@ -148,6 +152,7 @@ export function useTaskCard({
     uid,
     updateTaskStatus,
     recordTaskFinished,
+    onTaskMovedToColumn,
   ]);
 
   const handleEdit = useCallback(() => {

@@ -14,6 +14,12 @@ export interface TaskListProps {
   /** Tasks to display */
   tasks: Task[];
 
+  /** Callback when a column has layout (index 0|1|2, layout); used for scroll-into-view */
+  onColumnLayout?: (index: 0 | 1 | 2, layout: { y: number; height: number }) => void;
+
+  /** Callback to scroll to a column when a task moves */
+  onScrollToColumn?: (status: number) => void;
+
   /** Callback when task Edit is pressed (e.g. demo) */
   onEdit?: (task: Task) => void;
 
@@ -26,6 +32,8 @@ export interface TaskListProps {
 
 export function TaskList({
   tasks,
+  onColumnLayout,
+  onScrollToColumn,
   onEdit,
   onDelete,
   testID,
@@ -74,24 +82,30 @@ export function TaskList({
         titleKey="tasks_column_todo"
         tasks={tasks}
         status={0}
+        onColumnLayout={onColumnLayout}
         onEdit={onEdit}
         onDelete={onDelete}
+        onScrollToColumn={onScrollToColumn}
         testID={`${listTestID}-todo`}
       />
       <TaskColumn
         titleKey="tasks_column_in_progress"
         tasks={tasks}
         status={1}
+        onColumnLayout={onColumnLayout}
         onEdit={onEdit}
         onDelete={onDelete}
+        onScrollToColumn={onScrollToColumn}
         testID={`${listTestID}-in-progress`}
       />
       <TaskColumn
         titleKey="tasks_column_done"
         tasks={tasks}
         status={2}
+        onColumnLayout={onColumnLayout}
         onEdit={onEdit}
         onDelete={onDelete}
+        onScrollToColumn={onScrollToColumn}
         testID={`${listTestID}-done`}
       />
     </View>

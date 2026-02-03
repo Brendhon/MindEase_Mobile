@@ -1,5 +1,5 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { ScrollView } from 'react-native';
 
 /**
@@ -10,6 +10,8 @@ import { ScrollView } from 'react-native';
  * - flex-1 bg-bg-secondary for container
  * - contentContainerStyle flexGrow: 1 for proper content stretch
  * - spacingClasses.padding from accessibility (responsive to user preferences)
+ *
+ * Forwards ref to the underlying ScrollView for imperative scroll control (e.g. scrollTo).
  *
  * @example
  * ```tsx
@@ -29,25 +31,24 @@ export interface PageScrollViewProps {
   testID?: string;
 }
 
-export function PageScrollView({
-  children,
-  className = '',
-  testID,
-}: PageScrollViewProps) {
-  const { spacingClasses } = useAccessibilityClasses();
+export const PageScrollView = forwardRef<ScrollView, PageScrollViewProps>(
+  function PageScrollView({ children, className = '', testID }, ref) {
+    const { spacingClasses } = useAccessibilityClasses();
 
-  const scrollClassName = `${styles.container} ${spacingClasses.padding} ${className}`.trim();
+    const scrollClassName = `${styles.container} ${spacingClasses.padding} ${className}`.trim();
 
-  return (
-    <ScrollView
-      className={scrollClassName}
-      contentContainerStyle={styles.contentContainer}
-      testID={testID}
-    >
-      {children}
-    </ScrollView>
-  );
-}
+    return (
+      <ScrollView
+        ref={ref}
+        className={scrollClassName}
+        contentContainerStyle={styles.contentContainer}
+        testID={testID}
+      >
+        {children}
+      </ScrollView>
+    );
+  }
+);
 
 PageScrollView.displayName = 'PageScrollView';
 

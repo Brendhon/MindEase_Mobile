@@ -25,6 +25,9 @@ export interface TaskCardProps {
   /** Callback when Delete is pressed */
   onDelete?: (taskId: string) => void;
 
+  /** Callback when task moves to another column (for scroll-into-view) */
+  onTaskMovedToColumn?: (newStatus: number) => void;
+
   /** Test ID for testing */
   testID?: string;
 }
@@ -33,6 +36,7 @@ export function TaskCard({
   task,
   onEdit,
   onDelete,
+  onTaskMovedToColumn,
   testID,
 }: TaskCardProps) {
   const {
@@ -48,7 +52,13 @@ export function TaskCard({
     handleEdit,
     handleDelete,
     handleToggleSubtask,
-  } = useTaskCard({ task, onEdit, onDelete, testId: testID });
+  } = useTaskCard({
+    task,
+    onEdit,
+    onDelete,
+    onTaskMovedToColumn,
+    testId: testID,
+  });
 
   const { getText } = useTextDetail();
   const { fontSizeClasses } = useAccessibilityClasses();

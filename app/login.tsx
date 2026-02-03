@@ -43,10 +43,7 @@ export default function LoginScreen() {
   }, [isAuthenticated]);
 
   // Generate dynamic classes based on user preferences
-  const cardClasses = useMemo(
-    () => `${styles.card} ${spacingClasses.padding}`,
-    [spacingClasses.padding]
-  );
+  const cardClasses = useMemo(() => `${styles.card} ${spacingClasses.padding}`, [spacingClasses]);
 
   const titleClasses = useMemo(
     () => `${styles.title} ${fontSizeClasses['3xl']}`,

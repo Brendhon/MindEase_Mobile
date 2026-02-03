@@ -1,14 +1,15 @@
 import { PageScrollView } from '@/components/layout';
 import { TasksContent, TasksLoading } from '@/components/tasks/tasks-content';
 import { useAuth } from '@/hooks/auth';
+import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useTasks } from '@/hooks/tasks';
 import { useFocusTimer } from '@/hooks/timer';
 import { TaskDialogOutputData } from '@/schemas/task-dialog.schema';
 import React, { useCallback, useRef } from 'react';
 import { ScrollView } from 'react-native';
 
-const SCROLL_TO_COLUMN_PADDING = 24;
-const SCROLL_DELAY_MS = 100;
+const SCROLL_TO_COLUMN_PADDING = 0;
+const SCROLL_DELAY_MS = 10;
 
 type ColumnLayout = { y: number; height: number };
 
@@ -25,6 +26,7 @@ type ColumnLayout = { y: number; height: number };
  */
 export default function TasksScreen() {
   const { user } = useAuth();
+  const { settings } = useCognitiveSettings();
   const { tasks, loading, error, createTask, updateTask, deleteTask } = useTasks();
   const { timerState, stopTimer } = useFocusTimer();
   const scrollViewRef = useRef<ScrollView>(null);
@@ -44,16 +46,19 @@ export default function TasksScreen() {
   }, []);
 
   /** Scroll to the given column (0 = To Do, 1 = In Progress, 2 = Done) using stored layout */
-  const scrollToColumn = useCallback((status: 0 | 1 | 2) => {
-    const scrollRef = scrollViewRef.current;
-    if (!scrollRef) return;
-    setTimeout(() => {
-      const areaY = taskListAreaYRef.current;
-      const col = columnLayoutsRef.current[status];
-      const y = Math.max(0, areaY + col.y - SCROLL_TO_COLUMN_PADDING);
-      scrollRef.scrollTo({ y, animated: true });
-    }, SCROLL_DELAY_MS);
-  }, []);
+  const scrollToColumn = useCallback(
+    (status: 0 | 1 | 2) => {
+      const scrollRef = scrollViewRef.current;
+      if (!scrollRef) return;
+      setTimeout(() => {
+        const areaY = taskListAreaYRef.current;
+        const col = columnLayoutsRef.current[status];
+        const y = Math.max(0, areaY + col.y - SCROLL_TO_COLUMN_PADDING);
+        scrollRef.scrollTo({ y, animated: settings.animations });
+      }, SCROLL_DELAY_MS);
+    },
+    [settings]
+  );
 
   /** Delete task (after confirmation in TaskCard); stop timer if deleted task was active */
   const handleDeleteTask = useCallback(

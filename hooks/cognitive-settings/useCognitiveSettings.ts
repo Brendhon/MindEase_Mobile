@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useCognitiveSettingsContext } from '@/contexts/cognitive-settings';
 import { useAuthContext } from '@/contexts/auth';
@@ -14,7 +14,7 @@ import { userPreferencesService } from '@/services/user-preferences';
  * - CRUD operations for settings
  * - State management with Firestore synchronization
  * - Loading and error handling
- * - Automatic loading when user authenticates
+ * - Real-time sync when user authenticates (web and mobile stay in sync)
  *
  * For Tailwind classes generation, use `useAccessibilityClasses` hook instead.
  * For text detail helpers, use `useTextDetail` hook instead.
@@ -52,63 +52,56 @@ export function useCognitiveSettings() {
     useCognitiveSettingsContext();
   const { user } = useAuthContext();
 
-  // Track if settings have been loaded for current user
-  const loadedForUserRef = useRef<string | null>(null);
-
   /**
-   * Load settings from Firestore
-   * Called automatically when user authenticates
+   * Revert local state from Firestore (used on write error only).
+   * Not exposed; real-time subscription keeps state in sync otherwise.
    */
-  const loadSettings = useCallback(
-    async (userId?: string) => {
-      const targetUserId = userId || user?.uid;
-
-      if (!targetUserId) {
-        // No user, use defaults
-        _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
-        return;
-      }
-
+  const revertFromServer = useCallback(
+    async (userId: string) => {
       _setLoading(true);
       _setError(null);
-
       try {
-        const preferences = await userPreferencesService.getUserPreferences(targetUserId);
-
+        const preferences = await userPreferencesService.getUserPreferences(userId);
         _setSettings(preferences);
-        loadedForUserRef.current = targetUserId;
       } catch (err) {
         console.error('Error loading user preferences:', err);
         _setError(err instanceof Error ? err : new Error('Failed to load preferences'));
-        // Fallback to defaults on error
         _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
       } finally {
         _setLoading(false);
       }
     },
-    [user?.uid, _setSettings, _setLoading, _setError]
+    [_setSettings, _setLoading, _setError]
   );
 
   /**
-   * Auto-load settings when user changes
-   * This ensures the UI is updated with user preferences when they log in
+   * Subscribe to user preferences for real-time sync (web + mobile).
+   * Cleanup on unmount or user change.
    */
   useEffect(() => {
-    // Skip if already loaded for this user
-    if (user?.uid && loadedForUserRef.current === user.uid) {
-      return;
-    }
-
-    // Reset loaded ref when user changes
     if (!user?.uid) {
-      loadedForUserRef.current = null;
       _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
       return;
     }
 
-    // Load settings for new user
-    loadSettings(user.uid);
-  }, [user?.uid, loadSettings, _setSettings]);
+    _setLoading(true);
+    _setError(null);
+
+    const unsubscribe = userPreferencesService.subscribeUserPreferences(
+      user.uid,
+      (preferences) => {
+        _setSettings(preferences);
+        _setLoading(false);
+        _setError(null);
+      },
+      (err) => {
+        _setError(err);
+        _setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [user?.uid, _setSettings, _setLoading, _setError]);
 
   /**
    * Update a single setting
@@ -127,12 +120,11 @@ export function useCognitiveSettings() {
           });
         } catch (err) {
           console.error('Error syncing setting to Firestore:', err);
-          // Revert on error by reloading from Firestore
-          await loadSettings(user.uid);
+          await revertFromServer(user.uid);
         }
       }
     },
-    [user?.uid, _setSettings, loadSettings]
+    [user?.uid, _setSettings, revertFromServer]
   );
 
   /**
@@ -150,12 +142,11 @@ export function useCognitiveSettings() {
           await userPreferencesService.updateUserPreferences(user.uid, newSettings);
         } catch (err) {
           console.error('Error syncing settings to Firestore:', err);
-          // Revert on error by reloading from Firestore
-          await loadSettings(user.uid);
+          await revertFromServer(user.uid);
         }
       }
     },
-    [user?.uid, _setSettings, loadSettings]
+    [user?.uid, _setSettings, revertFromServer]
   );
 
   /**
@@ -172,11 +163,10 @@ export function useCognitiveSettings() {
         await userPreferencesService.resetUserPreferences(user.uid);
       } catch (err) {
         console.error('Error resetting settings in Firestore:', err);
-        // Revert on error by reloading from Firestore
-        await loadSettings(user.uid);
+        await revertFromServer(user.uid);
       }
     }
-  }, [user?.uid, _setSettings, loadSettings]);
+  }, [user?.uid, _setSettings, revertFromServer]);
 
   return {
     // State
@@ -185,7 +175,6 @@ export function useCognitiveSettings() {
     error,
 
     // Operations
-    loadSettings,
     updateSetting,
     updateSettings,
     resetSettings,

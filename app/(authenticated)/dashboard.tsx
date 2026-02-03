@@ -18,7 +18,7 @@ export default function DashboardScreen() {
   const { tasks, error } = useTasks();
 
   return (
-    <PageScrollView testID="dashboard-page-scroll">
+    <PageScrollView testID="dashboard-page-scroll-view">
       <DashboardContent tasks={tasks} error={error} testID="dashboard-page-container" />
     </PageScrollView>
   );

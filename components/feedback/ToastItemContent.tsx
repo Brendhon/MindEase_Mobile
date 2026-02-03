@@ -46,15 +46,12 @@ export function ToastItemContent({
   const IconComponent = useMemo(() => getTypeIcon(toast.type), [toast.type]);
 
   // Icon sizes from centralized theme utilities
-  const iconSize = useMemo(() => getToastIconSize(settings.fontSize), [settings.fontSize]);
-  const dismissIconSize = useMemo(
-    () => getToastDismissIconSize(settings.fontSize),
-    [settings.fontSize]
-  );
+  const iconSize = useMemo(() => getToastIconSize(settings.fontSize), [settings]);
+  const dismissIconSize = useMemo(() => getToastDismissIconSize(settings.fontSize), [settings]);
 
   const messageClasses = useMemo(
     () => `${styles.message} ${fontSizeClasses.sm} ${typeStyles.textColor}`,
-    [fontSizeClasses.sm, typeStyles.textColor]
+    [fontSizeClasses, typeStyles.textColor]
   );
 
   // Icon color from centralized theme (white for all types)

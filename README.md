@@ -179,6 +179,10 @@ npm run test:watch
 
 Os arquivos de teste ficam em pastas `__tests__` ao lado do código (ex.: `utils/timer/__tests__/timer-helpers-test.ts`, `components/ui/button/__tests__/ButtonText-test.tsx`).
 
+### Qualidade de código e CI
+
+Em todo **pull request** que altera o mobile, o CI executa automaticamente **testes** (`npm run test`) e **lint** (`npm run lint`) para validar as mudanças antes do merge. O workflow está em [`.github/workflows/ci-mobile.yml`](.github/workflows/ci-mobile.yml) (monorepo) e só dispara quando há alterações em `mind_ease_mobile/`.
+
 ---
 
 ## 📦 Como Rodar o Projeto

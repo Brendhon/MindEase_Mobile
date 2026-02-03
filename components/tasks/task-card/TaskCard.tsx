@@ -40,6 +40,7 @@ export function TaskCard({
     isRunning,
     hasActiveTask,
     isBreakRunning,
+    isFocused,
     isChecklistInteractive,
     handleStartFocus,
     handleStop,
@@ -97,7 +98,7 @@ export function TaskCard({
     >
       <Card
         className={cardClasses}
-        focused={false}
+        focused={isFocused}
         testID={testID || `task-card-${task.id}`}
       >
         <Card.Header>

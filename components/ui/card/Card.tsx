@@ -73,8 +73,11 @@ const CardRoot = function Card({
     useAccessibilityClasses();
 
   const borderClasses = useMemo(
-    () => getBorderContrastClasses(settings.contrast, 'subtle'),
-    [settings.contrast]
+    () =>
+      focused
+        ? ''
+        : getBorderContrastClasses(settings.contrast, 'subtle'),
+    [settings.contrast, focused]
   );
 
   // Only apply focus mode classes when this specific card is focused

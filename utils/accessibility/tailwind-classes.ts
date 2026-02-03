@@ -225,7 +225,7 @@ export function getAnimationsEnabled(animations: boolean): boolean {
  */
 export function getFocusModeClasses(focusMode: boolean): string {
   if (focusMode) {
-    return 'border-2 border-action-primary shadow-md';
+    return 'border-2 border-action-primary';
   }
   return '';
 }

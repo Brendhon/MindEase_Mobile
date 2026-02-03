@@ -106,7 +106,6 @@ export function FormInput<
 
   const generatedId = useId();
   const inputId = `${String(name)}-${generatedId}`;
-  const errorId = `${String(name)}-error-${generatedId}`;
   const helperId = helperText ? `${String(name)}-helper-${generatedId}` : undefined;
 
   const fieldError = errors[name];

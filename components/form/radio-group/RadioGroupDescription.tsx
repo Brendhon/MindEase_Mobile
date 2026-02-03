@@ -1,7 +1,6 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import React, { useMemo } from 'react';
 import { Text } from 'react-native';
-import { useRadioGroupContext } from './radio-group-context';
 import { styles } from './radio-group-styles';
 
 /**
@@ -28,11 +27,10 @@ export interface RadioGroupDescriptionProps {
 
 export function RadioGroupDescription({ children, testID }: RadioGroupDescriptionProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
-  const context = useRadioGroupContext();
 
   const descriptionClasses = useMemo(
     () => `${styles.description} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
+    [fontSizeClasses]
   );
 
   return (

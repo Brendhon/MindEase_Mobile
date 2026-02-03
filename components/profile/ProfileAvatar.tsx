@@ -1,4 +1,3 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { getBorderContrastClasses } from '@/utils/accessibility';
 import React, { useMemo } from 'react';
@@ -48,13 +47,12 @@ const AVATAR_BG_COLOR = 'bg-action-primary';
 
 export function ProfileAvatar({ image, name, className = '', testID }: ProfileAvatarProps) {
   const initials = useMemo(() => getInitials(name), [name]);
-  const { animationsEnabled } = useAccessibilityClasses();
   const { settings } = useCognitiveSettings();
 
   // Generate accessible classes with memoization
   const borderClasses = useMemo(
     () => getBorderContrastClasses(settings.contrast, 'subtle'),
-    [settings.contrast]
+    [settings]
   );
 
   const containerClasses = `${styles.avatarContainer} ${className}`;

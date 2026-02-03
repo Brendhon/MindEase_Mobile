@@ -15,7 +15,7 @@ import React from 'react';
  * - Settings reset functionality
  */
 export default function DashboardScreen() {
-  const { tasks, loading, error } = useTasks();
+  const { tasks, error } = useTasks();
 
   return (
     <PageScrollView testID="dashboard-page-scroll">

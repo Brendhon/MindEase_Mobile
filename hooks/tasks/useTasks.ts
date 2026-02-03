@@ -138,7 +138,7 @@ export function useTasks() {
         _setLoading(false);
       }
     },
-    [_setTasks, _setLoading, _setError]
+    [_setLoading, _setError, success]
   );
 
   /**

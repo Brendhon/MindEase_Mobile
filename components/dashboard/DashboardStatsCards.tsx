@@ -34,17 +34,17 @@ export function DashboardStatsCards({ tasks, testID }: DashboardStatsCardsProps)
 
   const containerClasses = useMemo(
     () => `${styles.dashboardStatsCards.container} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
+    [spacingClasses]
   );
 
   const titleClasses = useMemo(
     () => `${styles.dashboardStatsCards.title} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
+    [fontSizeClasses]
   );
 
   const valueClasses = useMemo(
     () => `${styles.dashboardStatsCards.value} ${fontSizeClasses['2xl']}`,
-    [fontSizeClasses['2xl']]
+    [fontSizeClasses]
   );
 
   return (

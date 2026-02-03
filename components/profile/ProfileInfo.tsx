@@ -87,7 +87,7 @@ export function ProfileInfo({ user: userProp, testID }: ProfileInfoProps) {
         }
       },
     });
-  }, [user?.uid, showConfirmation, showError, success]);
+  }, [user?.uid, showConfirmation, showError, success, router]);
 
   const handleDeleteAccount = useCallback(() => {
     if (!user?.uid) {

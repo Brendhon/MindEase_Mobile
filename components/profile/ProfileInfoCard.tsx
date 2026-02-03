@@ -37,23 +37,23 @@ export function ProfileInfoCard({
   className = '',
   testID,
 }: ProfileInfoCardProps) {
-  const { spacingClasses, animationsEnabled } = useAccessibilityClasses();
+  const { spacingClasses } = useAccessibilityClasses();
   const { settings } = useCognitiveSettings();
 
   // Generate accessible classes with memoization
   const borderClasses = useMemo(
     () => getBorderContrastClasses(settings.contrast, 'subtle'),
-    [settings.contrast]
+    [settings]
   );
 
   const cardClasses = useMemo(
     () => `${styles.infoCard} ${spacingClasses.gap} ${borderClasses} ${className}`,
-    [spacingClasses.gap, borderClasses, className]
+    [spacingClasses, borderClasses, className]
   );
 
   const infoSectionClasses = useMemo(
     () => `${styles.infoSection} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
+    [spacingClasses]
   );
 
   return (

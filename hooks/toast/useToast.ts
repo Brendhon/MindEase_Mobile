@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import { useTextDetail } from '@/hooks/accessibility';
 import type { AccessibilityTextKey } from '@/utils/accessibility';
 import { generateRandomUUID } from '@/utils/uuid';
 
@@ -87,8 +86,6 @@ export function unregisterToastManager() {
  * ```
  */
 export function useToast() {
-  const { getText } = useTextDetail();
-
   /**
    * Show a toast notification
    */

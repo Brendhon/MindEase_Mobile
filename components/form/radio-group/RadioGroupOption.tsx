@@ -1,5 +1,5 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useRadioGroupContext } from './radio-group-context';
 import { styles } from './radio-group-styles';
@@ -35,24 +35,23 @@ export interface RadioGroupOptionProps {
 export function RadioGroupOption({ value, label, description, testID }: RadioGroupOptionProps) {
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
   const { value: selectedValue, onChange, disabled } = useRadioGroupContext();
-  const [isPressed, setIsPressed] = useState(false);
 
   const checked = selectedValue === value;
   const isDisabled = disabled || false;
 
   const labelClasses = useMemo(
     () => `${styles.optionLabel} ${fontSizeClasses.base}`,
-    [fontSizeClasses.base]
+    [fontSizeClasses]
   );
 
   const descriptionClasses = useMemo(
     () => `${styles.optionDescription} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
+    [fontSizeClasses]
   );
 
   const optionClasses = useMemo(
     () => `${styles.option} ${spacingClasses.padding}`,
-    [spacingClasses.padding]
+    [spacingClasses]
   );
 
   const containerClasses = useMemo(() => {
@@ -71,21 +70,9 @@ export function RadioGroupOption({ value, label, description, testID }: RadioGro
     }
   }, [isDisabled, onChange, value]);
 
-  const handlePressIn = useCallback(() => {
-    if (!isDisabled) {
-      setIsPressed(true);
-    }
-  }, [isDisabled]);
-
-  const handlePressOut = useCallback(() => {
-    setIsPressed(false);
-  }, []);
-
   return (
     <Pressable
       onPress={handlePress}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
       disabled={isDisabled}
       accessibilityRole="radio"
       accessibilityState={{ selected: checked, disabled: isDisabled }}

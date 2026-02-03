@@ -30,12 +30,12 @@ export function ProfileActions({
   testID,
 }: ProfileActionsProps) {
   const { getText } = useTextDetail();
-  const { spacingClasses, animationsEnabled } = useAccessibilityClasses();
+  const { spacingClasses } = useAccessibilityClasses();
 
   // Generate accessible classes with memoization
   const actionsClasses = useMemo(
     () => `${styles.actions} ${spacingClasses.gap} ${className}`,
-    [spacingClasses.gap, className]
+    [spacingClasses, className]
   );
 
   return (

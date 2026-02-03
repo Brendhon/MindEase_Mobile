@@ -1,21 +1,20 @@
 import {
-  signInWithCredential,
-  signOut as firebaseSignOut,
-  GoogleAuthProvider,
-} from 'firebase/auth';
-import {
   GoogleSignin,
-  isSuccessResponse,
   isErrorWithCode,
+  isSuccessResponse,
+  SignInSilentlyResponse,
   statusCodes,
   type SignInResponse,
-  SignInSilentlyResponse,
 } from '@react-native-google-signin/google-signin';
+import {
+  signOut as firebaseSignOut,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
 import { tasksService } from '../tasks';
 import { userPreferencesService } from '../user-preferences';
-import { router } from 'expo-router';
 
 /**
  * Auth Service - MindEase Mobile

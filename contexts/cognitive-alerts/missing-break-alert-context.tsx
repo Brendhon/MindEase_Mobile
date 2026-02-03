@@ -16,10 +16,8 @@ import { MissingBreakAlertContextValue } from '@/models/cognitive-alerts';
  * Components should use useMissingBreakAlert(), not useMissingBreakAlertContext().
  */
 
-const {
-  context: MissingBreakAlertContext,
-  useContext: useMissingBreakAlertContextHook,
-} = createAlertContext<MissingBreakAlertContextValue>('MissingBreakAlert');
+const { context: MissingBreakAlertContext, useContext: useMissingBreakAlertContextHook } =
+  createAlertContext<MissingBreakAlertContextValue>('MissingBreakAlert');
 
 export { MissingBreakAlertContext };
 

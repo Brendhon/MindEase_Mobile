@@ -37,8 +37,7 @@ export function ProfileInfoRow({
   testID,
 }: ProfileInfoRowProps) {
   const { getText } = useTextDetail();
-  const { fontSizeClasses, spacingClasses, animationsEnabled } =
-    useAccessibilityClasses();
+  const { fontSizeClasses, spacingClasses, animationsEnabled } = useAccessibilityClasses();
 
   // Generate accessible classes with memoization
   const rowClasses = useMemo(

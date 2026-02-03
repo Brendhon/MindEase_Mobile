@@ -51,14 +51,10 @@ export function StatCard({
       <Card.Content>
         <View className={styles.dashboardStatsCards.cardHeader}>
           <Icon size={20} color={THEME_COLORS.textSecondary} />
-          <Text className={`${styles.dashboardStatsCards.titleBase} ${titleClasses}`}>
-            {title}
-          </Text>
+          <Text className={`${styles.dashboardStatsCards.titleBase} ${titleClasses}`}>{title}</Text>
         </View>
         <View className={styles.dashboardStatsCards.valueContainer}>
-          <Text className={`${styles.dashboardStatsCards.valueBase} ${valueClasses}`}>
-            {value}
-          </Text>
+          <Text className={`${styles.dashboardStatsCards.valueBase} ${valueClasses}`}>{value}</Text>
         </View>
       </Card.Content>
     </Card>

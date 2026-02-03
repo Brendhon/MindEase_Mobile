@@ -3,8 +3,7 @@ import { useActiveTaskIndicator } from '@/hooks/tasks';
 import { PROTECTED_ROUTES } from '@/utils/routes';
 import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import type { DrawerHeaderProps } from '@react-navigation/drawer';
-import { getHeaderTitle } from '@react-navigation/elements';
-import { Header } from '@react-navigation/elements';
+import { getHeaderTitle, Header } from '@react-navigation/elements';
 import { useRouter } from 'expo-router';
 import { Clock, Coffee } from 'lucide-react-native';
 import { useMemo } from 'react';
@@ -23,8 +22,7 @@ import { styles } from './active-task-banner-styles';
  * Accessibility: role button, full label (task + type + time), hint to open Tasks.
  */
 export function ActiveTaskIndicatorBanner() {
-  const { activeTimer, activeTask, timerType, remainingTime } =
-    useActiveTaskIndicator();
+  const { activeTimer, activeTask, timerType, remainingTime } = useActiveTaskIndicator();
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingValue } = useAccessibilityClasses();
   const router = useRouter();
@@ -51,8 +49,7 @@ export function ActiveTaskIndicatorBanner() {
     return null;
   }
 
-  const iconColor =
-    timerType === 'focus' ? THEME_COLORS.actionPrimary : THEME_COLORS.actionWarning;
+  const iconColor = timerType === 'focus' ? THEME_COLORS.actionPrimary : THEME_COLORS.actionWarning;
   const Icon = timerType === 'focus' ? Clock : Coffee;
 
   return (
@@ -64,8 +61,7 @@ export function ActiveTaskIndicatorBanner() {
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={getText('active_task_indicator_hint')}
       accessibilityLiveRegion="polite"
-      testID="active-task-indicator-banner"
-    >
+      testID="active-task-indicator-banner">
       <View className={styles.bannerIconWrapper} accessibilityElementsHidden>
         <Icon color={iconColor} size={22} />
       </View>
@@ -73,22 +69,17 @@ export function ActiveTaskIndicatorBanner() {
         <Text
           className={`${styles.bannerTitle} ${fontSizeClasses.sm}`}
           numberOfLines={1}
-          accessibilityElementsHidden
-        >
+          accessibilityElementsHidden>
           {activeTask?.title || statusText}
         </Text>
         <Text
           className={`${styles.bannerStatus} ${fontSizeClasses.xs}`}
           numberOfLines={1}
-          accessibilityElementsHidden
-        >
+          accessibilityElementsHidden>
           {statusText}
         </Text>
       </View>
-      <Text
-        className={`${styles.bannerTime} ${fontSizeClasses.base}`}
-        accessibilityElementsHidden
-      >
+      <Text className={`${styles.bannerTime} ${fontSizeClasses.base}`} accessibilityElementsHidden>
         {formattedTime}
       </Text>
     </Pressable>
@@ -108,9 +99,7 @@ export function HeaderWithActiveTaskBanner(props: DrawerHeaderProps) {
         {...options}
         layout={layout}
         title={getHeaderTitle(options, route.name)}
-        headerLeft={(headerProps) => (
-          <DrawerToggleButton {...headerProps} />
-        )}
+        headerLeft={(headerProps) => <DrawerToggleButton {...headerProps} />}
       />
       <ActiveTaskIndicatorBanner />
     </View>

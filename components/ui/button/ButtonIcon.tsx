@@ -1,4 +1,3 @@
-
 import { View } from 'react-native';
 import { THEME_COLORS } from '@/utils/theme/theme-colors';
 import { ButtonSize, ButtonVariant, iconSizes } from './button-styles';
@@ -40,10 +39,7 @@ export function ButtonIcon({
   // Determine icon color based on variant
   // Variants with inverse text (primary, danger, warning) use white
   // Variants with normal text (secondary, ghost) use primary text color
-  const iconColor =
-    variant === 'ghost'
-      ? THEME_COLORS.textPrimary
-      : THEME_COLORS.textWhite;
+  const iconColor = variant === 'ghost' ? THEME_COLORS.textPrimary : THEME_COLORS.textWhite;
 
   return (
     <View className={`${position === 'right' ? 'ml-3' : 'mr-3'} ${className}`}>

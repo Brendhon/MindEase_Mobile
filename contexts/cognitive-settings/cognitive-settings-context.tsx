@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-import {
-  UserPreferences,
-  DEFAULT_ACCESSIBILITY_SETTINGS,
-} from '@/models/user-preferences';
+import { UserPreferences, DEFAULT_ACCESSIBILITY_SETTINGS } from '@/models/user-preferences';
 
 /**
  * Cognitive Settings Context - MindEase Mobile
@@ -25,16 +22,14 @@ interface CognitiveSettingsContextValue {
   error: Error | null;
 
   // Internal setters - only used by useCognitiveSettings hook
-  _setSettings: (
-    settings: UserPreferences | ((prev: UserPreferences) => UserPreferences)
-  ) => void;
+  _setSettings: (settings: UserPreferences | ((prev: UserPreferences) => UserPreferences)) => void;
   _setLoading: (loading: boolean) => void;
   _setError: (error: Error | null) => void;
 }
 
-const CognitiveSettingsContext = createContext<
-  CognitiveSettingsContextValue | undefined
->(undefined);
+const CognitiveSettingsContext = createContext<CognitiveSettingsContextValue | undefined>(
+  undefined
+);
 
 interface CognitiveSettingsProviderProps {
   children: ReactNode;
@@ -72,9 +67,7 @@ export function CognitiveSettingsProvider({
   };
 
   return (
-    <CognitiveSettingsContext.Provider value={value}>
-      {children}
-    </CognitiveSettingsContext.Provider>
+    <CognitiveSettingsContext.Provider value={value}>{children}</CognitiveSettingsContext.Provider>
   );
 }
 
@@ -92,9 +85,7 @@ export function useCognitiveSettingsContext(): CognitiveSettingsContextValue {
   const context = useContext(CognitiveSettingsContext);
 
   if (!context) {
-    throw new Error(
-      'useCognitiveSettingsContext must be used within CognitiveSettingsProvider'
-    );
+    throw new Error('useCognitiveSettingsContext must be used within CognitiveSettingsProvider');
   }
 
   return context;

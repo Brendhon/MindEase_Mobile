@@ -3,11 +3,7 @@ import React, { ReactNode, useCallback, useMemo, useReducer } from 'react';
 import { FocusTimerContext } from '@/contexts/timer';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useCountdownInterval, useSyncFocusTimerWithTasks } from '@/hooks/timer';
-import {
-  FocusTimerAction,
-  FocusTimerContextValue,
-  FocusTimerState,
-} from '@/models/timer';
+import { FocusTimerAction, FocusTimerContextValue, FocusTimerState } from '@/models/timer';
 import {
   createCompletedTimerState,
   createIdleTimerState,
@@ -25,19 +21,10 @@ export interface FocusTimerProviderProps {
 
 // State creation functions using shared utilities
 const createInitialState = (defaultDuration: number) =>
-  createInitialTimerState<FocusTimerState>(
-    defaultDuration,
-    'timerState',
-    'idle'
-  );
+  createInitialTimerState<FocusTimerState>(defaultDuration, 'timerState', 'idle');
 
 const createRunningState = (taskId: string, duration: number) =>
-  createRunningTimerState<FocusTimerState>(
-    duration,
-    'timerState',
-    'running',
-    taskId
-  );
+  createRunningTimerState<FocusTimerState>(duration, 'timerState', 'running', taskId);
 
 const createIdleState = (defaultDuration: number) =>
   createIdleTimerState<FocusTimerState>(defaultDuration, 'timerState', 'idle');
@@ -46,10 +33,7 @@ const createIdleState = (defaultDuration: number) =>
  * Timer reducer function
  * Handles all state transitions
  */
-function timerReducer(
-  state: FocusTimerState,
-  action: FocusTimerAction
-): FocusTimerState {
+function timerReducer(state: FocusTimerState, action: FocusTimerAction): FocusTimerState {
   switch (action.type) {
     case 'START':
       return createRunningState(action.taskId, action.duration);
@@ -89,10 +73,8 @@ export function FocusTimerProvider({ children }: FocusTimerProviderProps) {
   );
 
   // Initialize state with default duration
-  const [timerState, dispatch] = useReducer(
-    timerReducer,
-    defaultDuration,
-    (duration) => createInitialState(duration)
+  const [timerState, dispatch] = useReducer(timerReducer, defaultDuration, (duration) =>
+    createInitialState(duration)
   );
 
   // Countdown: Handle timer countdown when running
@@ -129,8 +111,7 @@ export function FocusTimerProvider({ children }: FocusTimerProviderProps) {
         taskId ? timerState.activeTaskId === taskId : !!timerState.activeTaskId,
       isRunning: (taskId?: string | undefined) =>
         taskId
-          ? timerState.activeTaskId === taskId &&
-            timerState.timerState === 'running'
+          ? timerState.activeTaskId === taskId && timerState.timerState === 'running'
           : timerState.timerState === 'running',
       hasActiveTask: !!timerState.activeTaskId,
       remainingTime: timerState.remainingTime,
@@ -138,9 +119,5 @@ export function FocusTimerProvider({ children }: FocusTimerProviderProps) {
     [timerState, startTimer, stopTimer]
   );
 
-  return (
-    <FocusTimerContext.Provider value={contextValue}>
-      {children}
-    </FocusTimerContext.Provider>
-  );
+  return <FocusTimerContext.Provider value={contextValue}>{children}</FocusTimerContext.Provider>;
 }

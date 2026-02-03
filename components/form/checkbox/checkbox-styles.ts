@@ -8,8 +8,7 @@
 
 export const styles = {
   container: 'flex flex-row items-center gap-2',
-  checkbox:
-    'flex items-center justify-center border-2 rounded flex-shrink-0 w-6 h-6',
+  checkbox: 'flex items-center justify-center border-2 rounded flex-shrink-0 w-6 h-6',
   checkboxChecked: 'bg-feedback-success border-feedback-success',
   checkboxUnchecked: 'bg-surface-primary border-border-strong',
   checkboxDisabled: 'opacity-50',

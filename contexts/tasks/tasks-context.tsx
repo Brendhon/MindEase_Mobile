@@ -31,9 +31,7 @@ export interface TasksContextValue {
   _setError: (error: string | null) => void;
 }
 
-export const TasksContext = createContext<TasksContextValue | undefined>(
-  undefined
-);
+export const TasksContext = createContext<TasksContextValue | undefined>(undefined);
 
 /**
  * Hook to access tasks context

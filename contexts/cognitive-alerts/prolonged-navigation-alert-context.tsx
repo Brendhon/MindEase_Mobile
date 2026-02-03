@@ -19,9 +19,7 @@ import { ProlongedNavigationAlertContextValue } from '@/models/cognitive-alerts'
 const {
   context: ProlongedNavigationAlertContext,
   useContext: useProlongedNavigationAlertContextHook,
-} = createAlertContext<ProlongedNavigationAlertContextValue>(
-  'ProlongedNavigationAlert'
-);
+} = createAlertContext<ProlongedNavigationAlertContextValue>('ProlongedNavigationAlert');
 
 export { ProlongedNavigationAlertContext };
 

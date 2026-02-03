@@ -4,7 +4,8 @@
  */
 
 export const styles = {
-  banner: 'flex-row items-center gap-3 border-b border-border-subtle bg-surface-secondary px-4 py-3 active:bg-bg-tertiary',
+  banner:
+    'flex-row items-center gap-3 border-b border-border-subtle bg-surface-secondary px-4 py-3 active:bg-bg-tertiary',
   bannerIconWrapper: 'flex-shrink-0',
   bannerContent: 'min-w-0 flex-1 flex-col',
   bannerTitle: 'font-medium text-text-primary',

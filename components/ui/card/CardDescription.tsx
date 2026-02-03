@@ -25,11 +25,7 @@ export interface CardDescriptionProps {
   testID?: string;
 }
 
-export function CardDescription({
-  children,
-  className = '',
-  testID,
-}: CardDescriptionProps) {
+export function CardDescription({ children, className = '', testID }: CardDescriptionProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
   const { settings } = useCognitiveSettings();
 
@@ -39,8 +35,7 @@ export function CardDescription({
   );
 
   const descriptionClasses = useMemo(
-    () =>
-      `${styles.description} ${fontSizeClasses.sm} ${textContrastClasses} ${className}`,
+    () => `${styles.description} ${fontSizeClasses.sm} ${textContrastClasses} ${className}`,
     [fontSizeClasses.sm, textContrastClasses, className]
   );
 

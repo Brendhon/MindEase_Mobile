@@ -49,11 +49,7 @@ export function CheckboxLabel({
 
   if (onPress) {
     return (
-      <Pressable
-        onPress={onPress}
-        accessibilityRole="button"
-        testID={testID || 'checkbox-label'}
-      >
+      <Pressable onPress={onPress} accessibilityRole="button" testID={testID || 'checkbox-label'}>
         <Text className={labelClasses} numberOfLines={2}>
           {children}
         </Text>
@@ -66,8 +62,7 @@ export function CheckboxLabel({
       className={labelClasses}
       testID={testID || 'checkbox-label'}
       accessibilityRole="text"
-      numberOfLines={2}
-    >
+      numberOfLines={2}>
       {children}
     </Text>
   );

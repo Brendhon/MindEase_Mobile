@@ -16,10 +16,8 @@ import { ExcessiveTimeAlertContextValue } from '@/models/cognitive-alerts';
  * Components should use useExcessiveTimeAlert(), not useExcessiveTimeAlertContext().
  */
 
-const {
-  context: ExcessiveTimeAlertContext,
-  useContext: useExcessiveTimeAlertContextHook,
-} = createAlertContext<ExcessiveTimeAlertContextValue>('ExcessiveTimeAlert');
+const { context: ExcessiveTimeAlertContext, useContext: useExcessiveTimeAlertContextHook } =
+  createAlertContext<ExcessiveTimeAlertContextValue>('ExcessiveTimeAlert');
 
 export { ExcessiveTimeAlertContext };
 

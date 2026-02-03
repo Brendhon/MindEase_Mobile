@@ -1,9 +1,6 @@
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import {
-  getBorderContrastClasses,
-  getFocusModeClasses,
-} from '@/utils/accessibility';
+import { getBorderContrastClasses, getFocusModeClasses } from '@/utils/accessibility';
 import React, { ReactNode, useMemo } from 'react';
 import { View } from 'react-native';
 import { CardContent } from './CardContent';
@@ -62,29 +59,17 @@ export interface CardProps {
   testID?: string;
 }
 
-const CardRoot = function Card({
-  children,
-  className = '',
-  focused = false,
-  testID,
-}: CardProps) {
+const CardRoot = function Card({ children, className = '', focused = false, testID }: CardProps) {
   const { settings } = useCognitiveSettings();
-  const { spacingClasses, contrastClasses } =
-    useAccessibilityClasses();
+  const { spacingClasses, contrastClasses } = useAccessibilityClasses();
 
   const borderClasses = useMemo(
-    () =>
-      focused
-        ? ''
-        : getBorderContrastClasses(settings.contrast, 'subtle'),
+    () => (focused ? '' : getBorderContrastClasses(settings.contrast, 'subtle')),
     [settings.contrast, focused]
   );
 
   // Only apply focus mode classes when this specific card is focused
-  const focusModeClasses = useMemo(
-    () => getFocusModeClasses(focused),
-    [focused]
-  );
+  const focusModeClasses = useMemo(() => getFocusModeClasses(focused), [focused]);
 
   const cardClasses = useMemo(
     () =>

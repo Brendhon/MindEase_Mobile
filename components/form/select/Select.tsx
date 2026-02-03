@@ -69,8 +69,7 @@ function SelectRoot({ children, className = '', testID }: SelectProps) {
     <View
       className={containerClasses}
       testID={testID || 'select-container'}
-      accessibilityRole="none"
-    >
+      accessibilityRole="none">
       {children}
     </View>
   );

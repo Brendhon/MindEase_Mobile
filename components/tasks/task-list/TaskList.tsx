@@ -66,10 +66,7 @@ export function TaskList({
 
   if (!hasTasks) {
     return (
-      <View
-        className={emptyContainerClasses}
-        testID={`${listTestID}-empty`}
-      >
+      <View className={emptyContainerClasses} testID={`${listTestID}-empty`}>
         <Text className={emptyTextClasses}>{getText('tasks_empty')}</Text>
         <Text className={emptyDescClasses}>{getText('tasks_empty_desc')}</Text>
       </View>

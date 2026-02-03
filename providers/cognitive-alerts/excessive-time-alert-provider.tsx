@@ -15,17 +15,13 @@ interface ExcessiveTimeAlertProviderProps {
  * This provider manages ONLY basic state (task tracking, alert visibility).
  * All business logic is handled by the useExcessiveTimeAlert hook.
  */
-export function ExcessiveTimeAlertProvider({
-  children,
-}: ExcessiveTimeAlertProviderProps) {
+export function ExcessiveTimeAlertProvider({ children }: ExcessiveTimeAlertProviderProps) {
   // Common alert state
   const commonState = useCommonAlertState();
 
   // Additional state specific to excessive time alert
   const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
-  const [focusStartTimestamp, setFocusStartTimestamp] = useState<number | null>(
-    null
-  );
+  const [focusStartTimestamp, setFocusStartTimestamp] = useState<number | null>(null);
 
   // Setters for additional state
   const setCurrentTaskIdState = useCallback(
@@ -51,8 +47,7 @@ export function ExcessiveTimeAlertProvider({
         _setIsExcessiveTimeAlertVisible: commonState.setIsVisible,
         _setIsExcessiveTimeAlertDismissed: commonState.setIsDismissed,
         _setDismissedAt: commonState.setDismissedAt,
-      }}
-    >
+      }}>
       {children}
     </ExcessiveTimeAlertContext.Provider>
   );

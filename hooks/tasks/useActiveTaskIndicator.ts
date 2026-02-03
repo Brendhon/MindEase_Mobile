@@ -32,16 +32,8 @@ import { TimerType, UseActiveTaskIndicatorReturn } from '@/models/timer';
  * @returns Active timer state, task data, and derived values
  */
 export function useActiveTaskIndicator(): UseActiveTaskIndicatorReturn {
-  const {
-    timerState,
-    isRunning: isFocusRunning,
-    remainingTime: focusTime,
-  } = useFocusTimer();
-  const {
-    breakTimerState,
-    isRunning: isBreakRunning,
-    remainingTime: breakTime,
-  } = useBreakTimer();
+  const { timerState, isRunning: isFocusRunning, remainingTime: focusTime } = useFocusTimer();
+  const { breakTimerState, isRunning: isBreakRunning, remainingTime: breakTime } = useBreakTimer();
   const { getTask } = useTasks();
 
   // Determine which timer is active (prioritize focus)
@@ -61,14 +53,7 @@ export function useActiveTaskIndicator(): UseActiveTaskIndicatorReturn {
       };
     }
     return null;
-  }, [
-    isFocusRunning,
-    isBreakRunning,
-    timerState,
-    breakTimerState,
-    focusTime,
-    breakTime,
-  ]);
+  }, [isFocusRunning, isBreakRunning, timerState, breakTimerState, focusTime, breakTime]);
 
   // Fetch task if there's a taskId
   const activeTask = useMemo(() => {

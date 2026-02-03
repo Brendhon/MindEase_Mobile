@@ -16,9 +16,7 @@ interface AuthProviderProps {
  */
 function firebaseUserToAuthUser(user: User): AuthUser {
   // Extract Google ID from providerData if available
-  const googleProvider = user.providerData.find(
-    (provider) => provider.providerId === 'google.com'
-  );
+  const googleProvider = user.providerData.find((provider) => provider.providerId === 'google.com');
 
   return {
     uid: googleProvider?.uid || user.uid,
@@ -53,10 +51,7 @@ function firebaseUserToAuthUser(user: User): AuthUser {
  * </AuthProvider>
  * ```
  */
-export function AuthProvider({
-  children,
-  initialUser = null,
-}: AuthProviderProps) {
+export function AuthProvider({ children, initialUser = null }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(initialUser);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -86,15 +81,11 @@ export function AuthProvider({
 
   // Internal setters for useAuth hook to use
   const setUserState = useCallback(
-    (newUser: AuthUser | null | ((prev: AuthUser | null) => AuthUser | null)) =>
-      setUser(newUser),
+    (newUser: AuthUser | null | ((prev: AuthUser | null) => AuthUser | null)) => setUser(newUser),
     []
   );
 
-  const setLoadingState = useCallback(
-    (loading: boolean) => setIsLoading(loading),
-    []
-  );
+  const setLoadingState = useCallback((loading: boolean) => setIsLoading(loading), []);
 
   const setErrorState = useCallback((err: Error | null) => setError(err), []);
 
@@ -107,8 +98,7 @@ export function AuthProvider({
         _setUser: setUserState,
         _setLoading: setLoadingState,
         _setError: setErrorState,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   );

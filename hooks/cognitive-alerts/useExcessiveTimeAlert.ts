@@ -103,11 +103,7 @@ export function useExcessiveTimeAlert() {
   ]);
 
   // Check if dismiss has expired (2 hours)
-  useDismissExpiry(
-    dismissedAt,
-    _setIsExcessiveTimeAlertDismissed,
-    _setDismissedAt
-  );
+  useDismissExpiry(dismissedAt, _setIsExcessiveTimeAlertDismissed, _setDismissedAt);
 
   // Monitor continuous focus time and update alert visibility
   // Check time even when timer is idle (between sessions) - continuous focus on same task

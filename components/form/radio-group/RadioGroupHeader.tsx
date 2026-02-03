@@ -28,11 +28,7 @@ export interface RadioGroupHeaderProps {
   testID?: string;
 }
 
-export function RadioGroupHeader({
-  children,
-  className = '',
-  testID,
-}: RadioGroupHeaderProps) {
+export function RadioGroupHeader({ children, className = '', testID }: RadioGroupHeaderProps) {
   return (
     <View className={`${styles.header} ${className}`} testID={testID}>
       {children}

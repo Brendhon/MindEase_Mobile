@@ -1,9 +1,4 @@
-import {
-  AlertCircle,
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-} from 'lucide-react-native';
+import { AlertCircle, AlertTriangle, CheckCircle2, Info } from 'lucide-react-native';
 import type { ComponentType } from 'react';
 
 import type { ToastType } from '@/hooks/toast';

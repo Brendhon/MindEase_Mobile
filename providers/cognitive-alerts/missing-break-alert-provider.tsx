@@ -15,9 +15,7 @@ interface MissingBreakAlertProviderProps {
  * This provider manages ONLY basic state (session counters, alert visibility).
  * All business logic is handled by the useMissingBreakAlert hook.
  */
-export function MissingBreakAlertProvider({
-  children,
-}: MissingBreakAlertProviderProps) {
+export function MissingBreakAlertProvider({ children }: MissingBreakAlertProviderProps) {
   // Common alert state
   const commonState = useCommonAlertState();
 
@@ -26,8 +24,7 @@ export function MissingBreakAlertProvider({
 
   // Setters for additional state
   const setConsecutiveFocusSessionsState = useCallback(
-    (count: number | ((prev: number) => number)) =>
-      setConsecutiveFocusSessions(count),
+    (count: number | ((prev: number) => number)) => setConsecutiveFocusSessions(count),
     []
   );
 
@@ -42,8 +39,7 @@ export function MissingBreakAlertProvider({
         _setIsMissingBreakAlertVisible: commonState.setIsVisible,
         _setIsMissingBreakAlertDismissed: commonState.setIsDismissed,
         _setDismissedAt: commonState.setDismissedAt,
-      }}
-    >
+      }}>
       {children}
     </MissingBreakAlertContext.Provider>
   );

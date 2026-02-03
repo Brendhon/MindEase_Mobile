@@ -24,11 +24,7 @@ export interface CardTitleProps {
   testID?: string;
 }
 
-export function CardTitle({
-  children,
-  className = '',
-  testID,
-}: CardTitleProps) {
+export function CardTitle({ children, className = '', testID }: CardTitleProps) {
   const { settings } = useCognitiveSettings();
   const { fontSizeClasses } = useAccessibilityClasses();
 
@@ -38,8 +34,7 @@ export function CardTitle({
   );
 
   const titleClasses = useMemo(
-    () =>
-      `${styles.title} ${fontSizeClasses.lg} ${textContrastClasses} ${className}`,
+    () => `${styles.title} ${fontSizeClasses.lg} ${textContrastClasses} ${className}`,
     [fontSizeClasses.lg, textContrastClasses, className]
   );
 

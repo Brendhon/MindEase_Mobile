@@ -13,10 +13,7 @@ import { useEffect } from 'react';
 
 const TASK_STATUS_IN_PROGRESS = 1;
 
-export function useSyncFocusTimerWithTasks(
-  activeTaskId: string | null,
-  stopTimer: () => void
-) {
+export function useSyncFocusTimerWithTasks(activeTaskId: string | null, stopTimer: () => void) {
   const { tasks } = useTasks();
 
   useEffect(() => {
@@ -37,10 +34,7 @@ export function useSyncFocusTimerWithTasks(
  *
  * Call from BreakTimerProvider with (activeTaskId, stopBreak).
  */
-export function useSyncBreakTimerWithTasks(
-  activeTaskId: string | null,
-  stopBreak: () => void
-) {
+export function useSyncBreakTimerWithTasks(activeTaskId: string | null, stopBreak: () => void) {
   const { tasks } = useTasks();
 
   useEffect(() => {

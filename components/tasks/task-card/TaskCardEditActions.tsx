@@ -19,12 +19,7 @@ export interface TaskCardEditActionsProps {
   testID?: string;
 }
 
-export function TaskCardEditActions({
-  task,
-  onEdit,
-  onDelete,
-  testID,
-}: TaskCardEditActionsProps) {
+export function TaskCardEditActions({ task, onEdit, onDelete, testID }: TaskCardEditActionsProps) {
   const { spacingClasses } = useAccessibilityClasses();
   const { getText } = useTextDetail();
   const { showConfirmation } = useAlert();
@@ -55,8 +50,7 @@ export function TaskCardEditActions({
           onPress={() => onEdit()}
           accessibilityLabel={getText('tasks_action_edit_aria')}
           accessibilityRole="button"
-          testID={testID ? `${testID}-edit` : `task-card-edit-${task.id}`}
-        >
+          testID={testID ? `${testID}-edit` : `task-card-edit-${task.id}`}>
           <Button.Icon icon={Pencil} position="left" variant="ghost" />
           <Button.Text variant="ghost">{getText('tasks_action_edit')}</Button.Text>
         </Button>
@@ -69,8 +63,7 @@ export function TaskCardEditActions({
           onPress={handleRequestDelete}
           accessibilityLabel={getText('tasks_action_delete_aria')}
           accessibilityRole="button"
-          testID={testID ? `${testID}-delete` : `task-card-delete-${task.id}`}
-        >
+          testID={testID ? `${testID}-delete` : `task-card-delete-${task.id}`}>
           <Button.Icon icon={Trash2} position="left" variant="ghost" />
           <Button.Text variant="ghost">{getText('tasks_action_delete')}</Button.Text>
         </Button>

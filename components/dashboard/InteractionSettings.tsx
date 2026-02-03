@@ -81,8 +81,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
   return (
     <SettingsSection
       title={getText('profile_section_interaction')}
-      testID={testID || 'profile-section-interaction'}
-    >
+      testID={testID || 'profile-section-interaction'}>
       {/* Animations Setting */}
       <Switch testID="profile-animations">
         <Switch.Toggle
@@ -92,8 +91,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
         <View className={styles.interactionSettings.switchContainer}>
           <Switch.Label
             onPress={() => updateSetting('animations', !settings.animations)}
-            testID="profile-animations-label"
-          >
+            testID="profile-animations-label">
             {getText('profile_setting_animations')}
           </Switch.Label>
           <Switch.Description testID="profile-animations-description">
@@ -111,8 +109,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
         <View className={styles.interactionSettings.switchContainer}>
           <Switch.Label
             onPress={() => updateSetting('focusMode', !settings.focusMode)}
-            testID="profile-focus-mode-label"
-          >
+            testID="profile-focus-mode-label">
             {getText('profile_setting_focus_mode')}
           </Switch.Label>
           <Switch.Description testID="profile-focus-mode-description">
@@ -146,9 +143,7 @@ export function InteractionSettings({ testID }: InteractionSettingsProps) {
           </Select.Label>
           <Select.Field
             selectedValue={settings.shortBreakDuration || 5}
-            onValueChange={(value) =>
-              updateSetting('shortBreakDuration', Number(value))
-            }
+            onValueChange={(value) => updateSetting('shortBreakDuration', Number(value))}
             items={breakDurationItems}
             testID="profile-break-duration"
           />

@@ -77,9 +77,7 @@ export interface MissingBreakAlertContextValue {
   dismissedAt: number | null;
 
   // Internal setters - only used by useMissingBreakAlert hook
-  _setConsecutiveFocusSessions: (
-    count: number | ((prev: number) => number)
-  ) => void;
+  _setConsecutiveFocusSessions: (count: number | ((prev: number) => number)) => void;
   _setIsMissingBreakAlertVisible: (visible: boolean) => void;
   _setIsMissingBreakAlertDismissed: (dismissed: boolean) => void;
   _setDismissedAt: (timestamp: number | null) => void;

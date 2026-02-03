@@ -35,9 +35,7 @@ export function createTimerContext<T>(timerName: string) {
     const context = useContext(Context);
 
     if (!context) {
-      throw new Error(
-        `use${timerName}Context must be used within ${timerName}Provider`
-      );
+      throw new Error(`use${timerName}Context must be used within ${timerName}Provider`);
     }
 
     return context;

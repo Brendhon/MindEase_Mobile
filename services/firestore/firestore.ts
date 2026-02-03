@@ -40,9 +40,7 @@ const convertTimestamps = <T>(data: DocumentData): T => {
  * Remove undefined fields from an object
  * Firestore does not accept undefined values
  */
-export const removeUndefinedFields = <T extends Record<string, unknown>>(
-  data: T
-): Partial<T> => {
+export const removeUndefinedFields = <T extends Record<string, unknown>>(data: T): Partial<T> => {
   const cleaned: Partial<T> = {};
   Object.keys(data).forEach((key) => {
     if (data[key] !== undefined) {
@@ -71,11 +69,7 @@ export interface FirestoreService {
     id: string,
     data: Omit<T, 'id'>
   ) => Promise<T>;
-  updateDocument: <T>(
-    collectionPath: string,
-    id: string,
-    data: Partial<T>
-  ) => Promise<T>;
+  updateDocument: <T>(collectionPath: string, id: string, data: Partial<T>) => Promise<T>;
   deleteDocument: (collectionPath: string, id: string) => Promise<void>;
   deleteCollection: (collectionPath: string) => Promise<void>;
   subscribeCollection: <T>(
@@ -97,15 +91,13 @@ export const firestoreService: FirestoreService = {
       const collectionRef = collection(db, collectionPath);
       const querySnapshot = await getDocs(collectionRef);
 
-      return querySnapshot.docs.map(
-        (docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
-          const data = docSnapshot.data();
-          return convertTimestamps<T>({
-            id: docSnapshot.id,
-            ...data,
-          });
-        }
-      );
+      return querySnapshot.docs.map((docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
+        const data = docSnapshot.data();
+        return convertTimestamps<T>({
+          id: docSnapshot.id,
+          ...data,
+        });
+      });
     } catch (error) {
       console.error(`Error getting collection ${collectionPath}:`, error);
       throw error;
@@ -124,20 +116,15 @@ export const firestoreService: FirestoreService = {
       const q = query(collectionRef, ...queryConstraints);
       const querySnapshot = await getDocs(q);
 
-      return querySnapshot.docs.map(
-        (docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
-          const data = docSnapshot.data();
-          return convertTimestamps<T>({
-            id: docSnapshot.id,
-            ...data,
-          });
-        }
-      );
+      return querySnapshot.docs.map((docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
+        const data = docSnapshot.data();
+        return convertTimestamps<T>({
+          id: docSnapshot.id,
+          ...data,
+        });
+      });
     } catch (error) {
-      console.error(
-        `Error getting collection by query ${collectionPath}:`,
-        error
-      );
+      console.error(`Error getting collection by query ${collectionPath}:`, error);
       throw error;
     }
   },
@@ -145,10 +132,7 @@ export const firestoreService: FirestoreService = {
   /**
    * Get a single document by ID
    */
-  getDocument: async <T>(
-    collectionPath: string,
-    id: string
-  ): Promise<T | null> => {
+  getDocument: async <T>(collectionPath: string, id: string): Promise<T | null> => {
     try {
       const docRef = doc(db, collectionPath, id);
       const docSnap = await getDoc(docRef);
@@ -178,9 +162,7 @@ export const firestoreService: FirestoreService = {
     try {
       const collectionRef = collection(db, collectionPath);
       // Remove undefined fields before sending to Firestore
-      const cleanedData = removeUndefinedFields(
-        data as Record<string, unknown>
-      );
+      const cleanedData = removeUndefinedFields(data as Record<string, unknown>);
       const docRef = await addDoc(collectionRef, cleanedData);
 
       const docSnap = await getDoc(docRef);
@@ -211,9 +193,7 @@ export const firestoreService: FirestoreService = {
     try {
       const docRef = doc(db, collectionPath, id);
       // Remove undefined fields before sending to Firestore
-      const cleanedData = removeUndefinedFields(
-        data as Record<string, unknown>
-      );
+      const cleanedData = removeUndefinedFields(data as Record<string, unknown>);
       await setDoc(docRef, cleanedData, { merge: true });
 
       const docSnap = await getDoc(docRef);
@@ -235,17 +215,11 @@ export const firestoreService: FirestoreService = {
   /**
    * Update an existing document
    */
-  updateDocument: async <T>(
-    collectionPath: string,
-    id: string,
-    data: Partial<T>
-  ): Promise<T> => {
+  updateDocument: async <T>(collectionPath: string, id: string, data: Partial<T>): Promise<T> => {
     try {
       const docRef = doc(db, collectionPath, id);
       // Remove undefined fields before sending to Firestore
-      const cleanedData = removeUndefinedFields(
-        data as Record<string, unknown>
-      );
+      const cleanedData = removeUndefinedFields(data as Record<string, unknown>);
       await updateDoc(docRef, cleanedData as DocumentData);
 
       const docSnap = await getDoc(docRef);
@@ -290,15 +264,13 @@ export const firestoreService: FirestoreService = {
     return onSnapshot(
       collectionRef,
       (querySnapshot) => {
-        const data = querySnapshot.docs.map(
-          (docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
-            const docData = docSnapshot.data();
-            return convertTimestamps<T>({
-              id: docSnapshot.id,
-              ...docData,
-            });
-          }
-        );
+        const data = querySnapshot.docs.map((docSnapshot: QueryDocumentSnapshot<DocumentData>) => {
+          const docData = docSnapshot.data();
+          return convertTimestamps<T>({
+            id: docSnapshot.id,
+            ...docData,
+          });
+        });
         onNext(data);
       },
       (err) => {

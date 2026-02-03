@@ -5,11 +5,7 @@ import { Pressable, Text, View } from 'react-native';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import type { ToastMessage } from '@/hooks/toast';
-import {
-  getToastDismissIconSize,
-  getToastIconSize,
-  THEME_COLORS,
-} from '@/utils/theme';
+import { getToastDismissIconSize, getToastIconSize, THEME_COLORS } from '@/utils/theme';
 import { styles } from './toast-styles';
 import { getTypeIcon, getTypeStyles } from './toast-utils';
 
@@ -50,10 +46,7 @@ export function ToastItemContent({
   const IconComponent = useMemo(() => getTypeIcon(toast.type), [toast.type]);
 
   // Icon sizes from centralized theme utilities
-  const iconSize = useMemo(
-    () => getToastIconSize(settings.fontSize),
-    [settings.fontSize]
-  );
+  const iconSize = useMemo(() => getToastIconSize(settings.fontSize), [settings.fontSize]);
   const dismissIconSize = useMemo(
     () => getToastDismissIconSize(settings.fontSize),
     [settings.fontSize]
@@ -83,8 +76,7 @@ export function ToastItemContent({
         hitSlop={10}
         accessibilityRole="button"
         accessibilityLabel="Dismiss"
-        testID={testID ? `${testID}-dismiss-button` : 'toast-dismiss-button'}
-      >
+        testID={testID ? `${testID}-dismiss-button` : 'toast-dismiss-button'}>
         <X size={dismissIconSize} color={iconColor} />
       </Pressable>
     </>

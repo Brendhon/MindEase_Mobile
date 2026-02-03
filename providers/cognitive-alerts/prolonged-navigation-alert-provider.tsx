@@ -22,9 +22,7 @@ export function ProlongedNavigationAlertProvider({
   const commonState = useCommonAlertState();
 
   // Additional state specific to prolonged navigation alert
-  const [lastActionTimestamp, setLastActionTimestamp] = useState<number | null>(
-    null
-  );
+  const [lastActionTimestamp, setLastActionTimestamp] = useState<number | null>(null);
 
   // Setters for additional state
   const setLastActionTimestampState = useCallback(
@@ -43,8 +41,7 @@ export function ProlongedNavigationAlertProvider({
         _setIsProlongedNavigationAlertVisible: commonState.setIsVisible,
         _setIsProlongedNavigationAlertDismissed: commonState.setIsDismissed,
         _setDismissedAt: commonState.setDismissedAt,
-      }}
-    >
+      }}>
       {children}
     </ProlongedNavigationAlertContext.Provider>
   );

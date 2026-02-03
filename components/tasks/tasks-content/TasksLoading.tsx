@@ -26,8 +26,7 @@ export function TasksLoading({ testID }: TasksLoadingProps) {
       className={containerClasses}
       accessibilityRole="progressbar"
       accessibilityLabel={getText('tasks_loading')}
-      testID={testID || 'tasks-loading'}
-    >
+      testID={testID || 'tasks-loading'}>
       <Text className={styles.loadingText}>{getText('tasks_loading')}</Text>
     </View>
   );

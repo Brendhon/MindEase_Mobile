@@ -26,8 +26,7 @@ export function useFocusSessionCompleteAlert() {
   const { timerState, stopTimer, startTimer } = useFocusTimer();
   const { startBreak } = useBreakTimer();
   const { settings } = useCognitiveSettings();
-  const { recordFocusSessionComplete, recordTaskFinished } =
-    useMissingBreakAlert();
+  const { recordFocusSessionComplete, recordTaskFinished } = useMissingBreakAlert();
   const { recordUserAction } = useProlongedNavigationAlert();
   const { updateTaskStatus, getTask, refreshTask } = useTasks();
   const { showAlert } = useAlert();
@@ -98,28 +97,25 @@ export function useFocusSessionCompleteAlert() {
         const canFinish = activeTask ? canCompleteTask(activeTask) : false;
 
         const title = getText('tasks_focus_session_complete_title');
-        const message = getTextWithReplace(
-          'tasks_focus_session_complete_message',
-          { minutes: String(focusDuration) }
-        );
+        const message = getTextWithReplace('tasks_focus_session_complete_message', {
+          minutes: String(focusDuration),
+        });
         const question = getText('tasks_focus_session_complete');
         const fullMessage = `${message}\n\n${question}`;
 
-        const startBreakLabel = getTextWithReplace(
-          'tasks_focus_session_start_break',
-          { minutes: String(breakDuration) }
-        );
-        const continueFocusLabel = getTextWithReplace(
-          'tasks_focus_session_continue_focus',
-          { minutes: String(focusDuration) }
-        );
+        const startBreakLabel = getTextWithReplace('tasks_focus_session_start_break', {
+          minutes: String(breakDuration),
+        });
+        const continueFocusLabel = getTextWithReplace('tasks_focus_session_continue_focus', {
+          minutes: String(focusDuration),
+        });
         const finishLabel = getText('tasks_focus_session_finish');
 
-        const buttons: Array<{
+        const buttons: {
           text: string;
           style?: 'default' | 'destructive' | 'cancel';
           onPress?: () => void | Promise<void>;
-        }> = [
+        }[] = [
           {
             text: startBreakLabel,
             style: 'default',

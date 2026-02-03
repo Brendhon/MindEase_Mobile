@@ -1,8 +1,4 @@
-import {
-  registerToastManager,
-  unregisterToastManager,
-  type ToastMessage,
-} from '@/hooks/toast';
+import { registerToastManager, unregisterToastManager, type ToastMessage } from '@/hooks/toast';
 import { useAccessibilityClasses } from '@/hooks/accessibility';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';

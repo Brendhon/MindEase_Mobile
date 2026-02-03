@@ -93,11 +93,7 @@ export function useToast() {
    * Show a toast notification
    */
   const showToast = useCallback(
-    (options: {
-      type: ToastType;
-      messageKey: AccessibilityTextKey;
-      duration?: number;
-    }) => {
+    (options: { type: ToastType; messageKey: AccessibilityTextKey; duration?: number }) => {
       if (!toastManagerRef) {
         console.warn('ToastManager not registered. Toast will not be shown.');
         return;

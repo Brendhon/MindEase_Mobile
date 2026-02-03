@@ -79,8 +79,7 @@ function CheckboxRoot({
     <View
       className={containerClasses}
       testID={testID || 'checkbox-container'}
-      accessibilityRole="none"
-    >
+      accessibilityRole="none">
       <Pressable
         onPress={handlePress}
         disabled={disabled}
@@ -88,8 +87,7 @@ function CheckboxRoot({
         testID={testID ? `${testID}-checkbox` : 'checkbox'}
         accessibilityRole="checkbox"
         accessibilityState={{ checked, disabled }}
-        accessibilityLabel={accessibilityLabel}
-      >
+        accessibilityLabel={accessibilityLabel}>
         {checked && (
           <Check
             size={16}
@@ -99,9 +97,7 @@ function CheckboxRoot({
           />
         )}
       </Pressable>
-      {children ? (
-        <View className={styles.content}>{children}</View>
-      ) : null}
+      {children ? <View className={styles.content}>{children}</View> : null}
     </View>
   );
 }

@@ -24,11 +24,7 @@ export interface CardHeaderProps {
   testID?: string;
 }
 
-export function CardHeader({
-  children,
-  className = '',
-  testID,
-}: CardHeaderProps) {
+export function CardHeader({ children, className = '', testID }: CardHeaderProps) {
   const { settings } = useCognitiveSettings();
   const { spacingClasses } = useAccessibilityClasses();
 
@@ -38,8 +34,7 @@ export function CardHeader({
   );
 
   const headerClasses = useMemo(
-    () =>
-      `${styles.header} ${spacingClasses.gap} ${borderClasses} ${className}`,
+    () => `${styles.header} ${spacingClasses.gap} ${borderClasses} ${className}`,
     [spacingClasses.gap, borderClasses, className]
   );
 

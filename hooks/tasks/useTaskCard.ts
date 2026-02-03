@@ -72,11 +72,7 @@ export function useTaskCard({
     isActive: isFocusActive,
     isRunning: isFocusRunning,
   } = useFocusTimer();
-  const {
-    stopBreak,
-    isActive: isBreakActive,
-    isRunning: isBreakRunning,
-  } = useBreakTimer();
+  const { stopBreak, isActive: isBreakActive, isRunning: isBreakRunning } = useBreakTimer();
   const { recordTaskFinished } = useMissingBreakAlert();
   const { recordUserAction } = useProlongedNavigationAlert();
   const { getText } = useTextDetail();
@@ -85,17 +81,13 @@ export function useTaskCard({
   const hasActiveTask = hasTasksInProgress(task.id);
   const isActive = isFocusActive(task.id);
   const isRunning = isFocusRunning(task.id);
-  const isBreakRunningForTask =
-    isBreakActive(task.id) && isBreakRunning(task.id);
+  const isBreakRunningForTask = isBreakActive(task.id) && isBreakRunning(task.id);
   const isFocused = isActive || isBreakActive(task.id);
 
   const hasPendingSubtasks = useMemo(() => !canCompleteTask(task), [task]);
   const pendingSubtasks = useMemo(() => getPendingSubtasks(task), [task]);
 
-  const cardClasses = useMemo(
-    () => getTaskCardClasses(task, isFocusActive),
-    [task, isFocusActive]
-  );
+  const cardClasses = useMemo(() => getTaskCardClasses(task, isFocusActive), [task, isFocusActive]);
 
   const isChecklistInteractive = isActive && isRunning;
 
@@ -120,19 +112,20 @@ export function useTaskCard({
     }
     recordTaskFinished();
     onTaskMovedToColumn?.(0);
-  }, [stopBreak, stopTimer, task.id, uid, updateTaskStatus, recordTaskFinished, onTaskMovedToColumn]);
+  }, [
+    stopBreak,
+    stopTimer,
+    task.id,
+    uid,
+    updateTaskStatus,
+    recordTaskFinished,
+    onTaskMovedToColumn,
+  ]);
 
   const handleComplete = useCallback(() => {
     if (hasPendingSubtasks) {
-      const message = getCompletePendingSubtasksMessage(
-        pendingSubtasks,
-        getText
-      );
-      showAlert(
-        getText('tasks_complete_pending_title'),
-        message,
-        [{ text: getText('button_ok') }]
-      );
+      const message = getCompletePendingSubtasksMessage(pendingSubtasks, getText);
+      showAlert(getText('tasks_complete_pending_title'), message, [{ text: getText('button_ok') }]);
     } else {
       stopTimer();
       if (uid) {
@@ -179,12 +172,7 @@ export function useTaskCard({
         },
       });
     }
-  }, [
-    hasActiveTask,
-    showInfo,
-    showConfirmation,
-    handleStartFocus,
-  ]);
+  }, [hasActiveTask, showInfo, showConfirmation, handleStartFocus]);
 
   const showSubtaskBreakRequiredAlert = useCallback(() => {
     showInfo({

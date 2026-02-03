@@ -1,4 +1,3 @@
-
 import { Text } from 'react-native';
 import { ButtonVariant, variantStyles } from './button-styles';
 
@@ -22,17 +21,11 @@ export interface ButtonTextProps {
   className?: string;
 }
 
-export function ButtonText({
-  children,
-  variant = 'primary',
-  className = '',
-}: ButtonTextProps) {
+export function ButtonText({ children, variant = 'primary', className = '' }: ButtonTextProps) {
   const variantStyle = variantStyles[variant];
 
   return (
-    <Text
-      className={`font-semibold ${variantStyle.textColor} text-center ${className}`}
-    >
+    <Text className={`font-semibold ${variantStyle.textColor} text-center ${className}`}>
       {children}
     </Text>
   );

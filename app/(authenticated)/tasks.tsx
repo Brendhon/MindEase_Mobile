@@ -25,8 +25,7 @@ type ColumnLayout = { y: number; height: number };
  */
 export default function TasksScreen() {
   const { user } = useAuth();
-  const { tasks, loading, error, createTask, updateTask, deleteTask } =
-    useTasks();
+  const { tasks, loading, error, createTask, updateTask, deleteTask } = useTasks();
   const { timerState, stopTimer } = useFocusTimer();
   const scrollViewRef = useRef<ScrollView>(null);
   const taskListAreaYRef = useRef(0);
@@ -108,9 +107,12 @@ export default function TasksScreen() {
 
   const showLoading = loading && tasks.length === 0;
 
-  const handleScrollToColumn = useCallback((status: number) => {
-    if (status === 0 || status === 1 || status === 2) scrollToColumn(status);
-  }, [scrollToColumn]);
+  const handleScrollToColumn = useCallback(
+    (status: number) => {
+      if (status === 0 || status === 1 || status === 2) scrollToColumn(status);
+    },
+    [scrollToColumn]
+  );
 
   return (
     <PageScrollView ref={scrollViewRef} testID="tasks-page-scroll">

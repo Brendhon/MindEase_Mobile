@@ -27,9 +27,7 @@ const SPACING_UNIT = 4;
  * // compact: 8px, normal: 16px, relaxed: 24px
  * ```
  */
-export function getSpacingPixelValue(
-  spacing: UserPreferences['spacing']
-): number {
+export function getSpacingPixelValue(spacing: UserPreferences['spacing']): number {
   switch (spacing) {
     case 'compact':
       return 1 * SPACING_UNIT; // 4px
@@ -145,9 +143,7 @@ export function getBorderRadius(spacing: UserPreferences['spacing']): number {
  * const size = getToastIconSize('large'); // 22px (adjusted)
  * ```
  */
-export function getToastIconSize(
-  fontSize?: UserPreferences['fontSize']
-): number {
+export function getToastIconSize(fontSize?: UserPreferences['fontSize']): number {
   const baseSize = 20; // w-5 h-5 equivalent
 
   if (!fontSize) {
@@ -180,9 +176,7 @@ export function getToastIconSize(
  * const size = getToastDismissIconSize('large'); // 18px (adjusted)
  * ```
  */
-export function getToastDismissIconSize(
-  fontSize?: UserPreferences['fontSize']
-): number {
+export function getToastDismissIconSize(fontSize?: UserPreferences['fontSize']): number {
   const baseSize = 16; // w-4 h-4 equivalent
 
   if (!fontSize) {

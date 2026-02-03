@@ -31,11 +31,7 @@ export interface PageHeaderProps {
   testID?: string;
 }
 
-export function PageHeader({
-  descriptionKey,
-  className = '',
-  testID,
-}: PageHeaderProps) {
+export function PageHeader({ descriptionKey, className = '', testID }: PageHeaderProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses } = useAccessibilityClasses();
 
@@ -49,9 +45,7 @@ export function PageHeader({
   const headerClasses = `${styles.header} ${className}`;
 
   // Generate test IDs
-  const pTestID = testID
-    ? `${testID}-description`
-    : 'page-header-description';
+  const pTestID = testID ? `${testID}-description` : 'page-header-description';
 
   return (
     <View className={headerClasses} testID={testID || 'page-header'}>

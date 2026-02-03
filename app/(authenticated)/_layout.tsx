@@ -27,19 +27,11 @@ import {
 } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import {
-  CheckSquareIcon,
-  LayoutDashboardIcon,
-  LogOutIcon,
-  UserIcon,
-} from 'lucide-react-native';
+import { CheckSquareIcon, LayoutDashboardIcon, LogOutIcon, UserIcon } from 'lucide-react-native';
 import { Fragment, useMemo } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated';
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -59,15 +51,11 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   const router = useRouter();
   const { user, signOut, isLoading } = useAuth();
   const { getText } = useTextDetail();
-  const { fontSizeClasses, spacingClasses, spacingValue } =
-    useAccessibilityClasses();
+  const { fontSizeClasses, spacingClasses, spacingValue } = useAccessibilityClasses();
 
   // Memoize contentContainerStyle to avoid Reanimated warnings
   // This prevents accessing spacingValue during render
-  const contentContainerStyle = useMemo(
-    () => ({ paddingTop: spacingValue * 2 }),
-    [spacingValue]
-  );
+  const contentContainerStyle = useMemo(() => ({ paddingTop: spacingValue * 2 }), [spacingValue]);
 
   const handleLogout = async () => {
     await signOut();
@@ -77,9 +65,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
     <View className={styles.container}>
       {/* User Profile Section */}
-      <View
-        className={`${styles.userProfile} ${spacingClasses.gap}`}
-      >
+      <View className={`${styles.userProfile} ${spacingClasses.gap}`}>
         <View className={styles.userProfileHeader}>
           {user?.image ? (
             <Image
@@ -95,15 +81,13 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
           <View className={styles.userProfileName}>
             <Text
               className={`${styles.userProfileName} ${fontSizeClasses.base}`}
-              accessibilityRole="text"
-            >
+              accessibilityRole="text">
               {user?.name || getText('user')}
             </Text>
             <Text
               className={`${styles.userProfileEmail} ${fontSizeClasses.sm}`}
               accessibilityRole="text"
-              numberOfLines={1}
-            >
+              numberOfLines={1}>
               {user?.email || ''}
             </Text>
           </View>
@@ -111,10 +95,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       </View>
 
       {/* Navigation Items */}
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={contentContainerStyle}
-      >
+      <DrawerContentScrollView {...props} contentContainerStyle={contentContainerStyle}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
 
@@ -126,8 +107,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
           className={`${styles.logoutSectionButton} ${spacingClasses.padding}`}
           accessibilityRole="button"
           accessibilityLabel={getText('header_logout_aria')}
-          accessibilityHint={getText('header_logout_hint')}
-        >
+          accessibilityHint={getText('header_logout_hint')}>
           <LogOutIcon color={THEME_COLORS.actionDanger} size={22} />
           <Text className={`${styles.logoutSectionButtonText} ${fontSizeClasses.base}`}>
             {isLoading ? getText('header_logout_loading') : getText('logout')}
@@ -164,10 +144,7 @@ export default function AuthenticatedLayout() {
 
   // Memoize dynamic values based on accessibility preferences
   // This prevents Reanimated warnings about accessing values during render
-  const drawerWidth = useMemo(
-    () => getDrawerWidth(settings.spacing),
-    [settings.spacing]
-  );
+  const drawerWidth = useMemo(() => getDrawerWidth(settings.spacing), [settings.spacing]);
   const fontSize = useMemo(
     () => getFontSizePixelValue(settings.fontSize, 'base'),
     [settings.fontSize]
@@ -176,26 +153,15 @@ export default function AuthenticatedLayout() {
     () => getFontSizePixelValue(settings.fontSize, 'lg'),
     [settings.fontSize]
   );
-  const spacingValue = useMemo(
-    () => getSpacingPixelValue(settings.spacing),
-    [settings.spacing]
-  );
-  const borderRadius = useMemo(
-    () => getBorderRadius(settings.spacing),
-    [settings.spacing]
-  );
-  const iconSize = useMemo(
-    () => getIconSize(settings.fontSize),
-    [settings.fontSize]
-  );
+  const spacingValue = useMemo(() => getSpacingPixelValue(settings.spacing), [settings.spacing]);
+  const borderRadius = useMemo(() => getBorderRadius(settings.spacing), [settings.spacing]);
+  const iconSize = useMemo(() => getIconSize(settings.fontSize), [settings.fontSize]);
 
   // Memoize screen options to prevent Reanimated warnings
   const screenOptions = useMemo(
     () => ({
       headerShown: true,
-      header: (props: DrawerHeaderProps) => (
-        <HeaderWithActiveTaskBanner {...props} />
-      ),
+      header: (props: DrawerHeaderProps) => <HeaderWithActiveTaskBanner {...props} />,
       headerStyle: {
         backgroundColor: THEME_COLORS.surfacePrimary,
       },
@@ -219,13 +185,7 @@ export default function AuthenticatedLayout() {
         padding: spacingValue / 4,
       },
     }),
-    [
-      headerFontSize,
-      drawerWidth,
-      fontSize,
-      borderRadius,
-      spacingValue,
-    ]
+    [headerFontSize, drawerWidth, fontSize, borderRadius, spacingValue]
   );
 
   return (
@@ -242,41 +202,40 @@ export default function AuthenticatedLayout() {
                       drawerContent={(props: DrawerContentComponentProps) => (
                         <CustomDrawerContent {...props} />
                       )}
-                      screenOptions={screenOptions}
-                    >
-                    <Drawer.Screen
-                      name="dashboard"
-                      options={{
-                        drawerIcon: ({ color }: { color: string; size: number }) => (
-                          <LayoutDashboardIcon color={color} size={iconSize} />
-                        ),
-                        title: getText('sidebar_dashboard'),
-                        drawerLabel: getText('sidebar_dashboard'),
-                        headerTitle: getText('sidebar_dashboard'),
-                      }}
-                    />
-                    <Drawer.Screen
-                      name="tasks"
-                      options={{
-                        drawerIcon: ({ color }: { color: string; size: number }) => (
-                          <CheckSquareIcon color={color} size={iconSize} />
-                        ),
-                        title: getText('sidebar_tasks'),
-                        drawerLabel: getText('sidebar_tasks'),
-                        headerTitle: getText('sidebar_tasks'),
-                      }}
-                    />
-                    <Drawer.Screen
-                      name="profile"
-                      options={{
-                        drawerIcon: ({ color }: { color: string; size: number }) => (
-                          <UserIcon color={color} size={iconSize} />
-                        ),
-                        title: getText('sidebar_profile'),
-                        drawerLabel: getText('sidebar_profile'),
-                        headerTitle: getText('sidebar_profile'),
-                      }}
-                    />
+                      screenOptions={screenOptions}>
+                      <Drawer.Screen
+                        name="dashboard"
+                        options={{
+                          drawerIcon: ({ color }: { color: string; size: number }) => (
+                            <LayoutDashboardIcon color={color} size={iconSize} />
+                          ),
+                          title: getText('sidebar_dashboard'),
+                          drawerLabel: getText('sidebar_dashboard'),
+                          headerTitle: getText('sidebar_dashboard'),
+                        }}
+                      />
+                      <Drawer.Screen
+                        name="tasks"
+                        options={{
+                          drawerIcon: ({ color }: { color: string; size: number }) => (
+                            <CheckSquareIcon color={color} size={iconSize} />
+                          ),
+                          title: getText('sidebar_tasks'),
+                          drawerLabel: getText('sidebar_tasks'),
+                          headerTitle: getText('sidebar_tasks'),
+                        }}
+                      />
+                      <Drawer.Screen
+                        name="profile"
+                        options={{
+                          drawerIcon: ({ color }: { color: string; size: number }) => (
+                            <UserIcon color={color} size={iconSize} />
+                          ),
+                          title: getText('sidebar_profile'),
+                          drawerLabel: getText('sidebar_profile'),
+                          headerTitle: getText('sidebar_profile'),
+                        }}
+                      />
                     </Drawer>
                   </Fragment>
                 </GestureHandlerRootView>
@@ -290,13 +249,13 @@ export default function AuthenticatedLayout() {
 }
 
 const styles = {
-  container: "flex-1 bg-surface-primary",
-  userProfile: "border-b border-border-subtle px-4 pb-4 pt-20",
-  userProfileHeader: "flex-row items-center gap-3",
-  userProfileImage: "h-12 w-12 rounded-full",
-  userProfileName: "font-semibold text-text-primary",
-  userProfileEmail: "text-text-muted",
-  logoutSection: "border-t border-border-subtle",
-  logoutSectionButton: "flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary",
-  logoutSectionButtonText: "font-medium text-action-danger",
+  container: 'flex-1 bg-surface-primary',
+  userProfile: 'border-b border-border-subtle px-4 pb-4 pt-20',
+  userProfileHeader: 'flex-row items-center gap-3',
+  userProfileImage: 'h-12 w-12 rounded-full',
+  userProfileName: 'font-semibold text-text-primary',
+  userProfileEmail: 'text-text-muted',
+  logoutSection: 'border-t border-border-subtle',
+  logoutSectionButton: 'flex-row items-center gap-3 rounded-lg px-3 py-3 active:bg-bg-tertiary',
+  logoutSectionButtonText: 'font-medium text-action-danger',
 } as const;

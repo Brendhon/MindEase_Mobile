@@ -33,9 +33,7 @@ export function TaskChecklistItem({
   const itemClasses = useMemo(() => {
     const base = styles.checklistItem;
     const completed = isCompleted ? ` ${styles.checklistItemCompleted}` : '';
-    const nonInteractive = !interactive
-      ? ` ${styles.checklistItemNonInteractive}`
-      : '';
+    const nonInteractive = !interactive ? ` ${styles.checklistItemNonInteractive}` : '';
     return `${base}${completed}${nonInteractive}`;
   }, [isCompleted, interactive]);
 
@@ -51,31 +49,24 @@ export function TaskChecklistItem({
 
   const checkboxClassName = useMemo(() => {
     const base = styles.checklistCheckboxWrapper;
-    const nonInteractive = !interactive
-      ? ` ${styles.checklistCheckboxNonInteractive}`
-      : '';
+    const nonInteractive = !interactive ? ` ${styles.checklistCheckboxNonInteractive}` : '';
     return `${base}${nonInteractive}`;
   }, [interactive]);
 
   return (
-    <View
-      className={itemClasses}
-      testID={testID || `task-checklist-item-${subtask.id}`}
-    >
+    <View className={itemClasses} testID={testID || `task-checklist-item-${subtask.id}`}>
       <Checkbox
         checked={isCompleted}
         onChange={() => handleToggle()}
         disabled={false}
         accessibilityLabel={accessibilityLabel}
         testID={testID ? `${testID}-checkbox` : `task-checklist-checkbox-${subtask.id}`}
-        className={checkboxClassName}
-      >
+        className={checkboxClassName}>
         <Checkbox.Label
           checked={isCompleted}
           onPress={handleToggle}
           className={fontSizeClasses.sm}
-          testID={testID ? `${testID}-label` : `task-checklist-checkbox-${subtask.id}-label`}
-        >
+          testID={testID ? `${testID}-label` : `task-checklist-checkbox-${subtask.id}-label`}>
           {subtask.title}
         </Checkbox.Label>
       </Checkbox>

@@ -23,10 +23,7 @@ export interface SwitchDescriptionProps {
   testID?: string;
 }
 
-export function SwitchDescription({
-  children,
-  testID,
-}: SwitchDescriptionProps) {
+export function SwitchDescription({ children, testID }: SwitchDescriptionProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
 
   const descriptionClasses = useMemo(
@@ -39,8 +36,7 @@ export function SwitchDescription({
       className={descriptionClasses}
       testID={testID || 'switch-description'}
       accessibilityRole="text"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

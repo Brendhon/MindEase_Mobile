@@ -37,8 +37,7 @@ export function InputError({ children, testID }: InputErrorProps) {
       className={`${styles.error} ${fontSizeClass}`}
       testID={testID || 'input-error'}
       accessibilityRole="alert"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

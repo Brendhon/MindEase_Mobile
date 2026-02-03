@@ -15,24 +15,14 @@ export interface DashboardErrorProps {
   testID?: string;
 }
 
-export function DashboardError({
-  message,
-  testID,
-}: DashboardErrorProps) {
+export function DashboardError({ message, testID }: DashboardErrorProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
 
   // Generate error classes with fontSize preference
-  const errorClasses = useMemo(
-    () => `${styles.error} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
-  );
+  const errorClasses = useMemo(() => `${styles.error} ${fontSizeClasses.sm}`, [fontSizeClasses.sm]);
 
   return (
-    <View
-      className={errorClasses}
-      accessibilityRole="alert"
-      testID={testID || 'dashboard-error'}
-    >
+    <View className={errorClasses} accessibilityRole="alert" testID={testID || 'dashboard-error'}>
       <Text className={styles.dashboardErrorText}>{message}</Text>
     </View>
   );

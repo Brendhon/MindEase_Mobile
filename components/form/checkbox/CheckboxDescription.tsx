@@ -42,8 +42,7 @@ export function CheckboxDescription({
       className={descriptionClasses}
       testID={testID || 'checkbox-description'}
       accessibilityRole="text"
-      accessibilityLabel={typeof children === 'string' ? children : undefined}
-    >
+      accessibilityLabel={typeof children === 'string' ? children : undefined}>
       {children}
     </Text>
   );

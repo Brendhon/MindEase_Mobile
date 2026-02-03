@@ -130,8 +130,7 @@ export function ButtonRoot({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       className={baseClassName}
-      {...props}
-    >
+      {...props}>
       {isLoading ? (
         <ButtonLoading size={size} variant={variant} />
       ) : (
@@ -140,7 +139,6 @@ export function ButtonRoot({
     </Pressable>
   );
 }
-
 
 export const Button = Object.assign(ButtonRoot, {
   Icon: ButtonIcon,

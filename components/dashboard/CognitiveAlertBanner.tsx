@@ -41,13 +41,11 @@ export function CognitiveAlertBanner({
   testID,
 }: CognitiveAlertBannerProps) {
   const { getText } = useTextDetail();
-  const { fontSizeClasses, spacingClasses } =
-    useAccessibilityClasses();
+  const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
 
   // Generate accessible classes with memoization
   const bannerClasses = useMemo(
-    () =>
-      `${styles.cognitiveAlertBanner.banner} ${spacingClasses.padding}`,
+    () => `${styles.cognitiveAlertBanner.banner} ${spacingClasses.padding}`,
     [spacingClasses.padding]
   );
 
@@ -61,8 +59,7 @@ export function CognitiveAlertBanner({
     [fontSizeClasses.sm]
   );
 
-  const dismissAriaLabel =
-    getText('cognitive_alerts_dismiss_aria') || 'Dismiss alert';
+  const dismissAriaLabel = getText('cognitive_alerts_dismiss_aria') || 'Dismiss alert';
 
   if (!isVisible) {
     return null;
@@ -72,8 +69,7 @@ export function CognitiveAlertBanner({
     <View
       className={bannerClasses}
       accessibilityRole="alert"
-      testID={testID || 'cognitive-alert-banner'}
-    >
+      testID={testID || 'cognitive-alert-banner'}>
       <View className={styles.cognitiveAlertBanner.bannerContainer}>
         <View className={styles.cognitiveAlertBanner.icon}>
           <BellRing
@@ -91,8 +87,7 @@ export function CognitiveAlertBanner({
           accessibilityLabel={dismissAriaLabel}
           accessibilityRole="button"
           className={styles.cognitiveAlertBanner.dismissButton}
-          testID={testID ? `${testID}-dismiss` : 'cognitive-alert-dismiss'}
-        >
+          testID={testID ? `${testID}-dismiss` : 'cognitive-alert-dismiss'}>
           <X size={16} color={THEME_COLORS.actionPrimary} />
         </Pressable>
       </View>

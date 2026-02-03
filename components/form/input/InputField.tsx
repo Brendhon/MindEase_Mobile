@@ -48,18 +48,7 @@ export interface InputFieldProps extends TextInputProps {
 }
 
 const InputFieldRoot = forwardRef<TextInput, InputFieldProps>(
-  (
-    {
-      className = '',
-      type = 'text',
-      as,
-      multiline,
-      disabled = false,
-      testID,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className = '', type = 'text', as, multiline, disabled = false, testID, ...props }, ref) => {
     const isTextarea = as === 'textarea' || multiline === true;
     const isDisabled = disabled;
 
@@ -127,14 +116,7 @@ const InputFieldRoot = forwardRef<TextInput, InputFieldProps>(
       ]
         .filter(Boolean)
         .join(' ');
-    }, [
-      isTextarea,
-      fontSizeClass,
-      paddingClass,
-      borderClasses,
-      isDisabled,
-      className,
-    ]);
+    }, [isTextarea, fontSizeClass, paddingClass, borderClasses, isDisabled, className]);
 
     return (
       <TextInput

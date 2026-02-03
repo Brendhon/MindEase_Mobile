@@ -25,21 +25,14 @@ export interface DashboardCognitiveAlertsProps {
   testID?: string;
 }
 
-export function DashboardCognitiveAlerts({
-  testID,
-}: DashboardCognitiveAlertsProps) {
-  const { isMissingBreakAlertVisible, dismissMissingBreakAlert } =
-    useMissingBreakAlert();
+export function DashboardCognitiveAlerts({ testID }: DashboardCognitiveAlertsProps) {
+  const { isMissingBreakAlertVisible, dismissMissingBreakAlert } = useMissingBreakAlert();
   const { isProlongedNavigationAlertVisible, dismissProlongedNavigationAlert } =
     useProlongedNavigationAlert();
-  const { isExcessiveTimeAlertVisible, dismissExcessiveTimeAlert } =
-    useExcessiveTimeAlert();
+  const { isExcessiveTimeAlertVisible, dismissExcessiveTimeAlert } = useExcessiveTimeAlert();
 
   return (
-    <View
-      accessibilityRole="none"
-      testID={testID || 'dashboard-cognitive-alerts'}
-    >
+    <View accessibilityRole="none" testID={testID || 'dashboard-cognitive-alerts'}>
       <CognitiveAlertExcessiveTime
         isVisible={isExcessiveTimeAlertVisible}
         onDismiss={dismissExcessiveTimeAlert}

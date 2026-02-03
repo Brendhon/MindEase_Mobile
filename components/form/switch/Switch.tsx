@@ -36,11 +36,7 @@ export interface SwitchProps {
   testID?: string;
 }
 
-function SwitchRoot({
-  className = '',
-  children,
-  testID,
-}: SwitchProps) {
+function SwitchRoot({ className = '', children, testID }: SwitchProps) {
   // Use cognitive settings hook for automatic accessibility class generation
   const { spacingClasses } = useAccessibilityClasses();
 
@@ -56,12 +52,9 @@ function SwitchRoot({
     <View
       className={containerClasses}
       testID={testID || 'switch-container'}
-      accessibilityRole="none"
-    >
+      accessibilityRole="none">
       {toggle}
-      {content.length > 0 && (
-        <View className={styles.content}>{content}</View>
-      )}
+      {content.length > 0 && <View className={styles.content}>{content}</View>}
     </View>
   );
 }

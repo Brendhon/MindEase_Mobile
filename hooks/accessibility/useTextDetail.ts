@@ -1,10 +1,7 @@
 import { ReactNode, useCallback, useMemo } from 'react';
 
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import {
-  getAccessibilityText,
-  type AccessibilityTextKey,
-} from '@/utils/accessibility';
+import { getAccessibilityText, type AccessibilityTextKey } from '@/utils/accessibility';
 
 /**
  * useTextDetail Hook - MindEase Mobile
@@ -45,14 +42,8 @@ export function useTextDetail() {
 
   // Memoize text detail values to minimize re-renders
   const mode = useMemo(() => settings.textDetail, [settings.textDetail]);
-  const isDetailed = useMemo(
-    () => settings.textDetail === 'detailed',
-    [settings.textDetail]
-  );
-  const isSummary = useMemo(
-    () => settings.textDetail === 'summary',
-    [settings.textDetail]
-  );
+  const isDetailed = useMemo(() => settings.textDetail === 'detailed', [settings.textDetail]);
+  const isSummary = useMemo(() => settings.textDetail === 'summary', [settings.textDetail]);
 
   // Memoize getTextWithReplace to minimize re-renders
   const getTextWithReplace = useCallback(
@@ -68,8 +59,7 @@ export function useTextDetail() {
 
   // Memoize getText to minimize re-renders
   const getText = useCallback(
-    (key: AccessibilityTextKey) =>
-      getAccessibilityText(key, settings.textDetail),
+    (key: AccessibilityTextKey) => getAccessibilityText(key, settings.textDetail),
     [settings.textDetail]
   );
 

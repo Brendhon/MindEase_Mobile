@@ -31,24 +31,24 @@ export interface PageScrollViewProps {
   testID?: string;
 }
 
-export const PageScrollView = forwardRef<ScrollView, PageScrollViewProps>(
-  function PageScrollView({ children, className = '', testID }, ref) {
-    const { spacingClasses } = useAccessibilityClasses();
+export const PageScrollView = forwardRef<ScrollView, PageScrollViewProps>(function PageScrollView(
+  { children, className = '', testID },
+  ref
+) {
+  const { spacingClasses } = useAccessibilityClasses();
 
-    const scrollClassName = `${styles.container} ${spacingClasses.padding} ${className}`.trim();
+  const scrollClassName = `${styles.container} ${spacingClasses.padding} ${className}`.trim();
 
-    return (
-      <ScrollView
-        ref={ref}
-        className={scrollClassName}
-        contentContainerStyle={styles.contentContainer}
-        testID={testID}
-      >
-        {children}
-      </ScrollView>
-    );
-  }
-);
+  return (
+    <ScrollView
+      ref={ref}
+      className={scrollClassName}
+      contentContainerStyle={styles.contentContainer}
+      testID={testID}>
+      {children}
+    </ScrollView>
+  );
+});
 
 PageScrollView.displayName = 'PageScrollView';
 

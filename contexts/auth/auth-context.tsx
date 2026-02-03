@@ -16,9 +16,7 @@ import { AuthContextValue } from '@/models/auth';
  * is handled by the useAuth hook. Components should use useAuth(), not useAuthContext().
  */
 
-export const AuthContext = createContext<AuthContextValue | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 /**
  * Hook to access auth context

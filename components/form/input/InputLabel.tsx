@@ -26,11 +26,7 @@ export interface InputLabelProps {
   testID?: string;
 }
 
-export function InputLabel({
-  children,
-  nativeID,
-  testID,
-}: InputLabelProps) {
+export function InputLabel({ children, nativeID, testID }: InputLabelProps) {
   // Use cognitive settings hook for automatic accessibility class generation
   // Font size automatically updates when user preferences change
   const { fontSizeClasses } = useAccessibilityClasses();
@@ -44,8 +40,7 @@ export function InputLabel({
       className={`${styles.label} ${fontSizeClass}`}
       testID={testID || 'input-label'}
       accessibilityRole="text"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

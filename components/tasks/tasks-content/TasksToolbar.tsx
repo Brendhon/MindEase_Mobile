@@ -17,10 +17,7 @@ export interface TasksToolbarProps {
   testID?: string;
 }
 
-export function TasksToolbar({
-  onNewTask,
-  testID,
-}: TasksToolbarProps) {
+export function TasksToolbar({ onNewTask, testID }: TasksToolbarProps) {
   const { getText } = useTextDetail();
 
   return (
@@ -31,8 +28,7 @@ export function TasksToolbar({
         onPress={onNewTask}
         accessibilityLabel={getText('tasks_new_aria')}
         accessibilityHint={getText('tasks_new_aria')}
-        testID={testID ? `${testID}-new-button` : 'tasks-toolbar-new-button'}
-      >
+        testID={testID ? `${testID}-new-button` : 'tasks-toolbar-new-button'}>
         <Button.Icon icon={Plus} position="left" />
         <Button.Text>{getText('tasks_new')}</Button.Text>
       </Button>

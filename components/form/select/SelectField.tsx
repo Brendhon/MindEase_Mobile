@@ -37,8 +37,7 @@ export interface SelectFieldItem {
  * </Select>
  * ```
  */
-export interface SelectFieldProps
-  extends Omit<PickerProps, 'children' | 'onValueChange'> {
+export interface SelectFieldProps extends Omit<PickerProps, 'children' | 'onValueChange'> {
   /** Selected value */
   selectedValue?: string | number;
 
@@ -138,8 +137,7 @@ export function SelectField({
           expanded: false, // Picker is always collapsed until opened
         }}
         accessibilityLabel={pickerProps.accessibilityLabel}
-        {...pickerProps}
-      >
+        {...pickerProps}>
         {pickerItems.map((item, index) => (
           <Picker.Item
             key={item.value !== undefined ? String(item.value) : index}

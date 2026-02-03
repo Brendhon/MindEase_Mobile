@@ -25,10 +25,7 @@ export interface RadioGroupLabelProps {
   testID?: string;
 }
 
-export function RadioGroupLabel({
-  children,
-  testID,
-}: RadioGroupLabelProps) {
+export function RadioGroupLabel({ children, testID }: RadioGroupLabelProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
   const context = useRadioGroupContext();
 
@@ -42,8 +39,7 @@ export function RadioGroupLabel({
       className={labelClasses}
       testID={testID || 'radio-group-label'}
       accessibilityRole="text"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

@@ -65,11 +65,7 @@ export function useProlongedNavigationAlert() {
   }, [lastActionTimestamp, _setLastActionTimestamp]);
 
   // Check if dismiss has expired (2 hours)
-  useDismissExpiry(
-    dismissedAt,
-    _setIsProlongedNavigationAlertDismissed,
-    _setDismissedAt
-  );
+  useDismissExpiry(dismissedAt, _setIsProlongedNavigationAlertDismissed, _setDismissedAt);
 
   // Monitor navigation time and update alert visibility
   useEffect(() => {

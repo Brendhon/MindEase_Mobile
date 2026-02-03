@@ -19,11 +19,7 @@ export default function DashboardScreen() {
 
   return (
     <PageScrollView testID="dashboard-page-scroll">
-      <DashboardContent
-        tasks={tasks}
-        error={error}
-        testID="dashboard-page-container"
-      />
+      <DashboardContent tasks={tasks} error={error} testID="dashboard-page-container" />
     </PageScrollView>
   );
 }

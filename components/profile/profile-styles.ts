@@ -23,8 +23,7 @@ export const styles = {
   // Avatar styles
   avatarContainer: 'flex justify-center',
   avatar: 'rounded-full w-24 h-24 border-2 shadow-md',
-  initialsContainer:
-    'rounded-full w-24 h-24 flex items-center justify-center border-2 shadow-md',
+  initialsContainer: 'rounded-full w-24 h-24 flex items-center justify-center border-2 shadow-md',
   initialsText: 'text-text-inverse font-semibold text-2xl leading-none',
 
   // Actions styles

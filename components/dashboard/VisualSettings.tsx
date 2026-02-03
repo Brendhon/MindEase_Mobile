@@ -3,7 +3,6 @@ import { RadioGroup } from '@/components/form/radio-group';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useTextDetail } from '@/hooks/accessibility';
 
-
 /**
  * VisualSettings Component - MindEase Mobile
  * Visual accessibility settings section (contrast, spacing, fontSize)
@@ -20,14 +19,12 @@ export function VisualSettings({ testID }: VisualSettingsProps) {
   return (
     <SettingsSection
       title={getText('profile_section_visual')}
-      testID={testID || 'profile-section-visual'}
-    >
+      testID={testID || 'profile-section-visual'}>
       {/* Contrast Setting */}
       <RadioGroup
         value={settings.contrast}
         onChange={(value) => updateSetting('contrast', value)}
-        testID="profile-contrast"
-      >
+        testID="profile-contrast">
         <RadioGroup.Header>
           <RadioGroup.Label testID="profile-contrast-label">
             {getText('profile_setting_contrast')}
@@ -60,8 +57,7 @@ export function VisualSettings({ testID }: VisualSettingsProps) {
       <RadioGroup
         value={settings.spacing}
         onChange={(value) => updateSetting('spacing', value)}
-        testID="profile-spacing"
-      >
+        testID="profile-spacing">
         <RadioGroup.Header>
           <RadioGroup.Label testID="profile-spacing-label">
             {getText('profile_setting_spacing')}
@@ -94,8 +90,7 @@ export function VisualSettings({ testID }: VisualSettingsProps) {
       <RadioGroup
         value={settings.fontSize}
         onChange={(value) => updateSetting('fontSize', value)}
-        testID="profile-fontsize"
-      >
+        testID="profile-fontsize">
         <RadioGroup.Header>
           <RadioGroup.Label testID="profile-fontsize-label">
             {getText('profile_setting_font_size')}

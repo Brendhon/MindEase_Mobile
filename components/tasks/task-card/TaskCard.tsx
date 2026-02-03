@@ -32,13 +32,7 @@ export interface TaskCardProps {
   testID?: string;
 }
 
-export function TaskCard({
-  task,
-  onEdit,
-  onDelete,
-  onTaskMovedToColumn,
-  testID,
-}: TaskCardProps) {
+export function TaskCard({ task, onEdit, onDelete, onTaskMovedToColumn, testID }: TaskCardProps) {
   const {
     cardClasses,
     isRunning,
@@ -86,12 +80,15 @@ export function TaskCard({
   const hasSubtasks = totalSubtasks > 0;
 
   const accessibilityLabel = useMemo(
-    () => `${task.title}, ${statusLabel}${hasSubtasks ? `, ${completedSubtasks} ${getText('tasks_progress')} ${totalSubtasks} ${getText('tasks_progress_steps')}` : ''}`,
+    () =>
+      `${task.title}, ${statusLabel}${hasSubtasks ? `, ${completedSubtasks} ${getText('tasks_progress')} ${totalSubtasks} ${getText('tasks_progress_steps')}` : ''}`,
     [task.title, statusLabel, hasSubtasks, completedSubtasks, totalSubtasks, getText]
   );
 
   const showActions = task.status !== 2;
-  const hasAnyAction = Boolean(handleStartFocus || handleStop || handleComplete || handleEdit || handleDelete);
+  const hasAnyAction = Boolean(
+    handleStartFocus || handleStop || handleComplete || handleEdit || handleDelete
+  );
   const showContent =
     true &&
     (isRunning ||
@@ -104,33 +101,21 @@ export function TaskCard({
       className="w-full"
       accessibilityRole="summary"
       accessibilityLabel={accessibilityLabel}
-      importantForAccessibility="yes"
-    >
-      <Card
-        className={cardClasses}
-        focused={isFocused}
-        testID={testID || `task-card-${task.id}`}
-      >
+      importantForAccessibility="yes">
+      <Card className={cardClasses} focused={isFocused} testID={testID || `task-card-${task.id}`}>
         <Card.Header>
           <View className={styles.headerRow}>
-            <Text
-              className={`${styles.title} ${fontSizeClasses.base}`}
-              numberOfLines={2}
-            >
+            <Text className={`${styles.title} ${fontSizeClasses.base}`} numberOfLines={2}>
               {task.title}
             </Text>
             <Text
               className={statusBadgeClasses}
-              testID={testID ? `${testID}-status` : `task-card-status-${task.id}`}
-            >
+              testID={testID ? `${testID}-status` : `task-card-status-${task.id}`}>
               {statusLabel}
             </Text>
           </View>
           {task.description ? (
-            <Text
-              className={`${styles.description} ${fontSizeClasses.sm}`}
-              numberOfLines={2}
-            >
+            <Text className={`${styles.description} ${fontSizeClasses.sm}`} numberOfLines={2}>
               {task.description}
             </Text>
           ) : null}

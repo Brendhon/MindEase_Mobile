@@ -14,10 +14,7 @@ import { COUNTDOWN_INTERVAL_MS } from '@/utils/timer/timer-constants';
  * @param isRunning - Whether the timer is currently running
  * @param onTick - Callback to execute on each tick
  */
-export function useCountdownInterval(
-  isRunning: boolean,
-  onTick: () => void
-): void {
+export function useCountdownInterval(isRunning: boolean, onTick: () => void): void {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {

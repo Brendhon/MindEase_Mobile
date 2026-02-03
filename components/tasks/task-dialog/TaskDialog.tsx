@@ -13,13 +13,7 @@ import { generateRandomUUID } from '@/utils/uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, X } from 'lucide-react-native';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import {
-  Controller,
-  FormProvider,
-  Resolver,
-  useFieldArray,
-  useForm,
-} from 'react-hook-form';
+import { Controller, FormProvider, Resolver, useFieldArray, useForm } from 'react-hook-form';
 import {
   KeyboardAvoidingView,
   Modal,
@@ -136,10 +130,7 @@ export function TaskDialog({
     onClose();
   }, [onClose, resetForm]);
 
-  const formClasses = useMemo(
-    () => `${styles.form} ${spacingClasses.gap}`,
-    [spacingClasses.gap]
-  );
+  const formClasses = useMemo(() => `${styles.form} ${spacingClasses.gap}`, [spacingClasses.gap]);
 
   const checklistClasses = useMemo(
     () => `${styles.checklist} ${spacingClasses.gap}`,
@@ -169,22 +160,17 @@ export function TaskDialog({
       onRequestClose={handleCancel}
       animationType="slide"
       transparent={false}
-      testID={testID}
-    >
+      testID={testID}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         className={styles.modalContent}
-        style={{ flex: 1 }}
-      >
+        style={{ flex: 1 }}>
         <View style={headerPadding} className={styles.header}>
           <Text
             className={styles.headerTitle}
             testID={`${testID}-title`}
-            accessibilityRole="header"
-          >
-            {getText(
-              isEditing ? 'tasks_dialog_edit_title' : 'tasks_dialog_create_title'
-            )}
+            accessibilityRole="header">
+            {getText(isEditing ? 'tasks_dialog_edit_title' : 'tasks_dialog_create_title')}
           </Text>
         </View>
 
@@ -192,13 +178,9 @@ export function TaskDialog({
           className={styles.scrollContent}
           contentContainerStyle={scrollPadding}
           keyboardShouldPersistTaps="handled"
-          testID={`${testID}-content`}
-        >
+          testID={`${testID}-content`}>
           <FormProvider {...methods}>
-            <Pressable
-              onPress={(e) => e.stopPropagation()}
-              className={formClasses}
-            >
+            <Pressable onPress={(e) => e.stopPropagation()} className={formClasses}>
               <FormInput
                 name="title"
                 label={getText('tasks_dialog_field_title')}
@@ -212,9 +194,7 @@ export function TaskDialog({
                 name="description"
                 label={getText('tasks_dialog_field_description')}
                 as="textarea"
-                placeholder={getText(
-                  'tasks_dialog_field_description_placeholder'
-                )}
+                placeholder={getText('tasks_dialog_field_description_placeholder')}
                 rows={3}
                 testID={`${testID}-field-description`}
               />
@@ -229,12 +209,9 @@ export function TaskDialog({
                     size="sm"
                     onPress={handleAddSubtask}
                     testID={`${testID}-add-subtask`}
-                    accessibilityLabel={getText('tasks_checklist_add')}
-                  >
+                    accessibilityLabel={getText('tasks_checklist_add')}>
                     <Button.Icon icon={Plus} position="left" variant="ghost" />
-                    <Button.Text variant="ghost">
-                      {getText('tasks_checklist_add')}
-                    </Button.Text>
+                    <Button.Text variant="ghost">{getText('tasks_checklist_add')}</Button.Text>
                   </Button>
                 </View>
 
@@ -244,8 +221,7 @@ export function TaskDialog({
                       <View
                         key={field.id}
                         className={styles.checklistItem}
-                        testID={`${testID}-subtask-${field.id}`}
-                      >
+                        testID={`${testID}-subtask-${field.id}`}>
                         <Controller
                           name={`subtasks.${index}.title`}
                           control={methods.control}
@@ -265,11 +241,8 @@ export function TaskDialog({
                           variant="ghost"
                           size="sm"
                           onPress={() => handleRemoveSubtask(index)}
-                          accessibilityLabel={getText(
-                            'tasks_checklist_remove_aria'
-                          )}
-                          testID={`${testID}-remove-subtask-${field.id}`}
-                        >
+                          accessibilityLabel={getText('tasks_checklist_remove_aria')}
+                          testID={`${testID}-remove-subtask-${field.id}`}>
                           <Button.Icon icon={X} variant="ghost" />
                         </Button>
                       </View>
@@ -279,24 +252,15 @@ export function TaskDialog({
               </View>
 
               <View className={styles.actions}>
-                <Button
-                  variant="ghost"
-                  onPress={handleCancel}
-                  testID={`${testID}-cancel`}
-                >
-                  <Button.Text variant="ghost">
-                    {getText('button_cancel')}
-                  </Button.Text>
+                <Button variant="ghost" onPress={handleCancel} testID={`${testID}-cancel`}>
+                  <Button.Text variant="ghost">{getText('button_cancel')}</Button.Text>
                 </Button>
                 <Button
                   variant="primary"
                   onPress={methods.handleSubmit(handleSave as (data: TaskDialogFormData) => void)}
-                  testID={`${testID}-save`}
-                >
+                  testID={`${testID}-save`}>
                   <Button.Text>
-                    {isEditing
-                      ? getText('button_save')
-                      : getText('button_create')}
+                    {isEditing ? getText('button_save') : getText('button_create')}
                   </Button.Text>
                 </Button>
               </View>

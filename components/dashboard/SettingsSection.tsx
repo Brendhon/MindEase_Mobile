@@ -39,26 +39,17 @@ export function SettingsSection({
   return (
     <Card className={className} testID={testID || 'settings-section'}>
       <Card.Header>
-        <Card.Title
-          testID={testID ? `${testID}-title` : 'settings-section-title'}
-        >
+        <Card.Title testID={testID ? `${testID}-title` : 'settings-section-title'}>
           {title}
         </Card.Title>
         {description && (
           <Card.Description
-            testID={
-              testID
-                ? `${testID}-description`
-                : 'settings-section-description'
-            }
-          >
+            testID={testID ? `${testID}-description` : 'settings-section-description'}>
             {description}
           </Card.Description>
         )}
       </Card.Header>
-      <Card.Content
-        testID={testID ? `${testID}-content` : 'settings-section-content'}
-      >
+      <Card.Content testID={testID ? `${testID}-content` : 'settings-section-content'}>
         {children}
       </Card.Content>
     </Card>

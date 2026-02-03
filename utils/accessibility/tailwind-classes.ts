@@ -15,9 +15,7 @@ import { UserPreferences } from '@/models/user-preferences';
  * @param contrast - Contrast mode (normal, high, low)
  * @returns Contrast mode string for conditional styling
  */
-export function getContrastClasses(
-  contrast: UserPreferences['contrast']
-): string {
+export function getContrastClasses(contrast: UserPreferences['contrast']): string {
   // React Native doesn't support CSS contrast filters
   // Return empty string - contrast is handled via theme switching
   return '';
@@ -91,9 +89,7 @@ export function getBorderContrastClasses(
       return 'border-border-subtle opacity-60';
     case 'normal':
     default:
-      return variant === 'strong'
-        ? 'border-border-strong'
-        : 'border-border-subtle';
+      return variant === 'strong' ? 'border-border-strong' : 'border-border-subtle';
   }
 }
 

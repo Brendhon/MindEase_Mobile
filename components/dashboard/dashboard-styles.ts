@@ -19,7 +19,8 @@ export const styles = {
 
   // Cognitive alert banner styles
   cognitiveAlertBanner: {
-    banner: 'flex flex-col items-start justify-between gap-3 rounded-lg bg-surface-primary border-2 border-action-warning/50 shadow-md',
+    banner:
+      'flex flex-col items-start justify-between gap-3 rounded-lg bg-surface-primary border-2 border-action-warning/50 shadow-md',
     bannerContainer: 'flex flex-row items-start gap-3 flex-1',
     bannerContent: 'flex flex-col flex-1 min-w-0',
     title: 'font-semibold',

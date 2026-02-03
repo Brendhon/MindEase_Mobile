@@ -22,11 +22,7 @@ export interface CardContentProps {
   testID?: string;
 }
 
-export function CardContent({
-  children,
-  className = '',
-  testID,
-}: CardContentProps) {
+export function CardContent({ children, className = '', testID }: CardContentProps) {
   const { spacingClasses } = useAccessibilityClasses();
 
   const contentClasses = useMemo(

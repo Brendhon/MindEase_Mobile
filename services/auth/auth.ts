@@ -106,7 +106,9 @@ function handleGoogleSignInError(error: unknown): AuthError {
 /**
  * Process Google Sign-In response and authenticate with Firebase
  */
-async function processSignInResponse(response: SignInResponse | SignInSilentlyResponse): Promise<void> {
+async function processSignInResponse(
+  response: SignInResponse | SignInSilentlyResponse
+): Promise<void> {
   if (!isSuccessResponse(response as SignInResponse)) {
     // User cancelled the sign-in
     throw new AuthError('SIGN_IN_CANCELLED', 'Sign-in was cancelled');

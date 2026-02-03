@@ -1,4 +1,3 @@
-
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 interface ContainerProps {

@@ -32,8 +32,7 @@ import { useToast } from '../toast/useToast';
  * ```
  */
 export function useTasks() {
-  const { tasks, loading, error, _setTasks, _setLoading, _setError } =
-    useTasksContext();
+  const { tasks, loading, error, _setTasks, _setLoading, _setError } = useTasksContext();
   const { user } = useAuth();
   const { success } = useToast();
 
@@ -72,8 +71,7 @@ export function useTasks() {
         const loadedTasks = await tasksService.getTasks(userId);
         _setTasks(loadedTasks);
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to load tasks';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load tasks';
         _setError(errorMessage);
       } finally {
         _setLoading(false);
@@ -132,8 +130,7 @@ export function useTasks() {
         // TODO: Add feedback when useFeedback is available
         success('toast_success_task_created');
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to create task';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to create task';
         _setError(errorMessage);
         // TODO: Add feedback when useFeedback is available
         // showError('toast_error_task_create_failed');
@@ -156,14 +153,8 @@ export function useTasks() {
       _setError(null);
 
       try {
-        const updatedTask = await tasksService.updateTask(
-          userId,
-          taskId,
-          updates
-        );
-        _setTasks((prev) =>
-          prev.map((t) => (t.id === taskId ? updatedTask : t))
-        );
+        const updatedTask = await tasksService.updateTask(userId, taskId, updates);
+        _setTasks((prev) => prev.map((t) => (t.id === taskId ? updatedTask : t)));
 
         // TODO: Add feedback when useFeedback is available
         // const isComplete = updatedTask.status === 2;
@@ -171,8 +162,7 @@ export function useTasks() {
         //   success('toast_success_task_completed');
         // }
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to update task';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to update task';
         _setError(errorMessage);
         // TODO: Add feedback when useFeedback is available
         // showError('toast_error_task_update_failed');
@@ -200,8 +190,7 @@ export function useTasks() {
         // TODO: Add feedback when useFeedback is available
         // success('toast_success_task_deleted');
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to delete task';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to delete task';
         _setError(errorMessage);
         // TODO: Add feedback when useFeedback is available
         // showError('toast_error_task_delete_failed');

@@ -1,5 +1,4 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Subtask } from '@/models/task';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -34,15 +33,9 @@ export function TaskChecklist({
   const { spacingClasses, fontSizeClasses } = useAccessibilityClasses();
   const { getText } = useTextDetail();
 
-  const sortedSubtasks = useMemo(
-    () => [...subtasks].sort((a, b) => a.order - b.order),
-    [subtasks]
-  );
+  const sortedSubtasks = useMemo(() => [...subtasks].sort((a, b) => a.order - b.order), [subtasks]);
 
-  const completedCount = useMemo(
-    () => subtasks.filter((s) => s.completed).length,
-    [subtasks]
-  );
+  const completedCount = useMemo(() => subtasks.filter((s) => s.completed).length, [subtasks]);
   const totalCount = subtasks.length;
 
   if (subtasks.length === 0) {
@@ -55,10 +48,8 @@ export function TaskChecklist({
     <View className={containerClasses} testID={testID || 'task-checklist'}>
       <Text
         className={`${styles.checklistProgress} ${fontSizeClasses.sm}`}
-        testID={testID ? `${testID}-progress` : 'task-checklist-progress'}
-      >
-        {completedCount} {getText('tasks_progress')} {totalCount}{' '}
-        {getText('tasks_progress_steps')}
+        testID={testID ? `${testID}-progress` : 'task-checklist-progress'}>
+        {completedCount} {getText('tasks_progress')} {totalCount} {getText('tasks_progress_steps')}
       </Text>
       <View className={styles.checklistList}>
         {sortedSubtasks.map((subtask) => (
@@ -74,8 +65,7 @@ export function TaskChecklist({
       {!isInFocus && (
         <Text
           className={`${styles.checklistHint} ${fontSizeClasses.sm}`}
-          testID={testID ? `${testID}-hint` : 'task-checklist-hint'}
-        >
+          testID={testID ? `${testID}-hint` : 'task-checklist-hint'}>
           {getText('tasks_subtask_focus_required_hint_text')}
         </Text>
       )}

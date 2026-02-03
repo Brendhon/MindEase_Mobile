@@ -25,10 +25,7 @@ export interface ProfileInfoProps {
   testID?: string;
 }
 
-export function ProfileInfo({
-  user: userProp,
-  testID,
-}: ProfileInfoProps) {
+export function ProfileInfo({ user: userProp, testID }: ProfileInfoProps) {
   // Use provided user prop or fall back to useAuth for backward compatibility
   const auth = useAuth();
   const user = userProp || auth.user;
@@ -41,10 +38,7 @@ export function ProfileInfo({
   const { showConfirmation } = useAlert();
 
   // Generate accessible classes with memoization
-  const labelClasses = useMemo(
-    () => `${styles.label} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
-  );
+  const labelClasses = useMemo(() => `${styles.label} ${fontSizeClasses.sm}`, [fontSizeClasses.sm]);
 
   const valueClasses = useMemo(
     () => `${styles.value} ${fontSizeClasses.base}`,
@@ -106,20 +100,14 @@ export function ProfileInfo({
 
   if (!user) {
     return (
-      <View
-        className={containerClasses}
-        testID={testID || 'profile-info-container'}
-      >
+      <View className={containerClasses} testID={testID || 'profile-info-container'}>
         <Text className={errorClasses}>{getText('error')}</Text>
       </View>
     );
   }
 
   return (
-    <View
-      className={containerClasses}
-      testID={testID || 'profile-info-container'}
-    >
+    <View className={containerClasses} testID={testID || 'profile-info-container'}>
       <PageHeader
         descriptionKey="profile_description"
         testID={testID ? `${testID}-header` : 'profile-info-header'}

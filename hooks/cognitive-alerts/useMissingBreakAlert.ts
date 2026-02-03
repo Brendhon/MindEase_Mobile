@@ -57,11 +57,7 @@ export function useMissingBreakAlert() {
   } = useMissingBreakAlertContext();
 
   // Check if dismiss has expired (2 hours)
-  useDismissExpiry(
-    dismissedAt,
-    _setIsMissingBreakAlertDismissed,
-    _setDismissedAt
-  );
+  useDismissExpiry(dismissedAt, _setIsMissingBreakAlertDismissed, _setDismissedAt);
 
   // Update alert visibility when consecutive sessions or dismissed state changes
   useEffect(() => {
@@ -73,11 +69,7 @@ export function useMissingBreakAlert() {
     } else if (consecutiveFocusSessions < MISSING_BREAK_SESSIONS_THRESHOLD) {
       _setIsMissingBreakAlertVisible(false);
     }
-  }, [
-    consecutiveFocusSessions,
-    isMissingBreakAlertDismissed,
-    _setIsMissingBreakAlertVisible,
-  ]);
+  }, [consecutiveFocusSessions, isMissingBreakAlertDismissed, _setIsMissingBreakAlertVisible]);
 
   /**
    * Record that a focus session was completed without taking a break

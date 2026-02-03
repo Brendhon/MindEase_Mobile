@@ -28,12 +28,7 @@ export interface SwitchToggleProps {
   testID?: string;
 }
 
-export function SwitchToggle({
-  checked,
-  onChange,
-  disabled = false,
-  testID,
-}: SwitchToggleProps) {
+export function SwitchToggle({ checked, onChange, disabled = false, testID }: SwitchToggleProps) {
   return (
     <View testID={testID || 'switch-toggle'}>
       <RNSwitch

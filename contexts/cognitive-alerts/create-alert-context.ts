@@ -35,9 +35,7 @@ export function createAlertContext<T>(alertName: string) {
     const context = useContext(Context);
 
     if (!context) {
-      throw new Error(
-        `use${alertName}Context must be used within ${alertName}Provider`
-      );
+      throw new Error(`use${alertName}Context must be used within ${alertName}Provider`);
     }
 
     return context;

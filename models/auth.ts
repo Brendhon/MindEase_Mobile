@@ -25,9 +25,7 @@ export interface AuthContextValue {
   error: Error | null;
 
   // Internal setters - only used by useAuth hook
-  _setUser: (
-    user: AuthUser | null | ((prev: AuthUser | null) => AuthUser | null)
-  ) => void;
+  _setUser: (user: AuthUser | null | ((prev: AuthUser | null) => AuthUser | null)) => void;
   _setLoading: (loading: boolean) => void;
   _setError: (error: Error | null) => void;
 }

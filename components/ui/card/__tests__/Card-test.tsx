@@ -8,7 +8,13 @@ import { Card } from '../Card';
 
 jest.mock('@/hooks/accessibility', () => ({
   useAccessibilityClasses: () => ({
-    fontSizeClasses: { xs: 'text-xs', sm: 'text-sm', base: 'text-base', lg: 'text-lg', xl: 'text-xl' },
+    fontSizeClasses: {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      base: 'text-base',
+      lg: 'text-lg',
+      xl: 'text-xl',
+    },
     spacingClasses: { gap: 'gap-2', padding: 'p-4' },
     contrastClasses: 'contrast-class',
   }),

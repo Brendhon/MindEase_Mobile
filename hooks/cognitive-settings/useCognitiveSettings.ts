@@ -2,10 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { useCognitiveSettingsContext } from '@/contexts/cognitive-settings';
 import { useAuthContext } from '@/contexts/auth';
-import {
-  UserPreferences,
-  DEFAULT_ACCESSIBILITY_SETTINGS,
-} from '@/models/user-preferences';
+import { UserPreferences, DEFAULT_ACCESSIBILITY_SETTINGS } from '@/models/user-preferences';
 import { userPreferencesService } from '@/services/user-preferences';
 
 /**
@@ -76,16 +73,13 @@ export function useCognitiveSettings() {
       _setError(null);
 
       try {
-        const preferences =
-          await userPreferencesService.getUserPreferences(targetUserId);
+        const preferences = await userPreferencesService.getUserPreferences(targetUserId);
 
         _setSettings(preferences);
         loadedForUserRef.current = targetUserId;
       } catch (err) {
         console.error('Error loading user preferences:', err);
-        _setError(
-          err instanceof Error ? err : new Error('Failed to load preferences')
-        );
+        _setError(err instanceof Error ? err : new Error('Failed to load preferences'));
         // Fallback to defaults on error
         _setSettings(DEFAULT_ACCESSIBILITY_SETTINGS);
       } finally {
@@ -121,10 +115,7 @@ export function useCognitiveSettings() {
    * Automatically syncs with Firestore
    */
   const updateSetting = useCallback(
-    async <K extends keyof UserPreferences>(
-      key: K,
-      value: UserPreferences[K]
-    ) => {
+    async <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
       // Optimistic update for immediate UI feedback
       _setSettings((prev) => ({ ...prev, [key]: value }));
 
@@ -156,10 +147,7 @@ export function useCognitiveSettings() {
       // Sync with Firestore if user is authenticated
       if (user?.uid) {
         try {
-          await userPreferencesService.updateUserPreferences(
-            user.uid,
-            newSettings
-          );
+          await userPreferencesService.updateUserPreferences(user.uid, newSettings);
         } catch (err) {
           console.error('Error syncing settings to Firestore:', err);
           // Revert on error by reloading from Firestore

@@ -13,9 +13,7 @@ interface RadioGroupContextValue {
   disabled?: boolean;
 }
 
-export const RadioGroupContext = createContext<RadioGroupContextValue | null>(
-  null
-);
+export const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
 
 /**
  * Hook to access RadioGroup context

@@ -68,10 +68,7 @@ export default function LoginScreen() {
     [fontSizeClasses]
   );
 
-  const errorClasses = useMemo(
-    () => `${styles.error} ${fontSizeClasses.sm}`,
-    [fontSizeClasses]
-  );
+  const errorClasses = useMemo(() => `${styles.error} ${fontSizeClasses.sm}`, [fontSizeClasses]);
 
   /**
    * Handles sign-in button press
@@ -81,24 +78,18 @@ export default function LoginScreen() {
   };
 
   return (
-    <View
-      className={styles.container}
-      accessibilityLabel={getText('login_title')}
-    >
+    <View className={styles.container} accessibilityLabel={getText('login_title')}>
       <View className={cardClasses}>
         {/* Title */}
         <Text
           className={titleClasses}
           accessibilityRole="header"
-          accessibilityLabel={getText('login_title')}
-        >
+          accessibilityLabel={getText('login_title')}>
           {getText('login_title')}
         </Text>
 
         {/* Description */}
-        <Text className={descriptionClasses}>
-          {getText('login_description')}
-        </Text>
+        <Text className={descriptionClasses}>{getText('login_description')}</Text>
 
         {/* Sign-in Button */}
         <View className={styles.buttonContainer}>
@@ -110,8 +101,7 @@ export default function LoginScreen() {
             isLoading={isLoading}
             className={styles.button}
             accessibilityLabel={getText('login_button_aria')}
-            accessibilityHint={getText('login_button_hint')}
-          >
+            accessibilityHint={getText('login_button_hint')}>
             <Button.Icon icon={LogIn} position="left" size="lg" variant="primary" />
             <Button.Text className={buttonTextClasses} variant="primary">
               {getText('login_button')}
@@ -127,9 +117,7 @@ export default function LoginScreen() {
         )}
 
         {/* Disclaimer */}
-        <Text className={disclaimerClasses}>
-          {getText('login_disclaimer')}
-        </Text>
+        <Text className={disclaimerClasses}>{getText('login_disclaimer')}</Text>
       </View>
     </View>
   );

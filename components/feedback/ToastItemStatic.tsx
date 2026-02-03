@@ -26,11 +26,7 @@ export interface ToastItemStaticProps {
  * Static toast item component without animations
  * Used when animations are disabled to avoid Reanimated warnings
  */
-export function ToastItemStatic({
-  toast,
-  onRemove,
-  testID,
-}: ToastItemStaticProps) {
+export function ToastItemStatic({ toast, onRemove, testID }: ToastItemStaticProps) {
   const { spacingClasses } = useAccessibilityClasses();
 
   const typeStyles = useMemo(() => getTypeStyles(toast.type), [toast.type]);
@@ -39,11 +35,7 @@ export function ToastItemStatic({
   const containerClasses = useMemo(
     () =>
       `${styles.itemContainer} ${spacingClasses.padding} ${spacingClasses.marginBottom} ${typeStyles.bgColor}`,
-    [
-      spacingClasses.padding,
-      spacingClasses.marginBottom,
-      typeStyles.bgColor,
-    ]
+    [spacingClasses.padding, spacingClasses.marginBottom, typeStyles.bgColor]
   );
 
   // Auto dismiss without animation
@@ -65,8 +57,7 @@ export function ToastItemStatic({
       className={containerClasses}
       accessibilityRole="alert"
       accessibilityLiveRegion="polite"
-      testID={testID}
-    >
+      testID={testID}>
       <ToastItemContent
         toast={toast}
         onDismiss={handleDismiss}

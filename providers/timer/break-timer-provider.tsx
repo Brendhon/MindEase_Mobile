@@ -3,11 +3,7 @@ import React, { ReactNode, useCallback, useMemo, useReducer } from 'react';
 import { BreakTimerContext } from '@/contexts/timer';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useCountdownInterval, useSyncBreakTimerWithTasks } from '@/hooks/timer';
-import {
-  BreakTimerAction,
-  BreakTimerContextValue,
-  BreakTimerState,
-} from '@/models/timer';
+import { BreakTimerAction, BreakTimerContextValue, BreakTimerState } from '@/models/timer';
 import {
   createBreakEndedTimerState,
   createIdleTimerState,
@@ -25,31 +21,15 @@ export interface BreakTimerProviderProps {
 
 // State creation functions using shared utilities
 const createInitialState = (defaultDuration: number) =>
-  createInitialTimerState<BreakTimerState>(
-    defaultDuration,
-    'breakTimerState',
-    'idle'
-  );
+  createInitialTimerState<BreakTimerState>(defaultDuration, 'breakTimerState', 'idle');
 
 const createRunningState = (duration: number, taskId?: string) =>
-  createRunningTimerState<BreakTimerState>(
-    duration,
-    'breakTimerState',
-    'running',
-    taskId
-  );
+  createRunningTimerState<BreakTimerState>(duration, 'breakTimerState', 'running', taskId);
 
 const createIdleState = (defaultDuration: number) =>
-  createIdleTimerState<BreakTimerState>(
-    defaultDuration,
-    'breakTimerState',
-    'idle'
-  );
+  createIdleTimerState<BreakTimerState>(defaultDuration, 'breakTimerState', 'idle');
 
-const createBreakEndedState = (
-  defaultDuration: number,
-  taskId?: string | null
-) =>
+const createBreakEndedState = (defaultDuration: number, taskId?: string | null) =>
   createBreakEndedTimerState<BreakTimerState>(
     defaultDuration,
     'breakTimerState',
@@ -61,10 +41,7 @@ const createBreakEndedState = (
  * Break timer reducer function
  * Handles all state transitions
  */
-function breakTimerReducer(
-  state: BreakTimerState,
-  action: BreakTimerAction
-): BreakTimerState {
+function breakTimerReducer(state: BreakTimerState, action: BreakTimerAction): BreakTimerState {
   switch (action.type) {
     case 'START':
       return createRunningState(action.duration, action.taskId);
@@ -99,10 +76,8 @@ export function BreakTimerProvider({ children }: BreakTimerProviderProps) {
   );
 
   // Initialize state with default duration
-  const [breakTimerState, dispatch] = useReducer(
-    breakTimerReducer,
-    defaultDuration,
-    (duration) => createInitialState(duration)
+  const [breakTimerState, dispatch] = useReducer(breakTimerReducer, defaultDuration, (duration) =>
+    createInitialState(duration)
   );
 
   // Countdown: Handle break timer countdown when running
@@ -110,10 +85,7 @@ export function BreakTimerProvider({ children }: BreakTimerProviderProps) {
     dispatch({ type: 'TICK', defaultDuration });
   }, [defaultDuration]);
 
-  useCountdownInterval(
-    breakTimerState.breakTimerState === 'running',
-    handleTick
-  );
+  useCountdownInterval(breakTimerState.breakTimerState === 'running', handleTick);
 
   // Start break function
   const startBreak = useCallback(
@@ -139,13 +111,10 @@ export function BreakTimerProvider({ children }: BreakTimerProviderProps) {
       startBreak,
       stopBreak,
       isActive: (taskId?: string) =>
-        taskId
-          ? breakTimerState.activeTaskId === taskId
-          : !!breakTimerState.activeTaskId,
+        taskId ? breakTimerState.activeTaskId === taskId : !!breakTimerState.activeTaskId,
       isRunning: (taskId?: string) =>
         taskId
-          ? breakTimerState.activeTaskId === taskId &&
-            breakTimerState.breakTimerState === 'running'
+          ? breakTimerState.activeTaskId === taskId && breakTimerState.breakTimerState === 'running'
           : breakTimerState.breakTimerState === 'running',
       hasActiveTask: !!breakTimerState.activeTaskId,
       remainingTime: breakTimerState.remainingTime,
@@ -153,9 +122,5 @@ export function BreakTimerProvider({ children }: BreakTimerProviderProps) {
     [breakTimerState, startBreak, stopBreak]
   );
 
-  return (
-    <BreakTimerContext.Provider value={contextValue}>
-      {children}
-    </BreakTimerContext.Provider>
-  );
+  return <BreakTimerContext.Provider value={contextValue}>{children}</BreakTimerContext.Provider>;
 }

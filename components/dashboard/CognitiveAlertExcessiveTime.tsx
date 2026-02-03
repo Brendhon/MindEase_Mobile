@@ -1,4 +1,3 @@
-
 import { CognitiveAlertBanner } from './CognitiveAlertBanner';
 
 /**

@@ -1,7 +1,7 @@
 import { PageHeader } from '@/components/layout';
-import { useAccessibilityClasses } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import { useTextDetail } from '@/hooks/accessibility';
+
 import { Task } from '@/models/task';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
@@ -34,11 +34,7 @@ export interface DashboardContentProps {
   testID?: string;
 }
 
-export function DashboardContent({
-  tasks,
-  error,
-  testID,
-}: DashboardContentProps) {
+export function DashboardContent({ tasks, error, testID }: DashboardContentProps) {
   const { error: settingsError } = useCognitiveSettings();
 
   // Use accessibility classes hook for optimized class generation
@@ -63,10 +59,7 @@ export function DashboardContent({
   );
 
   return (
-    <View
-      className={containerClasses}
-      testID={testID || 'dashboard-content-container'}
-    >
+    <View className={containerClasses} testID={testID || 'dashboard-content-container'}>
       <PageHeader
         descriptionKey="dashboard_description"
         testID={testID ? `${testID}-header` : 'dashboard-header'}
@@ -96,22 +89,14 @@ export function DashboardContent({
           testID={testID ? `${testID}-visual-settings` : 'dashboard-visual-settings'}
         />
         <InteractionSettings
-          testID={
-            testID
-              ? `${testID}-interaction-settings`
-              : 'dashboard-interaction-settings'
-          }
+          testID={testID ? `${testID}-interaction-settings` : 'dashboard-interaction-settings'}
         />
         <ContentSettings
-          testID={
-            testID ? `${testID}-content-settings` : 'dashboard-content-settings'
-          }
+          testID={testID ? `${testID}-content-settings` : 'dashboard-content-settings'}
         />
       </View>
 
-      <DashboardResetButton
-        testID={testID ? `${testID}-reset-button` : 'dashboard-reset-button'}
-      />
+      <DashboardResetButton testID={testID ? `${testID}-reset-button` : 'dashboard-reset-button'} />
     </View>
   );
 }

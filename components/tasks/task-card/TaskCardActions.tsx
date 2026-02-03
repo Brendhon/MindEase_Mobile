@@ -63,12 +63,7 @@ export function TaskCardActions({
         testID={testID}
       />
       {showEditActions ? (
-        <TaskCardEditActions
-          task={task}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          testID={testID}
-        />
+        <TaskCardEditActions task={task} onEdit={onEdit} onDelete={onDelete} testID={testID} />
       ) : null}
     </View>
   );

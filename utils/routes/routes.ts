@@ -41,7 +41,5 @@ export const ALL_PAGE_ROUTES = {
  * Type definitions for route values
  */
 export type PageRoute = (typeof PAGE_ROUTES)[keyof typeof PAGE_ROUTES];
-export type ProtectedRoute =
-  (typeof PROTECTED_ROUTES)[keyof typeof PROTECTED_ROUTES];
-export type AllPageRoute =
-  (typeof ALL_PAGE_ROUTES)[keyof typeof ALL_PAGE_ROUTES];
+export type ProtectedRoute = (typeof PROTECTED_ROUTES)[keyof typeof PROTECTED_ROUTES];
+export type AllPageRoute = (typeof ALL_PAGE_ROUTES)[keyof typeof ALL_PAGE_ROUTES];

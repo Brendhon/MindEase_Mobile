@@ -46,12 +46,7 @@ function getInitials(name: string | null | undefined): string {
  */
 const AVATAR_BG_COLOR = 'bg-action-primary';
 
-export function ProfileAvatar({
-  image,
-  name,
-  className = '',
-  testID,
-}: ProfileAvatarProps) {
+export function ProfileAvatar({ image, name, className = '', testID }: ProfileAvatarProps) {
   const initials = useMemo(() => getInitials(name), [name]);
   const { animationsEnabled } = useAccessibilityClasses();
   const { settings } = useCognitiveSettings();
@@ -81,8 +76,7 @@ export function ProfileAvatar({
         <View
           className={initialsContainerClasses}
           accessibilityLabel={name ? `${name} avatar` : 'User avatar'}
-          testID={testID ? `${testID}-initials` : 'profile-avatar-initials'}
-        >
+          testID={testID ? `${testID}-initials` : 'profile-avatar-initials'}>
           <Text className={styles.initialsText}>{initials}</Text>
         </View>
       )}

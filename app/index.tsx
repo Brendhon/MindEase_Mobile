@@ -25,13 +25,17 @@ export default function HomePage() {
       </View>
     );
   }
-  
+
   // Redirect to dashboard when authenticated
-  return isAuthenticated ? <Redirect href={PROTECTED_ROUTES.DASHBOARD} /> : <Redirect href={PAGE_ROUTES.LOGIN} />;
+  return isAuthenticated ? (
+    <Redirect href={PROTECTED_ROUTES.DASHBOARD} />
+  ) : (
+    <Redirect href={PAGE_ROUTES.LOGIN} />
+  );
 }
 
 const styles = {
-  container: "flex-1 bg-surface-primary",
-  loadingContainer: "flex-1 items-center justify-center bg-bg-secondary",
-  loadingText: "mt-4 text-text-secondary text-center",
+  container: 'flex-1 bg-surface-primary',
+  loadingContainer: 'flex-1 items-center justify-center bg-bg-secondary',
+  loadingText: 'mt-4 text-text-secondary text-center',
 };

@@ -32,12 +32,7 @@ export interface RadioGroupOptionProps {
   testID?: string;
 }
 
-export function RadioGroupOption({
-  value,
-  label,
-  description,
-  testID,
-}: RadioGroupOptionProps) {
+export function RadioGroupOption({ value, label, description, testID }: RadioGroupOptionProps) {
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
   const { value: selectedValue, onChange, disabled } = useRadioGroupContext();
   const [isPressed, setIsPressed] = useState(false);
@@ -97,19 +92,14 @@ export function RadioGroupOption({
       accessibilityLabel={label}
       accessibilityHint={description}
       className={containerClasses}
-      testID={testID || `radio-option-${value}`}
-    >
+      testID={testID || `radio-option-${value}`}>
       <View className={styles.optionContent}>
-        <View
-          className={`${styles.radio} ${checked ? styles.radioChecked : ''}`}
-        >
+        <View className={`${styles.radio} ${checked ? styles.radioChecked : ''}`}>
           {checked && <View className={styles.radioDot} />}
         </View>
         <View className={styles.optionText}>
           <Text className={labelClasses}>{label}</Text>
-          {description && (
-            <Text className={descriptionClasses}>{description}</Text>
-          )}
+          {description && <Text className={descriptionClasses}>{description}</Text>}
         </View>
       </View>
     </Pressable>

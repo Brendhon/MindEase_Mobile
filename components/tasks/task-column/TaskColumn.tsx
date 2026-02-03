@@ -38,16 +38,7 @@ export interface TaskColumnProps {
 }
 
 export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
-  {
-    titleKey,
-    tasks,
-    status,
-    onEdit,
-    onDelete,
-    onColumnLayout,
-    onScrollToColumn,
-    testID,
-  },
+  { titleKey, tasks, status, onEdit, onDelete, onColumnLayout, onScrollToColumn, testID },
   ref
 ) {
   const { getText } = useTextDetail();
@@ -56,10 +47,7 @@ export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
   const sortedTasks = useMemo(() => {
     return [...tasks]
       .filter((task) => task.status === status)
-      .sort(
-        (a, b) =>
-          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-      );
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   }, [tasks, status]);
 
   const columnHeaderClasses = useMemo(
@@ -105,23 +93,18 @@ export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
       testID={columnTestID}
       accessibilityRole="summary"
       accessibilityLabel={columnLabel}
-      onLayout={handleLayout}
-    >
+      onLayout={handleLayout}>
       <View className={columnHeaderClasses}>
         <Text className={columnTitleClasses}>{getText(titleKey)}</Text>
         <Text
           className={columnCountClasses}
-          accessibilityLabel={`${sortedTasks.length} ${getText('tasks_count_aria')}`}
-        >
+          accessibilityLabel={`${sortedTasks.length} ${getText('tasks_count_aria')}`}>
           {sortedTasks.length}
         </Text>
       </View>
       <View className={columnContentClasses}>
         {sortedTasks.length === 0 ? (
-          <View
-            className={styles.columnEmpty}
-            testID={`${columnTestID}-empty`}
-          >
+          <View className={styles.columnEmpty} testID={`${columnTestID}-empty`}>
             <Text className={`${styles.columnEmptyText} ${fontSizeClasses.sm}`}>
               {getText('tasks_empty')}
             </Text>

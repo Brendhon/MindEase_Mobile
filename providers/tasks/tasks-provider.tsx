@@ -36,10 +36,7 @@ export function TasksProvider({
     []
   );
 
-  const setLoadingState = useCallback(
-    (isLoading: boolean) => setLoading(isLoading),
-    []
-  );
+  const setLoadingState = useCallback((isLoading: boolean) => setLoading(isLoading), []);
 
   const setErrorState = useCallback((msg: string | null) => setError(msg), []);
 
@@ -52,8 +49,7 @@ export function TasksProvider({
         _setTasks: setTasksState,
         _setLoading: setLoadingState,
         _setError: setErrorState,
-      }}
-    >
+      }}>
       {children}
     </TasksContext.Provider>
   );

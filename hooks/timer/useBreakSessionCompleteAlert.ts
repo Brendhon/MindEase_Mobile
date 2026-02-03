@@ -8,10 +8,7 @@
  * The user can choose: Start Focus or End Focus.
  */
 
-import {
-  useMissingBreakAlert,
-  useProlongedNavigationAlert,
-} from '@/hooks/cognitive-alerts';
+import { useMissingBreakAlert, useProlongedNavigationAlert } from '@/hooks/cognitive-alerts';
 import { useAlert } from '@/hooks/alert';
 import { useTextDetail } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
@@ -52,8 +49,7 @@ export function useBreakSessionCompleteAlert() {
 
     // Detect break session completion: was running, now breakEnded
     const completed =
-      prev.breakTimerState === 'running' &&
-      current.breakTimerState === 'breakEnded';
+      prev.breakTimerState === 'running' && current.breakTimerState === 'breakEnded';
 
     if (completed && !hasShownForCurrentCompletionRef.current) {
       hasShownForCurrentCompletionRef.current = true;
@@ -61,17 +57,15 @@ export function useBreakSessionCompleteAlert() {
       const activeTaskId = current.activeTaskId;
 
       const title = getText('tasks_break_session_complete_title');
-      const message = getTextWithReplace(
-        'tasks_break_session_complete_message',
-        { minutes: String(breakDuration) }
-      );
+      const message = getTextWithReplace('tasks_break_session_complete_message', {
+        minutes: String(breakDuration),
+      });
       const question = getText('tasks_break_session_complete');
       const fullMessage = `${message}\n\n${question}`;
 
-      const startFocusLabel = getTextWithReplace(
-        'tasks_break_session_start_focus',
-        { minutes: String(focusDuration) }
-      );
+      const startFocusLabel = getTextWithReplace('tasks_break_session_start_focus', {
+        minutes: String(focusDuration),
+      });
       const endFocusLabel = getText('tasks_break_session_end_focus');
 
       const buttons = [

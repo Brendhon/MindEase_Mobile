@@ -3,7 +3,6 @@ import { RadioGroup } from '@/components/form/radio-group';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
 import { useTextDetail } from '@/hooks/accessibility';
 
-
 /**
  * ContentSettings Component - MindEase Mobile
  * Content accessibility settings section (textDetail)
@@ -20,14 +19,12 @@ export function ContentSettings({ testID }: ContentSettingsProps) {
   return (
     <SettingsSection
       title={getText('profile_section_content')}
-      testID={testID || 'profile-section-content'}
-    >
+      testID={testID || 'profile-section-content'}>
       {/* Text Detail Setting */}
       <RadioGroup
         value={settings.textDetail}
         onChange={(value) => updateSetting('textDetail', value)}
-        testID="profile-textdetail"
-      >
+        testID="profile-textdetail">
         <RadioGroup.Header>
           <RadioGroup.Label testID="profile-textdetail-label">
             {getText('profile_setting_text_detail')}

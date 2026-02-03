@@ -41,8 +41,7 @@ export function SelectError({ children, testID }: SelectErrorProps) {
       className={`${styles.error} ${fontSizeClass}`}
       testID={testID || 'select-error'}
       accessibilityRole="alert"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

@@ -15,23 +15,13 @@ export interface TasksErrorProps {
   testID?: string;
 }
 
-export function TasksError({
-  message,
-  testID,
-}: TasksErrorProps) {
+export function TasksError({ message, testID }: TasksErrorProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
 
-  const errorClasses = useMemo(
-    () => `${styles.error} ${fontSizeClasses.sm}`,
-    [fontSizeClasses.sm]
-  );
+  const errorClasses = useMemo(() => `${styles.error} ${fontSizeClasses.sm}`, [fontSizeClasses.sm]);
 
   return (
-    <View
-      className={errorClasses}
-      accessibilityRole="alert"
-      testID={testID || 'tasks-error'}
-    >
+    <View className={errorClasses} accessibilityRole="alert" testID={testID || 'tasks-error'}>
       <Text className={styles.errorText}>{message}</Text>
     </View>
   );

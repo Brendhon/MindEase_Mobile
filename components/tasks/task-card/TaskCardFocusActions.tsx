@@ -46,8 +46,7 @@ export function TaskCardFocusActions({
         onPress={() => onStop()}
         accessibilityLabel={getText('tasks_action_stop_aria')}
         accessibilityRole="button"
-        testID={testID ? `${testID}-stop-break` : `task-card-stop-break-${task.id}`}
-      >
+        testID={testID ? `${testID}-stop-break` : `task-card-stop-break-${task.id}`}>
         <Button.Icon icon={Square} position="left" variant="ghost" />
         <Button.Text variant="ghost">{getText('tasks_action_stop')}</Button.Text>
       </Button>
@@ -65,8 +64,7 @@ export function TaskCardFocusActions({
             onPress={() => onStop()}
             accessibilityLabel={getText('tasks_action_stop_aria')}
             accessibilityRole="button"
-            testID={testID ? `${testID}-stop` : `task-card-stop-${task.id}`}
-          >
+            testID={testID ? `${testID}-stop` : `task-card-stop-${task.id}`}>
             <Button.Icon icon={Square} position="left" variant="ghost" />
             <Button.Text variant="ghost">{getText('tasks_action_stop')}</Button.Text>
           </Button>
@@ -79,8 +77,7 @@ export function TaskCardFocusActions({
             onPress={() => onComplete()}
             accessibilityLabel={getText('tasks_action_finish_aria')}
             accessibilityRole="button"
-            testID={testID ? `${testID}-complete` : `task-card-complete-${task.id}`}
-          >
+            testID={testID ? `${testID}-complete` : `task-card-complete-${task.id}`}>
             <Button.Icon icon={Check} position="left" variant="primary" />
             <Button.Text>{getText('tasks_action_finish')}</Button.Text>
           </Button>
@@ -99,8 +96,7 @@ export function TaskCardFocusActions({
         disabled={hasActiveTask}
         accessibilityLabel={getText('tasks_action_start_focus_aria')}
         accessibilityRole="button"
-        testID={testID ? `${testID}-start-focus` : `task-card-start-focus-${task.id}`}
-      >
+        testID={testID ? `${testID}-start-focus` : `task-card-start-focus-${task.id}`}>
         <Button.Icon icon={Play} position="left" variant="primary" />
         <Button.Text>{getText('tasks_action_start_focus')}</Button.Text>
       </Button>

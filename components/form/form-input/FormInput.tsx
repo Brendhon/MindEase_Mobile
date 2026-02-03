@@ -113,17 +113,12 @@ export function FormInput<
   const errorMessage = fieldError?.message as string | undefined;
 
   const { fontSizeClasses } = useAccessibilityClasses();
-  const helperTextFontSize = useMemo(
-    () => fontSizeClasses.sm,
-    [fontSizeClasses.sm]
-  );
+  const helperTextFontSize = useMemo(() => fontSizeClasses.sm, [fontSizeClasses.sm]);
 
   const labelText = required ? `${label} *` : label;
 
   const fieldClassName = useMemo(() => {
-    const parts = [errorMessage && styles.fieldError, inputClassName].filter(
-      Boolean
-    );
+    const parts = [errorMessage && styles.fieldError, inputClassName].filter(Boolean);
     return parts.join(' ');
   }, [errorMessage, inputClassName]);
 
@@ -133,10 +128,7 @@ export function FormInput<
       control={control}
       rules={rules}
       render={({ field }) => (
-        <Input
-          className={className}
-          testID={testID || `form-input-${String(name)}`}
-        >
+        <Input className={className} testID={testID || `form-input-${String(name)}`}>
           <Input.Label nativeID={inputId} testID={`form-input-label-${String(name)}`}>
             {labelText}
           </Input.Label>
@@ -150,7 +142,7 @@ export function FormInput<
             as={as}
             placeholder={placeholder}
             disabled={disabled}
-            numberOfLines={as === 'textarea' ? rows ?? 3 : undefined}
+            numberOfLines={as === 'textarea' ? (rows ?? 3) : undefined}
             multiline={as === 'textarea'}
             className={fieldClassName}
             testID={`form-input-field-${String(name)}`}
@@ -161,18 +153,13 @@ export function FormInput<
             <Text
               nativeID={helperId}
               className={`${styles.helperText} ${helperTextFontSize}`}
-              testID={`form-input-helper-${String(name)}`}
-            >
+              testID={`form-input-helper-${String(name)}`}>
               {helperText}
             </Text>
           )}
 
           {errorMessage && (
-            <Input.Error
-              testID={`form-input-error-${String(name)}`}
-            >
-              {errorMessage}
-            </Input.Error>
+            <Input.Error testID={`form-input-error-${String(name)}`}>{errorMessage}</Input.Error>
           )}
         </Input>
       )}

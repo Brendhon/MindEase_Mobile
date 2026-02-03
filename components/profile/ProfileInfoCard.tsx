@@ -47,8 +47,7 @@ export function ProfileInfoCard({
   );
 
   const cardClasses = useMemo(
-    () =>
-      `${styles.infoCard} ${spacingClasses.gap} ${borderClasses} ${className}`,
+    () => `${styles.infoCard} ${spacingClasses.gap} ${borderClasses} ${className}`,
     [spacingClasses.gap, borderClasses, className]
   );
 

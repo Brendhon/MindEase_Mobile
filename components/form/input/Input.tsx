@@ -69,8 +69,7 @@ function InputRoot({ children, className = '', testID }: InputProps) {
     <View
       className={containerClasses}
       testID={testID || 'input-container'}
-      accessibilityRole="none"
-    >
+      accessibilityRole="none">
       {children}
     </View>
   );

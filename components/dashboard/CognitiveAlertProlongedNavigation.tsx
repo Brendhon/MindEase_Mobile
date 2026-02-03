@@ -1,4 +1,3 @@
-
 import { CognitiveAlertBanner } from './CognitiveAlertBanner';
 
 /**
@@ -34,5 +33,4 @@ export function CognitiveAlertProlongedNavigation({
   );
 }
 
-CognitiveAlertProlongedNavigation.displayName =
-  'CognitiveAlertProlongedNavigation';
+CognitiveAlertProlongedNavigation.displayName = 'CognitiveAlertProlongedNavigation';

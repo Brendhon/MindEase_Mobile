@@ -70,10 +70,7 @@ export const tasksService: TasksService = {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    return firestoreService.createDocument<Task>(
-      getTasksCollectionPath(userId),
-      taskData
-    );
+    return firestoreService.createDocument<Task>(getTasksCollectionPath(userId), taskData);
   },
 
   /**
@@ -89,11 +86,7 @@ export const tasksService: TasksService = {
       updatedAt: new Date(),
     };
     const collectionPath = getTasksCollectionPath(userId);
-    return firestoreService.updateDocument<Task>(
-      collectionPath,
-      taskId,
-      updatedData
-    );
+    return firestoreService.updateDocument<Task>(collectionPath, taskId, updatedData);
   },
 
   /**

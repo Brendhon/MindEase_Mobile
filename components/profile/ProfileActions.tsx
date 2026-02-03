@@ -45,10 +45,7 @@ export function ProfileActions({
         size="md"
         onPress={onLogout}
         accessibilityLabel={getText('logout')}
-        testID={
-          testID ? `${testID}-logout-button` : 'profile-logout-button'
-        }
-      >
+        testID={testID ? `${testID}-logout-button` : 'profile-logout-button'}>
         <Button.Icon icon={LogOut} position="left" size="md" variant="secondary" />
         <Button.Text variant="secondary">{getText('logout')}</Button.Text>
       </Button>
@@ -57,12 +54,7 @@ export function ProfileActions({
         size="md"
         onPress={onDeleteAccount}
         accessibilityLabel={getText('profile_delete_account_aria')}
-        testID={
-          testID
-            ? `${testID}-delete-account-button`
-            : 'profile-delete-account-button'
-        }
-      >
+        testID={testID ? `${testID}-delete-account-button` : 'profile-delete-account-button'}>
         <Button.Icon icon={Trash2} position="left" size="md" variant="danger" />
         <Button.Text variant="danger">{getText('profile_delete_account')}</Button.Text>
       </Button>

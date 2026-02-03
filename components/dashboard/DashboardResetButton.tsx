@@ -15,30 +15,21 @@ export interface DashboardResetButtonProps {
   testID?: string;
 }
 
-export function DashboardResetButton({
-  testID,
-}: DashboardResetButtonProps) {
+export function DashboardResetButton({ testID }: DashboardResetButtonProps) {
   const { resetSettings } = useCognitiveSettings();
   const { getText } = useTextDetail();
 
   return (
     <View
       className={styles.resetButtonContainer}
-      testID={testID || 'dashboard-reset-button-container'}
-    >
+      testID={testID || 'dashboard-reset-button-container'}>
       <Button
         variant="secondary"
         size="md"
         onPress={resetSettings}
         accessibilityLabel={getText('profile_reset_aria')}
-        testID={testID || 'dashboard-reset-button'}
-      >
-        <Button.Icon
-          icon={RotateCcw}
-          position="left"
-          size="md"
-          variant="secondary"
-        />
+        testID={testID || 'dashboard-reset-button'}>
+        <Button.Icon icon={RotateCcw} position="left" size="md" variant="secondary" />
         <Button.Text variant="secondary">{getText('profile_reset')}</Button.Text>
       </Button>
     </View>

@@ -10,10 +10,7 @@
  * and within a tree that provides useAlert and useTextDetail (CognitiveSettingsProvider, etc.).
  */
 
-import {
-  useFocusSessionCompleteAlert,
-  useBreakSessionCompleteAlert,
-} from '@/hooks/timer';
+import { useFocusSessionCompleteAlert, useBreakSessionCompleteAlert } from '@/hooks/timer';
 
 export function SessionCompleteAlerts() {
   useFocusSessionCompleteAlert();

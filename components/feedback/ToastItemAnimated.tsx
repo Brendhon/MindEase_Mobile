@@ -26,11 +26,7 @@ export interface ToastItemAnimatedProps {
  * Animated toast item component with smooth entrance/exit animations
  * Uses React Native Animated API (not Reanimated) to avoid conflicts
  */
-export function ToastItemAnimated({
-  toast,
-  onRemove,
-  testID,
-}: ToastItemAnimatedProps) {
+export function ToastItemAnimated({ toast, onRemove, testID }: ToastItemAnimatedProps) {
   const { spacingClasses } = useAccessibilityClasses();
 
   // Create Animated values with useRef to avoid re-creation on re-renders
@@ -52,11 +48,7 @@ export function ToastItemAnimated({
   const containerClasses = useMemo(
     () =>
       `${styles.itemContainer} ${spacingClasses.padding} ${spacingClasses.marginBottom} ${typeStyles.bgColor}`,
-    [
-      spacingClasses.padding,
-      spacingClasses.marginBottom,
-      typeStyles.bgColor,
-    ]
+    [spacingClasses.padding, spacingClasses.marginBottom, typeStyles.bgColor]
   );
 
   // Animate in on mount
@@ -122,8 +114,7 @@ export function ToastItemAnimated({
       className={containerClasses}
       accessibilityRole="alert"
       accessibilityLiveRegion="polite"
-      testID={testID}
-    >
+      testID={testID}>
       <ToastItemContent
         toast={toast}
         onDismiss={handleDismiss}

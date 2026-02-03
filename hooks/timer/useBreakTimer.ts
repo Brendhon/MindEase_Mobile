@@ -27,11 +27,7 @@ import { useBreakTimerContext } from '@/contexts/timer';
 /**
  * Re-export types for convenience
  */
-export type {
-  BreakTimerState,
-  BreakTimerStateType,
-  BreakTimerContextValue,
-} from '@/models/timer';
+export type { BreakTimerState, BreakTimerStateType, BreakTimerContextValue } from '@/models/timer';
 
 /**
  * Hook for accessing break timer state and operations

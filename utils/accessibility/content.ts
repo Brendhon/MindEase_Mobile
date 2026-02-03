@@ -30,9 +30,7 @@ export function getAccessibilityText(
   const content = accessibilityTexts[mode];
 
   if (!content || !(key in content)) {
-    console.warn(
-      `Accessibility text key "${key}" not found for mode "${mode}"`
-    );
+    console.warn(`Accessibility text key "${key}" not found for mode "${mode}"`);
     // Fallback to detailed mode if key not found in current mode
     return accessibilityTexts.detailed[key] || key;
   }

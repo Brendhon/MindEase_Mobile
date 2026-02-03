@@ -71,24 +71,18 @@ export function useAlert() {
       onConfirm: () => void | Promise<void>;
       confirmStyle?: 'default' | 'destructive' | 'cancel';
     }) => {
-      Alert.alert(
-        getText(options.titleKey),
-        getText(options.messageKey),
-        [
-          {
-            text: options.cancelLabelKey
-              ? getText(options.cancelLabelKey)
-              : 'Cancel',
-            style: 'cancel',
-            onPress: options.onCancel,
-          },
-          {
-            text: getText(options.confirmLabelKey),
-            style: options.confirmStyle || 'default',
-            onPress: options.onConfirm,
-          },
-        ]
-      );
+      Alert.alert(getText(options.titleKey), getText(options.messageKey), [
+        {
+          text: options.cancelLabelKey ? getText(options.cancelLabelKey) : 'Cancel',
+          style: 'cancel',
+          onPress: options.onCancel,
+        },
+        {
+          text: getText(options.confirmLabelKey),
+          style: options.confirmStyle || 'default',
+          onPress: options.onConfirm,
+        },
+      ]);
     },
     [getText]
   );
@@ -103,16 +97,12 @@ export function useAlert() {
       okLabelKey?: AccessibilityTextKey;
       onOk?: () => void;
     }) => {
-      Alert.alert(
-        getText(options.titleKey),
-        getText(options.messageKey),
-        [
-          {
-            text: options.okLabelKey ? getText(options.okLabelKey) : 'OK',
-            onPress: options.onOk,
-          },
-        ]
-      );
+      Alert.alert(getText(options.titleKey), getText(options.messageKey), [
+        {
+          text: options.okLabelKey ? getText(options.okLabelKey) : 'OK',
+          onPress: options.onOk,
+        },
+      ]);
     },
     [getText]
   );
@@ -124,11 +114,11 @@ export function useAlert() {
     (
       title: string,
       message: string,
-      buttons?: Array<{
+      buttons?: {
         text: string;
         style?: 'default' | 'destructive' | 'cancel';
         onPress?: () => void | Promise<void>;
-      }>
+      }[]
     ) => {
       Alert.alert(title, message, buttons);
     },

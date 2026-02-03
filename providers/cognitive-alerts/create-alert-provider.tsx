@@ -34,15 +34,9 @@ export function useCommonAlertState(): CommonAlertState {
   const [isDismissed, setIsDismissed] = useState(false);
   const [dismissedAt, setDismissedAt] = useState<number | null>(null);
 
-  const setIsVisibleState = useCallback(
-    (visible: boolean) => setIsVisible(visible),
-    []
-  );
+  const setIsVisibleState = useCallback((visible: boolean) => setIsVisible(visible), []);
 
-  const setIsDismissedState = useCallback(
-    (dismissed: boolean) => setIsDismissed(dismissed),
-    []
-  );
+  const setIsDismissedState = useCallback((dismissed: boolean) => setIsDismissed(dismissed), []);
 
   const setDismissedAtState = useCallback(
     (timestamp: number | null) => setDismissedAt(timestamp),

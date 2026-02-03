@@ -95,8 +95,7 @@ function RadioGroupRoot<T extends string = string>({
         className={containerClasses}
         testID={testID || 'radio-group-container'}
         accessibilityRole="radiogroup"
-        accessibilityLabel="Radio group"
-      >
+        accessibilityLabel="Radio group">
         <View className={optionsClasses}>{children}</View>
       </View>
     </RadioGroupContext.Provider>

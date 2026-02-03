@@ -25,11 +25,7 @@ export interface SwitchLabelProps {
   testID?: string;
 }
 
-export function SwitchLabel({
-  children,
-  onPress,
-  testID,
-}: SwitchLabelProps) {
+export function SwitchLabel({ children, onPress, testID }: SwitchLabelProps) {
   const { fontSizeClasses } = useAccessibilityClasses();
 
   const labelClasses = useMemo(
@@ -39,22 +35,14 @@ export function SwitchLabel({
 
   if (onPress) {
     return (
-      <Pressable
-        onPress={onPress}
-        accessibilityRole="button"
-        testID={testID || 'switch-label'}
-      >
+      <Pressable onPress={onPress} accessibilityRole="button" testID={testID || 'switch-label'}>
         <Text className={labelClasses}>{children}</Text>
       </Pressable>
     );
   }
 
   return (
-    <Text
-      className={labelClasses}
-      testID={testID || 'switch-label'}
-      accessibilityRole="text"
-    >
+    <Text className={labelClasses} testID={testID || 'switch-label'} accessibilityRole="text">
       {children}
     </Text>
   );

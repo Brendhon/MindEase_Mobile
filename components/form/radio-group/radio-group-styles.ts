@@ -10,11 +10,9 @@ export const styles = {
   label: 'font-medium text-text-primary',
   description: 'text-text-secondary mt-1',
   options: 'flex flex-col',
-  option:
-    'relative flex rounded-lg border-2 transition-colors duration-150',
+  option: 'relative flex rounded-lg border-2 transition-colors duration-150',
   optionChecked: 'border-action-primary bg-action-primary/5',
-  optionUnchecked:
-    'border-border-subtle bg-surface-primary',
+  optionUnchecked: 'border-border-subtle bg-surface-primary',
   optionDisabled: 'opacity-50',
   optionContent: 'flex flex-row items-start gap-3 w-full',
   radio:

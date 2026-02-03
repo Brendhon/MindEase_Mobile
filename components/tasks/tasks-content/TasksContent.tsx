@@ -40,10 +40,7 @@ export interface TasksContentProps {
   onCreateTask?: (data: TaskDialogOutputData) => void | Promise<void>;
 
   /** Callback to update an existing task (taskId + payload from task dialog) */
-  onUpdateTask?: (
-    taskId: string,
-    data: TaskDialogOutputData
-  ) => void | Promise<void>;
+  onUpdateTask?: (taskId: string, data: TaskDialogOutputData) => void | Promise<void>;
 
   /** Test ID for testing */
   testID?: string;
@@ -105,20 +102,14 @@ export function TasksContent({
   const hasError = Boolean(error);
 
   return (
-    <View
-      className={containerClasses}
-      testID={testID || 'tasks-content-container'}
-    >
+    <View className={containerClasses} testID={testID || 'tasks-content-container'}>
       <PageHeader
         descriptionKey="tasks_description"
         testID={testID ? `${testID}-header` : 'tasks-header'}
       />
 
       {hasError && (
-        <TasksError
-          message={error!}
-          testID={testID ? `${testID}-error` : 'tasks-error'}
-        />
+        <TasksError message={error!} testID={testID ? `${testID}-error` : 'tasks-error'} />
       )}
 
       <TasksToolbar
@@ -130,11 +121,9 @@ export function TasksContent({
         className={contentClasses}
         onLayout={
           onTaskListAreaLayout
-            ? (e: LayoutChangeEvent) =>
-                onTaskListAreaLayout(e.nativeEvent.layout)
+            ? (e: LayoutChangeEvent) => onTaskListAreaLayout(e.nativeEvent.layout)
             : undefined
-        }
-      >
+        }>
         <TaskList
           tasks={tasks}
           onColumnLayout={onColumnLayout}

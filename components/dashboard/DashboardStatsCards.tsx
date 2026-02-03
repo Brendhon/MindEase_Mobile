@@ -1,5 +1,4 @@
-import { useAccessibilityClasses } from '@/hooks/accessibility';
-import { useTextDetail } from '@/hooks/accessibility';
+import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
 import { BarChart3, CheckCircle2, Clock, ListTodo } from 'lucide-react-native';
 import React, { useMemo } from 'react';
@@ -19,10 +18,7 @@ export interface DashboardStatsCardsProps {
   testID?: string;
 }
 
-export function DashboardStatsCards({
-  tasks,
-  testID,
-}: DashboardStatsCardsProps) {
+export function DashboardStatsCards({ tasks, testID }: DashboardStatsCardsProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
 
@@ -52,10 +48,7 @@ export function DashboardStatsCards({
   );
 
   return (
-    <View
-      className={containerClasses}
-      testID={testID || 'dashboard-stats-cards'}
-    >
+    <View className={containerClasses} testID={testID || 'dashboard-stats-cards'}>
       <StatCard
         icon={BarChart3}
         title={getText('dashboard_stats_total')}
@@ -78,9 +71,7 @@ export function DashboardStatsCards({
         value={stats.inProgress}
         titleClasses={titleClasses}
         valueClasses={valueClasses}
-        testID={
-          testID ? `${testID}-in-progress` : 'dashboard-stat-in-progress'
-        }
+        testID={testID ? `${testID}-in-progress` : 'dashboard-stat-in-progress'}
       />
       <StatCard
         icon={CheckCircle2}

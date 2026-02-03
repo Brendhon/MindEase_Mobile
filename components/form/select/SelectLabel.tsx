@@ -40,8 +40,7 @@ export function SelectLabel({ children, testID }: SelectLabelProps) {
       className={`${styles.label} ${fontSizeClass}`}
       testID={testID || 'select-label'}
       accessibilityRole="text"
-      accessibilityLabel={children}
-    >
+      accessibilityLabel={children}>
       {children}
     </Text>
   );

@@ -12,7 +12,9 @@
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" && prettier -c \"**/*.{js,jsx,ts,tsx,json}\"",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "build:apk": "sh ./scripts/build-apk.sh",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
@@ -39,15 +41,29 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "29.5.14",
     "@types/react": "~19.1.0",
     "babel-preset-expo": "^54.0.10",
     "eslint": "^9.25.1",
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.2",
+    "jest": "~29.7.0",
+    "jest-expo": "~54.0.17",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "react-test-renderer": "19.1.0",
     "tailwindcss": "^3.4.0",
     "typescript": "~5.9.2"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/$1"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|nativewind)"
+    ]
   },
   "main": "expo-router/entry",
   "private": true

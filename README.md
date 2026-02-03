@@ -158,11 +158,26 @@ A lógica compartilhada foi extraída da versão web sempre que possível, evita
 
 Os testes no ambiente mobile seguem abordagens específicas:
 
+* **Testes unitários**: Jest + jest-expo + React Native Testing Library (funções puras e poucos componentes simples).
 * Testes de lógica e domínio reutilizados
 * Testes de componentes com Testing Library (React Native)
 * Testes E2E planejados com Detox (futuro)
 
 O foco principal é validar **comportamento do usuário** e não implementação interna.
+
+### Rodar os testes unitários
+
+```bash
+npm run test
+```
+
+Para modo watch (re-executa ao alterar arquivos):
+
+```bash
+npm run test:watch
+```
+
+Os arquivos de teste ficam em pastas `__tests__` ao lado do código (ex.: `utils/timer/__tests__/timer-helpers-test.ts`, `components/ui/button/__tests__/ButtonText-test.tsx`).
 
 ---
 

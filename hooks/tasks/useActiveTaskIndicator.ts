@@ -22,7 +22,8 @@
 
 import { useMemo } from 'react';
 
-import { useBreakTimer, useFocusTimer } from '@/hooks/timer';
+import { useBreakTimer } from '@/hooks/timer/useBreakTimer';
+import { useFocusTimer } from '@/hooks/timer/useFocusTimer';
 import { useTasks } from './useTasks';
 import { TimerType, UseActiveTaskIndicatorReturn } from '@/models/timer';
 

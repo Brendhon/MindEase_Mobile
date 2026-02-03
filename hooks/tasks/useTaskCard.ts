@@ -15,11 +15,10 @@
 
 import { useAuth } from '@/hooks/auth';
 import { useAlert } from '@/hooks/alert/useAlert';
-import {
-  useMissingBreakAlert,
-  useProlongedNavigationAlert,
-} from '@/hooks/cognitive-alerts';
-import { useBreakTimer, useFocusTimer } from '@/hooks/timer';
+import { useMissingBreakAlert } from '@/hooks/cognitive-alerts/useMissingBreakAlert';
+import { useProlongedNavigationAlert } from '@/hooks/cognitive-alerts/useProlongedNavigationAlert';
+import { useBreakTimer } from '@/hooks/timer/useBreakTimer';
+import { useFocusTimer } from '@/hooks/timer/useFocusTimer';
 import { useTextDetail } from '@/hooks/accessibility';
 import type { UseTaskCardProps, UseTaskCardReturn } from '@/models/use-task-card-props';
 import type { Subtask } from '@/models/task';

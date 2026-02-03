@@ -8,14 +8,12 @@
  * The user can choose: Start Break, Continue Focus, or Finish Task (if no pending subtasks).
  */
 
-import {
-  useMissingBreakAlert,
-  useProlongedNavigationAlert,
-} from '@/hooks/cognitive-alerts';
+import { useMissingBreakAlert } from '@/hooks/cognitive-alerts/useMissingBreakAlert';
+import { useProlongedNavigationAlert } from '@/hooks/cognitive-alerts/useProlongedNavigationAlert';
 import { useAlert } from '@/hooks/alert';
 import { useTextDetail } from '@/hooks/accessibility';
 import { useCognitiveSettings } from '@/hooks/cognitive-settings';
-import { useTasks } from '@/hooks/tasks';
+import { useTasks } from '@/hooks/tasks/useTasks';
 import { useAuth } from '@/hooks/auth';
 import { useBreakTimer } from './useBreakTimer';
 import { useFocusTimer } from './useFocusTimer';

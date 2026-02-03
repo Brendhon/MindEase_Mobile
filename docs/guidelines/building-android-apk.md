@@ -69,6 +69,16 @@ O usuário baixa o APK, abre no Android e autoriza a instalação de "fontes des
 
 Se preferir gerar o APK localmente (sem usar EAS):
 
+### Script de build (recomendado)
+
+Na raiz do projeto existe um script que automatiza o processo: roda o prebuild, gera o APK e move o arquivo para a pasta `release/` com o nome `MindEase - Mobile.apk`.
+
+```bash
+./scripts/build-apk.sh
+```
+
+O APK ficará em **`release/MindEase - Mobile.apk`**. No Windows, use Git Bash ou WSL para rodar o `.sh`, ou execute os comandos abaixo manualmente.
+
 ### 1. Gerar o código nativo (se ainda não fez)
 
 ```bash
@@ -117,7 +127,7 @@ Para **teste rápido**, muitas vezes o APK gerado com `assembleRelease` já é i
 |----------|------------------|
 | **Gerar APK na nuvem (EAS)** | `eas build --platform android --profile preview` |
 | **Onde fica o APK (EAS)** | Link no painel [expo.dev](https://expo.dev) após o build |
-| **Build local** | `npm run prebuild` → `cd android` → `./gradlew assembleRelease` |
-| **Onde fica o APK (local)** | `android/app/build/outputs/apk/release/app-release.apk` |
+| **Build local (script)** | `./scripts/build-apk.sh` (prebuild + build; APK em `release/MindEase - Mobile.apk`) |
+| **Onde fica o APK (local)** | `release/MindEase - Mobile.apk` |
 
 Depois é só enviar o APK para o Google Drive e compartilhar o link com os testadores.

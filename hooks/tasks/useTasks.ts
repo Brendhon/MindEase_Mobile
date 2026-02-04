@@ -34,7 +34,7 @@ import { useToast } from '../toast/useToast';
 export function useTasks() {
   const { tasks, loading, error, _setTasks, _setLoading, _setError } = useTasksContext();
   const { user } = useAuth();
-  const { success } = useToast();
+  const { success, error: showError } = useToast();
 
   /**
    * Initialize tasks from server data
@@ -127,18 +127,16 @@ export function useTasks() {
           status: 0,
         });
         // State is updated by the Firestore subscription when the new doc is emitted; do not append here to avoid duplicate keys.
-        // TODO: Add feedback when useFeedback is available
         success('toast_success_task_created');
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to create task';
         _setError(errorMessage);
-        // TODO: Add feedback when useFeedback is available
-        // showError('toast_error_task_create_failed');
+        showError('toast_error_task_create_failed');
       } finally {
         _setLoading(false);
       }
     },
-    [_setLoading, _setError, success]
+    [_setLoading, _setError, success, showError]
   );
 
   /**
@@ -154,23 +152,19 @@ export function useTasks() {
 
       try {
         const updatedTask = await tasksService.updateTask(userId, taskId, updates);
-        _setTasks((prev) => prev.map((t) => (t.id === taskId ? updatedTask : t)));
-
-        // TODO: Add feedback when useFeedback is available
-        // const isComplete = updatedTask.status === 2;
-        // if (isComplete) {
-        //   success('toast_success_task_completed');
-        // }
+        const isComplete = updatedTask.status === 2;
+        if (isComplete) {
+          success('toast_success_task_completed');
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to update task';
         _setError(errorMessage);
-        // TODO: Add feedback when useFeedback is available
-        // showError('toast_error_task_update_failed');
+        showError('toast_error_task_update_failed');
       } finally {
         _setLoading(false);
       }
     },
-    [_setTasks, _setLoading, _setError]
+    [_setTasks, _setLoading, _setError, success, showError]
   );
 
   /**
@@ -187,18 +181,17 @@ export function useTasks() {
       try {
         await tasksService.deleteTask(userId, taskId);
         _setTasks((prev) => prev.filter((t) => t.id !== taskId));
-        // TODO: Add feedback when useFeedback is available
-        // success('toast_success_task_deleted');
+
+        success('toast_success_task_deleted');
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to delete task';
         _setError(errorMessage);
-        // TODO: Add feedback when useFeedback is available
-        // showError('toast_error_task_delete_failed');
+        showError('toast_error_task_delete_failed');
       } finally {
         _setLoading(false);
       }
     },
-    [_setTasks, _setLoading, _setError]
+    [_setTasks, _setLoading, _setError, success, showError]
   );
 
   /**

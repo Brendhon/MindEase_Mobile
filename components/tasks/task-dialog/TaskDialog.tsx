@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
 import { FormInput } from '@/components/form/form-input';
 import { Input } from '@/components/form/input';
+import { Button } from '@/components/ui/button';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
+import { useToast } from '@/hooks/toast/useToast';
 import { Task } from '@/models/task';
 import {
   TaskDialogFormData,
@@ -53,7 +54,7 @@ export function TaskDialog({
   const { spacingClasses } = useAccessibilityClasses();
   const { getText } = useTextDetail();
   const insets = useSafeAreaInsets();
-
+  const { info } = useToast();
   const isEditing = !!task;
 
   const methods = useForm<TaskDialogFormData>({
@@ -100,8 +101,9 @@ export function TaskDialog({
   const handleRemoveSubtask = useCallback(
     (index: number) => {
       remove(index);
+      info('tasks_checklist_removed');
     },
-    [remove]
+    [remove, info]
   );
 
   const handleSave = useCallback(

@@ -13,7 +13,7 @@ export const styles = {
   // Card styles
   infoCard: 'flex flex-col items-center gap-6',
   avatarSection: 'flex-shrink-0',
-  infoSection: 'flex flex-col gap-4 flex-1',
+  infoSection: 'flex flex-col gap-4',
 
   // Info row styles
   infoRow: 'flex flex-col gap-1.5',

@@ -164,7 +164,7 @@ export function useTasks() {
         _setLoading(false);
       }
     },
-    [_setTasks, _setLoading, _setError, success, showError]
+    [_setLoading, _setError, success, showError]
   );
 
   /**
@@ -180,8 +180,6 @@ export function useTasks() {
 
       try {
         await tasksService.deleteTask(userId, taskId);
-        _setTasks((prev) => prev.filter((t) => t.id !== taskId));
-
         success('toast_success_task_deleted');
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to delete task';
@@ -191,7 +189,7 @@ export function useTasks() {
         _setLoading(false);
       }
     },
-    [_setTasks, _setLoading, _setError, success, showError]
+    [_setLoading, _setError, success, showError]
   );
 
   /**

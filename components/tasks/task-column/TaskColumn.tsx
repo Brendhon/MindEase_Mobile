@@ -71,7 +71,7 @@ export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
   );
 
   const columnLabel = useMemo(
-    () => `${getText(titleKey)}, ${sortedTasks.length} ${getText('tasks_count_aria')}`,
+    () => `${getText(titleKey)}, ${sortedTasks.length} ${getText('tasks_count_caption')}`,
     [getText, titleKey, sortedTasks.length]
   );
 
@@ -98,8 +98,8 @@ export const TaskColumn = forwardRef<View, TaskColumnProps>(function TaskColumn(
         <Text className={columnTitleClasses}>{getText(titleKey)}</Text>
         <Text
           className={columnCountClasses}
-          accessibilityLabel={`${sortedTasks.length} ${getText('tasks_count_aria')}`}>
-          {sortedTasks.length}
+          accessibilityLabel={`${sortedTasks.length} ${getText('tasks_count_caption')}`}>
+          {sortedTasks.length} {getText('tasks_count_caption')}
         </Text>
       </View>
       <View className={columnContentClasses}>

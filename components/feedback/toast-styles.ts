@@ -5,7 +5,7 @@
 
 export const styles = {
   // Container styles
-  managerContainer: 'absolute bottom-12 left-4 right-4 z-50',
+  managerContainer: 'absolute bottom-12 left-4 right-4 z-50 flex flex-col gap-3',
   itemContainer: 'flex-row items-center rounded-lg',
 
   // Element styles

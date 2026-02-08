@@ -8,4 +8,7 @@ export const styles = {
   emptyContainer: 'flex flex-col items-center justify-center py-12',
   emptyText: 'text-text-primary font-semibold mb-2',
   emptyDescription: 'text-text-secondary',
+  searchContainer: 'flex flex-row items-center relative mt-2 w-full',
+  searchInput: 'w-full',
+  clearButton: 'absolute right-3 p-1 flex items-center justify-center',
 } as const;

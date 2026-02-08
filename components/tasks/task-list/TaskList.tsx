@@ -1,7 +1,10 @@
+import { Input } from '@/components/form/input';
 import { useAccessibilityClasses, useTextDetail } from '@/hooks/accessibility';
 import { Task } from '@/models/task';
-import React, { useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { THEME_COLORS } from '@/utils/theme';
+import { X } from 'lucide-react-native';
+import React, { useMemo, useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 import { TaskColumn } from '../task-column';
 import { styles } from './task-list-styles';
 
@@ -40,6 +43,7 @@ export function TaskList({
 }: TaskListProps) {
   const { getText } = useTextDetail();
   const { fontSizeClasses, spacingClasses } = useAccessibilityClasses();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const containerClasses = useMemo(
     () => `${styles.listContainer} ${spacingClasses.gap}`,
@@ -75,9 +79,30 @@ export function TaskList({
 
   return (
     <View className={containerClasses} testID={listTestID}>
+      {/* Search Input */}
+      <View className={styles.searchContainer}>
+        <Input className={styles.searchInput}>
+          <Input.Field
+            placeholder={getText('tasks_search_caption')}
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+          />
+        </Input>
+        {searchTerm.length > 0 && (
+          <Pressable
+            className={styles.clearButton}
+            onPress={() => setSearchTerm('')}
+            accessibilityLabel={getText('button_cancel')}
+            accessibilityRole="button">
+            <X size={20} color={THEME_COLORS.textMuted} />
+          </Pressable>
+        )}
+      </View>
+
       <TaskColumn
         titleKey="tasks_column_todo"
         tasks={tasks}
+        searchTerm={searchTerm}
         status={0}
         onColumnLayout={onColumnLayout}
         onEdit={onEdit}
@@ -88,6 +113,7 @@ export function TaskList({
       <TaskColumn
         titleKey="tasks_column_in_progress"
         tasks={tasks}
+        searchTerm={searchTerm}
         status={1}
         onColumnLayout={onColumnLayout}
         onEdit={onEdit}
@@ -98,6 +124,7 @@ export function TaskList({
       <TaskColumn
         titleKey="tasks_column_done"
         tasks={tasks}
+        searchTerm={searchTerm}
         status={2}
         onColumnLayout={onColumnLayout}
         onEdit={onEdit}
